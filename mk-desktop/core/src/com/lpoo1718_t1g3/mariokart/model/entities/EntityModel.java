@@ -1,8 +1,6 @@
 package com.lpoo1718_t1g3.mariokart.model.entities;
 
-import com.badlogic.gdx.physics.box2d.World;
-
-abstract class EntityModel {
+public abstract class EntityModel {
 
 
     private float x;

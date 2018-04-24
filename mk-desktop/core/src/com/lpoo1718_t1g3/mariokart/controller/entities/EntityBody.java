@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
 
-abstract class EntityBody {
+public abstract class EntityBody {
 
     Body body;
 
@@ -16,5 +16,21 @@ abstract class EntityBody {
         def.angle = model.getRotation();
         body = world.createBody(def);
         body.setUserData(model);
+    }
+
+    public void setTransform(float x, float y, float angle) {
+        body.setTransform(x, y, angle);
+    }
+
+    public void setAngularVelocuty(float omega) {
+        body.setAngularVelocity(omega);
+    }
+
+    public void applyForceToCenter(float forceX, float forceY, boolean awake) {
+        body.applyForceToCenter(forceX, forceY, awake);
+    }
+
+    public Object getUserdata() {
+        return body.getUserData();
     }
 }
