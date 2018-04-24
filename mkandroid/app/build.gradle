@@ -5,7 +5,7 @@ android {
     defaultConfig {
         applicationId "com.lpoo1718_t1g3.mk_android"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

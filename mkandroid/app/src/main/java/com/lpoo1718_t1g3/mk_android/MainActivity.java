@@ -19,14 +19,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button btn = (Button) findViewById(R.id.connectBtn);
-        btn.setOnClickListener(new View.OnClickListener() {
+        /*btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EditText ip = findViewById(R.id.ipTxt);
                 EditText port = findViewById(R.id.portTxt);
                 connect(ip.getText().toString(), Integer.parseInt(port.getText().toString()));
             }
-        });
+        });*/
 
     }
 
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
             c = new Connection(addr, port);
             clientSocket = c.getSocket();
             w = new PrintWriter(clientSocket.getOutputStream(), true);
+            w.println("Sabiola");
         } catch (IOException e) {
             e.printStackTrace();
         }
