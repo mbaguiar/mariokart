@@ -1,33 +1,50 @@
 package com.lpoo1718_t1g3.mariokart;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class MarioKart extends com.badlogic.gdx.Game {
-	SpriteBatch batch;
-	Texture img;
-	
+
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+
 	}
 
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		ServerSocket serverSocket;
+		Socket clientSocket;
+		BufferedReader in;
+		try {
+			serverSocket = new ServerSocket(4444);
+			clientSocket = serverSocket.accept();
+			System.out.println("Accepted client");
+			in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+			String inputLine;
+			while ((inputLine = in.readLine()) != null){
+				System.out.println(inputLine);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
+
 	}
-	
+
 	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
+
 	}
 }
