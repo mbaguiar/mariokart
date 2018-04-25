@@ -12,9 +12,12 @@ import com.lpoo1718_t1g3.mariokart.view.entities.KartView;
 
 public class GameView extends ScreenAdapter {
 
-    private static GameView ourInstance = new GameView();
+    private static GameView ourInstance = null;
 
     public static GameView getInstance() {
+        if (ourInstance == null) {
+            ourInstance = new GameView();
+        }
         return ourInstance;
     }
     private KartView kartView;
@@ -36,8 +39,8 @@ public class GameView extends ScreenAdapter {
     }
 
     private void loadAssets() {
-        MarioKart.getInstance().getAssetManager().load( "badlogic.jpg" , Texture.class);
-
+        MarioKart.getInstance().getAssetManager().load( "mariokart.png" , Texture.class);
+        MarioKart.getInstance().getAssetManager().finishLoading();
     }
 
     @Override
@@ -60,7 +63,7 @@ public class GameView extends ScreenAdapter {
 
     private void handleInputs(float delta) {
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             GameController.getInstance().accelerate();
         }
     }
