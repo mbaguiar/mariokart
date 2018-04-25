@@ -7,7 +7,7 @@ public class GameModel {
     private static GameModel ourInstance = new GameModel();
     private KartModel kart;
 
-    public GameModel() {
+    private GameModel() {
         kart = new KartModel(0, 0, 0);
     }
 

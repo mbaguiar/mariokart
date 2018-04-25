@@ -9,15 +9,15 @@ abstract class EntityView {
 
     Sprite sprite;
 
-    public EntityView(MarioKart game) {
-        sprite = createSprite(game);
+    public EntityView() {
+        sprite = createSprite();
     }
 
     public void draw(SpriteBatch batch) {
         sprite.draw(batch);
     }
 
-    public abstract Sprite createSprite(MarioKart game);
+    public abstract Sprite createSprite();
 
     public void update(EntityModel model) {
         sprite.setCenter(model.getX(), model.getY());

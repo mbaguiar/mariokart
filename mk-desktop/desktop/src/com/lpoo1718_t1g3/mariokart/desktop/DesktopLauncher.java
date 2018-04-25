@@ -7,6 +7,6 @@ import com.lpoo1718_t1g3.mariokart.MarioKart;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new MarioKart(), config);
+		new LwjglApplication(MarioKart.getInstance(), config);
 	}
 }

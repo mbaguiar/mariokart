@@ -33,4 +33,16 @@ public abstract class EntityBody {
     public Object getUserdata() {
         return body.getUserData();
     }
+
+    public float getX() {
+        return body.getPosition().x;
+    }
+
+    public float getY() {
+        return body.getPosition().y;
+    }
+
+    public float getAngle() {
+        return body.getAngle();
+    }
 }
