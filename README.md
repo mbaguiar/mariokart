@@ -27,6 +27,10 @@
 
 ### Main Functionalities 
 ----
+* Multi-threaded server
+* QR Code connection
+* Mandatory mobile controllers
+* 2d Multiplayer race (Max 6 players)
 
 <br>
 
