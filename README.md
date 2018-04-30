@@ -9,11 +9,30 @@
 
 #### mk-desktop Package Class Diagram
 ![Class diagram](https://i.imgur.com/iwQZfix.png)
-<br>
+<br> <br>
+*Mario Kart* - Represents the game <br>
+*GameModel* - Stores all the data about the game and the itens of the game (EntityModel) <br>
+*EntityModel* - Represents an item of the game and stores all its data and information <br>
+*Player* - Represents a player in the game, it has a KartModel associated and a Race <br>
+*Race* - Represents a race in the game, it has various Players associated and a TrackModel <br>
+*GameView* - Represents the visualization of the game based on the data stored in the GameModel <br>
+*EntityView* - Represents the view of the itens of the game <br>
+*GameController* - Updates the data stored in the GameModel based on any user inputs or Messages received and updates the view when any data is changed <br>
+*EntityBody* - Represents the Body of an item in the game and is used to update its position using the Physics engine in libgdx <br>
+*SeverManager* - Creates the server socket and creates a new Thread(ClientManager) for every new connection <br>
+*Message* - Shared between host and client to facilitate communication. Enables the use of serialization <br>
+*ClientManager* - Represents a connected client and handles communication (reading and writing) to the client <br> <br>
 
 #### mk-android Package Class Diagram
 ![Class diagram](https://i.imgur.com/TBJWkuZ.png)
-<br>
+<br><br>
+*Mario Kart* - Represents the game <br>
+*GameModel* - Stores all the data about the game and its itens <br>
+*GameView* - Represents the visualization of the game based on the data stored in the GameModel <br>
+*GameController* - Updates the data stored in the GameModel based on any user inputs or Messages received and updates the view when any data is changed <br>
+*Connector* - Creates the socket connection to the server and creates a new Thread(Receiver) to handle communication from the server. It also sends Messages to the server <br>
+*Receiver* - Handles Messages received from the server <br>
+*Message* - Shared between host and client to facilitate communication. Enables the use of serialization <br> <br>
 
 ### Behavioural Aspects
 ----
@@ -22,7 +41,14 @@
 
 ### Design Patterns
 ----
-
+* #### Model View Controller (MVC) 
+To be used to separate the game's graphics, model and logic and to reduce dependency between these 3 components (GameModel, GameController, GameView) 
+* #### Singleton 
+To be used in several different classes to ensure that they only have one instance and to provide a global and easy point of access to each one of them (GameModel, GameController, GameView)
+* #### Factory Method
+To be used to create EntityViews and EntityBodies for each EntityModel
+* #### State
+The server side (desktop) and the client side (android) both have their own state that changes based on events. This allows the GameController to change its behaviour based on the state
 <br>
 
 ### Main Functionalities 
@@ -84,5 +110,12 @@
 
 ### Test cases
 ----
+* Test kart behaviour according to the implemented physics' variables
+* Test kart behaviour based on the different user inputs
+* Test kart behaviour based on different recieved Messages
+* Test collisions between the kart and other game objects
+* Test behaviour of the special items (Banana, Mushroom, Mystery Box, ...)
+* Test updates on the game state based on the coccurence of different events
+* Test all the buttons' behaviour (play, instructions, quit)
 
 <br>
