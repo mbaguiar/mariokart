@@ -17,7 +17,7 @@
 
 ### Behavioural Aspects
 ----
-
+![Behaviour diagram](https://i.imgur.com/tvUchia.png)
 <br>
 
 ### Design Patterns
