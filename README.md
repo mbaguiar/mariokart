@@ -53,10 +53,10 @@ The server side (desktop) and the client side (android) both have their own stat
 
 ### Main Functionalities 
 ----
-* Multi-threaded server
-* QR Code connection
-* Mandatory mobile controllers
-* 2d Multiplayer race (Max 6 players)
+* 2D Multiplayer game
+* Networking (2-way communication between desktop and android phone)
+* Physics (using libgdx physics engine)
+* Mobile (Android controller app)
 
 <br>
 
