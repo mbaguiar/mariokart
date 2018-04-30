@@ -1,5 +1,5 @@
 # Final Project Specification - Mario Kart
-<br><br>
+<br>
 
 ### Package and Class Diagram
 ----
