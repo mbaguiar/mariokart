@@ -1,4 +1,5 @@
 package com.lpoo1718_t1g3.mariokart.view;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
@@ -22,6 +23,7 @@ public class GameView extends ScreenAdapter {
     }
     private KartView kartView;
     private OrthographicCamera camera;
+    public static final float PIXEL_TO_METER = 0.04f;
 
     private GameView() {
         loadAssets();
@@ -63,8 +65,16 @@ public class GameView extends ScreenAdapter {
 
     private void handleInputs(float delta) {
 
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             GameController.getInstance().accelerate();
+        }
+
+        if (Gdx.input.isKeyPressed((Input.Keys.A))) {
+            GameController.getInstance().rotateLeft();
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            GameController.getInstance().rotateRight();
         }
     }
 

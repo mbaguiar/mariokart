@@ -7,6 +7,7 @@ public class KartBody extends EntityBody {
 
     public KartBody(World world, EntityModel model) {
         super(world, model);
+        body.setLinearDamping(0.1f);
         createFixture(body);
     }
 
@@ -25,4 +26,7 @@ public class KartBody extends EntityBody {
     }
 
 
+    public Body getBody() {
+        return body;
+    }
 }
