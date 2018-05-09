@@ -1,25 +1,15 @@
 package com.lpoo1718_t1g3.mk_android;
 
-<<<<<<< Updated upstream
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-public class ControlActivity extends AppCompatActivity {
-=======
 import android.content.pm.ActivityInfo;
-import android.graphics.Matrix;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ControlActivity extends AppCompatActivity implements SensorEventListener{
 
@@ -31,14 +21,10 @@ public class ControlActivity extends AppCompatActivity implements SensorEventLis
     private ImageView image;
 
     private float accValue = 0;
->>>>>>> Stashed changes
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< Updated upstream
         setContentView(R.layout.activity_control);
-=======
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_control);
         image = (ImageView) findViewById(R.id.imgView);
@@ -86,7 +72,5 @@ public class ControlActivity extends AppCompatActivity implements SensorEventLis
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
->>>>>>> Stashed changes
     }
 }

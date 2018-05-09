@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ControlActivity">
 
-<<<<<<< Updated upstream
-=======
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -46,6 +44,4 @@
     
 
 
-
->>>>>>> Stashed changes
 </android.support.constraint.ConstraintLayout>
