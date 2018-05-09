@@ -20,6 +20,7 @@
             android:hint="IP address"
             android:id="@+id/ipTxt"
             android:padding="15dp"
+            android:text="@string/defaultIp"
             />
 
         <EditText
@@ -29,6 +30,7 @@
             android:hint="Port"
             android:id="@+id/portTxt"
             android:padding="15dp"
+            android:text="@string/defaultPort"
             />
 
         <Button
