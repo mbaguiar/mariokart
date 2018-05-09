@@ -7,12 +7,14 @@ import com.badlogic.gdx.utils.Array;
 import com.lpoo1718_t1g3.mariokart.controller.entities.KartBody;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
+import com.lpoo1718_t1g3.mariokart.networking.ServerManager;
 
 import java.util.List;
 
 public class GameController {
 
     private static GameController ourInstance = new GameController();
+    private ServerManager server;
     private final World world;
     private final KartBody kartBody;
     private float accumulator;
@@ -20,6 +22,7 @@ public class GameController {
     private GameController() {
         world = new World(new Vector2(0, 0), true);
         kartBody = new KartBody(world, GameModel.getInstance().getKart());
+        server = new ServerManager(4444);
     }
 
     public static GameController getInstance() {

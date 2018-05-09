@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
+import com.lpoo1718_t1g3.mariokart.networking.MessageQueue;
 import com.lpoo1718_t1g3.mariokart.view.entities.KartView;
 
 public class GameView extends ScreenAdapter {
@@ -76,6 +77,10 @@ public class GameView extends ScreenAdapter {
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             GameController.getInstance().rotateRight();
         }
+
+
+        System.out.println(MessageQueue.getInstance().getmQueue().poll().toString());
+
     }
 
     private void drawEntities() {
