@@ -1,15 +1,17 @@
-package com.lpoo1718_t1g3.mk_android;
+package com.lpoo1718_t1g3.mariokart;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.io.IOException;
+import com.lpoo1718_t1g3.mk_android.R;
+import com.lpoo1718_t1g3.mariokart.networking.Connector;
+import com.lpoo1718_t1g3.mariokart.networking.Message;
+
 import java.io.ObjectOutputStream;
-import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,16 +34,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void connect(String addr, int port){
-        Connection c;
-        Socket clientSocket;
-        try{
-            c = new Connection(addr, port);
-            clientSocket = c.connect();
-            w = new ObjectOutputStream(clientSocket.getOutputStream());
+        if (Connector.getInstance().connect(addr, port) != null){
+            Connector.getInstance().write(new Message(Message.MESSAGE_TYPE.CONNECTION, Message.SENDER.CLIENT));
             Intent i = new Intent(this, ControlActivity.class);
             startActivity(i);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
     }

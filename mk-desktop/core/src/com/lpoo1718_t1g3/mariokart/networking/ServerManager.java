@@ -1,26 +1,36 @@
 package com.lpoo1718_t1g3.mariokart.networking;
 
+import sun.java2d.pipe.ShapeSpanIterator;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 
-public class ServerManager {
+public class ServerManager implements Runnable {
 
     private ServerSocket socket;
-    private ArrayList<ClientManager> clients;
 
     public ServerManager(int port){
         try {
             socket = new ServerSocket(port);
-            while (true){
-                Socket clientSocket = socket.accept();
-                clients.add(new ClientManager(clientSocket));
-            }
+            System.out.println("Server opened");
         } catch (IOException e){
             e.printStackTrace();
         }
     }
 
 
+    @Override
+    public void run() {
+        while (true){
+            Socket clientSocket = null;
+            try {
+                clientSocket = socket.accept();
+                System.out.println("Connected");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            new ClientManager(clientSocket).start();
+        }
+    }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ControlActivity">
+    tools:context="com.lpoo1718_t1g3.mariokart.ControlActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,13 +32,40 @@
             android:layout_height="wrap_content"
             android:text="Z: "
             android:padding="50dp"
-            android:id="@+id/zTxt"/>-->
+            android:id="@+id/zTxt"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imgView"
-            android:src="@drawable/arrow"/>
+            android:src="@drawable/arrow"/>-->
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/upBtn"
+            android:text="GO"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lftBtn"
+                android:text="LEFT"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rgtBtn"
+                android:text="RIGHT"/>
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
     

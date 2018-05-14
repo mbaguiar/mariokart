@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
+import com.lpoo1718_t1g3.mariokart.networking.Message;
 import com.lpoo1718_t1g3.mariokart.networking.MessageQueue;
 import com.lpoo1718_t1g3.mariokart.view.entities.KartView;
 
@@ -70,6 +71,7 @@ public class GameView extends ScreenAdapter {
             GameController.getInstance().accelerate();
         }
 
+
         if (Gdx.input.isKeyPressed((Input.Keys.A))) {
             GameController.getInstance().rotateLeft();
         }
@@ -78,8 +80,18 @@ public class GameView extends ScreenAdapter {
             GameController.getInstance().rotateRight();
         }
 
+        Message m = MessageQueue.getInstance().getmQueue().poll();
+        if (m != null){
+            System.out.println(m.toString());
+            if (m.getType() == Message.MESSAGE_TYPE.CONTROLLER_ACTIVITY){
+                if ((Boolean) m.getOptions().get("upPressed")) GameController.getInstance().accelerate();
+                if ((Boolean) m.getOptions().get("leftPressed")) GameController.getInstance().rotateLeft();
+                if ((Boolean) m.getOptions().get("rightPressed")) GameController.getInstance().rotateRight();
 
-        System.out.println(MessageQueue.getInstance().getmQueue().poll().toString());
+            }
+
+
+        }
 
     }
 

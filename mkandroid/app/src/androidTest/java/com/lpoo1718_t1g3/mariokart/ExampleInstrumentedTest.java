@@ -1,4 +1,4 @@
-package com.lpoo1718_t1g3.mk_android;
+package com.lpoo1718_t1g3.mariokart;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

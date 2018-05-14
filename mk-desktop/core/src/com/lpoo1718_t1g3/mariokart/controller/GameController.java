@@ -23,6 +23,7 @@ public class GameController {
         world = new World(new Vector2(0, 0), true);
         kartBody = new KartBody(world, GameModel.getInstance().getKart());
         server = new ServerManager(4444);
+        new Thread(server).start();
     }
 
     public static GameController getInstance() {
