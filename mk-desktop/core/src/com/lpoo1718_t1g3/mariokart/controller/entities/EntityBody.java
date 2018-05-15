@@ -22,7 +22,7 @@ public abstract class EntityBody {
         body.setTransform(x, y, angle);
     }
 
-    public void setAngularVelocuty(float omega) {
+    public void setAngularVelocity(float omega) {
         body.setAngularVelocity(omega);
     }
 
