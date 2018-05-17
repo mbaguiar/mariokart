@@ -9,101 +9,88 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.lpoo1718_t1g3.mariokart.networking.Connector;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 import com.lpoo1718_t1g3.mk_android.R;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class ControlActivity extends AppCompatActivity implements SensorEventListener{
 
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
-    private TextView xText;
-    private TextView yText;
-    private TextView zText;
-    private ImageView image;
 
-    private Button up;
-    private Button left;
-    private Button right;
 
     private Boolean upPressed = false;
     private Boolean leftPressed = false;
     private Boolean rightPressed = false;
+    private Boolean downPressed = false;
 
     private float accValue = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_control);
-        up = (Button) findViewById(R.id.upBtn);
-        left = (Button) findViewById(R.id.lftBtn);
-        right = (Button) findViewById(R.id.rgtBtn);
 
-        up.setOnTouchListener(new View.OnTouchListener() {
+        View.OnTouchListener o = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN){
-                    upPressed = true;
-                    System.out.println("Pressed down");
-                } else if (event.getAction() == MotionEvent.ACTION_UP){
-                    upPressed = false;
-                    System.out.println("Released");
+                if (event.getAction() == MotionEvent.ACTION_POINTER_DOWN || event.getAction() == MotionEvent.ACTION_DOWN) {
+                    switch (v.getId()) {
+                        case R.id.upBtn:
+                            upPressed = true;
+                            break;
+                        case R.id.leftBtn:
+                            leftPressed = true;
+                            break;
+                        case R.id.rightBtn:
+                            rightPressed = true;
+                            break;
+                        case R.id.downBtn:
+                            downPressed = true;
+                            break;
+                    }
+                } else if (event.getAction() == MotionEvent.ACTION_POINTER_UP || event.getAction() == MotionEvent.ACTION_UP){
+                    switch (v.getId()) {
+                        case R.id.upBtn:
+                            upPressed = false;
+                            break;
+                        case R.id.leftBtn:
+                            leftPressed = false;
+                            break;
+                        case R.id.rightBtn:
+                            rightPressed = false;
+                            break;
+                        case R.id.downBtn:
+                            downPressed = false;
+                            break;
+                    }
                 }
-
-
-                return false;
+                return true;
             }
-        });
-
-        left.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN){
-                    leftPressed = true;
-                    System.out.println("Pressed down");
-                } else if (event.getAction() == MotionEvent.ACTION_UP){
-                    leftPressed = false;
-                    System.out.println("Released");
-                }
+        };
 
 
-                return false;
-            }
-        });
+        findViewById(R.id.upBtn).setOnTouchListener(o);
+        findViewById(R.id.leftBtn).setOnTouchListener(o);
+        findViewById(R.id.rightBtn).setOnTouchListener(o);
+        findViewById(R.id.downBtn).setOnTouchListener(o);
 
-        right.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN){
-                    rightPressed = true;
-                    System.out.println("Pressed down");
-                } else if (event.getAction() == MotionEvent.ACTION_UP){
-                    rightPressed = false;
-                    System.out.println("Released");
-                }
-
-
-                return false;
-            }
-        });
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
     }
 
 
     @Override
     protected void onResume(){
         super.onResume();
-        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
+        mSensorManager.registerListener(this, mAccelerometer, 50000);
 
     }
 
@@ -116,14 +103,20 @@ public class ControlActivity extends AppCompatActivity implements SensorEventLis
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        Message m = new Message(Message.MESSAGE_TYPE.CONTROLLER_ACTIVITY, Message.SENDER.CLIENT);
-        m.addOption("upPressed", upPressed);
-        m.addOption("leftPressed", leftPressed);
-        m.addOption("rightPressed", rightPressed);
-        Connector.getInstance().write(m);
+        Connector.getInstance().write(getControllerData());
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
+
+    Message getControllerData(){
+        Message m = new Message(Message.MESSAGE_TYPE.CONTROLLER_ACTIVITY, Message.SENDER.CLIENT);
+        m.addOption("upPressed", upPressed);
+        m.addOption("leftPressed", leftPressed);
+        m.addOption("rightPressed", rightPressed);
+        m.addOption("downPressed", downPressed);
+        return m;
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.lpoo1718_t1g3.mariokart.networking;
 
+import com.lpoo1718_t1g3.mariokart.controller.GameController;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
@@ -23,8 +25,7 @@ public class ClientManager extends Thread {
         Message input;
         try {
             while ((input = (Message) inputStream.readObject()) != null){
-                MessageQueue.getInstance().add(input);
-                System.out.println("received msg");
+                if (input.getType() == Message.MESSAGE_TYPE.CONTROLLER_ACTIVITY) GameController.getInstance().getControllerInput(input);
             }
         } catch (IOException e){
             e.printStackTrace();

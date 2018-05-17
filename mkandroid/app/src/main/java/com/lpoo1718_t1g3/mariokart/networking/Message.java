@@ -21,16 +21,16 @@ public class Message implements Serializable {
         options = new Hashtable<String, Object>();
     }
 
+    public MESSAGE_TYPE getType(){
+        return type;
+    }
+
     public void addOption(String s, Object o){
         options.put(s, o);
     }
 
     public Hashtable<String, Object> getOptions() {
         return options;
-    }
-
-    public MESSAGE_TYPE getType(){
-        return type;
     }
 
     @Override

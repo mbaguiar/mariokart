@@ -13,57 +13,62 @@
         android:padding="30dp"
         android:gravity="center">
 
-        <!--<TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="X: "
-            android:padding="50dp"
-            android:id="@+id/xTxt"/>
-
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Y: "
-            android:padding="50dp"
-            android:id="@+id/yTxt"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Z: "
-            android:padding="50dp"
-            android:id="@+id/zTxt"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imgView"
-            android:src="@drawable/arrow"/>-->
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/upBtn"
-            android:text="GO"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_red_dark"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="UP"
+            android:id="@+id/upBtn"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/lftBtn"
-                android:text="LEFT"/>
+            <TextView
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:background="@android:color/holo_blue_dark"
+                android:gravity="center"
+                android:text="LEFT"
+                android:id="@+id/leftBtn">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/rgtBtn"
-                android:text="RIGHT"/>
+            </TextView>
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:background="@android:color/holo_green_dark"
+                android:gravity="center"
+                android:text="RIGHT"
+                android:id="@+id/rightBtn">
+
+            </TextView>
 
         </LinearLayout>
+
+            <TextView
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:background="@android:color/holo_orange_dark"
+                android:gravity="center"
+                android:layout_weight="2"
+                android:text="DOWN"
+                android:id="@+id/downBtn">
+
+            </TextView>
+
+
+
+
+
+
+
 
 
 

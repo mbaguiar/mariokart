@@ -31,33 +31,6 @@ public class MarioKart extends com.badlogic.gdx.Game {
 
     }
 
-/*
-    @Override
-    public void render() {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        ServerSocket serverSocket;
-        Socket clientSocket;
-        BufferedReader in;
-        try {
-            serverSocket = new ServerSocket(4444);
-            clientSocket = serverSocket.accept();
-            System.out.println("Accepted client");
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                System.out.println(inputLine);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    */
-
-
     public SpriteBatch getBatch() {
         return batch;
     }
