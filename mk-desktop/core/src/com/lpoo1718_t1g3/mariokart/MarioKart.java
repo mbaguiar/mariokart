@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lpoo1718_t1g3.mariokart.view.GameView;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.lpoo1718_t1g3.mariokart.view.MenuView;
 
 import java.io.*;
 import java.lang.reflect.Array;
@@ -15,7 +16,7 @@ import java.util.Arrays;
 
 public class MarioKart extends com.badlogic.gdx.Game {
     private static MarioKart ourInstance = null;
-    SpriteBatch batch;
+    private SpriteBatch batch;
     private AssetManager assetManager;
 
     @Override
@@ -26,7 +27,8 @@ public class MarioKart extends com.badlogic.gdx.Game {
     }
 
     private void startGame() {
-        setScreen(GameView.getInstance());
+        //setScreen(GameView.getInstance());
+        setScreen(new MenuView());
 
 
     }

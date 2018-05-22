@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.lpoo1718_t1g3.mariokart.controller.entities.KartBody;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
+import com.lpoo1718_t1g3.mariokart.model.Player;
 import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 import com.lpoo1718_t1g3.mariokart.networking.ServerManager;
@@ -79,7 +80,6 @@ public class GameController {
     public void accelerate() {
         float x = 0.05f * - (float) Math.sin(kartBody.getAngle() * Math.PI / 180);
         float y = 0.05f * (float) Math.cos(kartBody.getAngle() * Math.PI / 180);
-        System.out.println(x + " " + y);
         kartBody.getBody().setTransform(kartBody.getX() + x, kartBody.getY() + y, kartBody.getAngle());
     }
 
@@ -96,5 +96,9 @@ public class GameController {
         }
         kartBody.getBody().setTransform(kartBody.getX(), kartBody.getY(), kartBody.getAngle() - 1);
         System.out.println(kartBody.getAngle());
+    }
+
+    public boolean registerPlayer(int playerId, String playerHandle){
+        return GameModel.getInstance().addPlayer(playerId, playerHandle);
     }
 }

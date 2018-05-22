@@ -9,14 +9,15 @@ public class ClientManager extends Thread {
 
     private Socket socket;
     ObjectInputStream inputStream;
+    private final int playerId;
 
-    ClientManager(Socket client){
+    ClientManager(Socket client, int playerId){
         socket = client;
+        this.playerId = playerId;
     }
 
     @Override
     public void run() {
-        System.out.println("Input stream opened");
         try {
             inputStream = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
@@ -25,6 +26,7 @@ public class ClientManager extends Thread {
         Message input;
         try {
             while ((input = (Message) inputStream.readObject()) != null){
+                input.setSenderId(playerId);
                 if (input.getType() == Message.MESSAGE_TYPE.CONTROLLER_ACTIVITY) GameController.getInstance().getControllerInput(input);
             }
         } catch (IOException e){

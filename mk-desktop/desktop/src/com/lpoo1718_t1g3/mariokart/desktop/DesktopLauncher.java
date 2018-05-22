@@ -7,6 +7,10 @@ import com.lpoo1718_t1g3.mariokart.MarioKart;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.title = "MarioKart";
+		config.width = 1920;
+		config.height = 1080;
+		config.fullscreen = false;
 		new LwjglApplication(MarioKart.getInstance(), config);
 	}
 }

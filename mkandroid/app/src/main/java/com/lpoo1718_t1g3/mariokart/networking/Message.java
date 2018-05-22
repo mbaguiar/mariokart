@@ -18,7 +18,7 @@ public class Message implements Serializable {
     public Message(MESSAGE_TYPE t, SENDER s){
         type = t;
         sender = s;
-        options = new Hashtable<String, Object>();
+        options = new Hashtable<>();
     }
 
     public MESSAGE_TYPE getType(){

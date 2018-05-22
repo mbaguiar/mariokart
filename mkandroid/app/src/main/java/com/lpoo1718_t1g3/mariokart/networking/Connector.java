@@ -25,7 +25,7 @@ public class Connector {
             public void run() {
                 try {
                     socket = new Socket(cAddress, cPort);
-                    //socket.setTcpNoDelay(true);
+                    socket.setTcpNoDelay(true);
                     ostream = new ObjectOutputStream(socket.getOutputStream());
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -43,32 +43,26 @@ public class Connector {
     }
 
     public void write(Message o){
-        /*new Thread(new Runnable() {
+        final Message obj = o;
+        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 if (ostream != null) {
                     try {
                         ostream.writeObject(obj);
                         ostream.reset();
-                        //System.out.println("wrote msg");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
             }
-        }).run();*/
-
-        if (ostream != null) {
-            try {
-                ostream.writeObject(o);
-                ostream.flush();
-                //ostream.reset();
-                //System.out.println("wrote msg");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-
 
     }
 }
