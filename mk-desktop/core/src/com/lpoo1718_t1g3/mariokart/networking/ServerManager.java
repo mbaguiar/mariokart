@@ -1,5 +1,7 @@
 package com.lpoo1718_t1g3.mariokart.networking;
 
+import com.lpoo1718_t1g3.mariokart.model.GameModel;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -47,7 +49,7 @@ public class ServerManager implements Runnable {
 
         try {
             socket = new ServerSocket(port);
-            QRCodeUtilities.generateQRCode(localIp, port);
+            GameModel.getInstance().setQrCode(QRCodeUtilities.generateQRCode(localIp, port));
             System.out.println("Server opened: " + localIp + ":" + port);
         } catch (IOException e){
             e.printStackTrace();

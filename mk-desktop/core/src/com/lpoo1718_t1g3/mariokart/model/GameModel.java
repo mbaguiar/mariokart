@@ -23,6 +23,8 @@ public class GameModel {
         kart = new KartModel(0, 0, 0);
     }
 
+    private boolean qrCode = false;
+
     public static GameModel getInstance() {
         return ourInstance;
     }
@@ -62,5 +64,9 @@ public class GameModel {
     private void updateServerData(){
         ipAddress = GameModel.getInstance().getServer().getLocalIp();
         port = GameModel.getInstance().getServer().getPort();
+    }
+
+    public void setQrCode(boolean qrCode) {
+        this.qrCode = qrCode;
     }
 }
