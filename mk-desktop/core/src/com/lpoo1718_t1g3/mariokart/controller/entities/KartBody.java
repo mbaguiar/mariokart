@@ -1,6 +1,9 @@
 package com.lpoo1718_t1g3.mariokart.controller.entities;
 
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
 
 public class KartBody extends EntityBody {

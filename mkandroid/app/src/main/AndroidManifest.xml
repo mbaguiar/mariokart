@@ -3,9 +3,8 @@
     package="com.lpoo1718_t1g3.mk_android">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -17,11 +16,11 @@
         <activity android:name="com.lpoo1718_t1g3.mariokart.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.lpoo1718_t1g3.mariokart.ControlActivity"></activity>
+        <activity android:name="com.lpoo1718_t1g3.mariokart.ControlActivity" />
+        <activity android:name="com.lpoo1718_t1g3.mariokart.RegisterActivity"></activity>
     </application>
 
 </manifest>

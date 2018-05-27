@@ -1,6 +1,7 @@
 package com.lpoo1718_t1g3.mariokart.networking;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
@@ -10,6 +11,8 @@ public class Connector {
 
     private Socket socket;
     private ObjectOutputStream ostream;
+    private ObjectInputStream istream;
+
 
     private Connector() {}
 
@@ -27,6 +30,7 @@ public class Connector {
                     socket = new Socket(cAddress, cPort);
                     socket.setTcpNoDelay(true);
                     ostream = new ObjectOutputStream(socket.getOutputStream());
+                    startReceiver();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -40,6 +44,27 @@ public class Connector {
         }
 
         return socket;
+    }
+
+    private void startReceiver(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    istream = new ObjectInputStream(socket.getInputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Message input;
+                try {
+                    while ((input = (Message) istream.readObject()) != null){
+                    }
+                } catch (IOException | ClassNotFoundException e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
     }
 
     public void write(Message o){

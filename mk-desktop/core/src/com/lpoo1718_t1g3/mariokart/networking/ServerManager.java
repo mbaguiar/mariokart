@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 public class ServerManager implements Runnable {
 
@@ -29,6 +30,8 @@ public class ServerManager implements Runnable {
         return port;
     }
 
+    private ArrayList<ClientManager> clients = new ArrayList<ClientManager>();
+
     public ServerManager(){
         try {
             Socket testSocket = new Socket(GOOGLE_URL, TEST_PORT);
@@ -44,6 +47,7 @@ public class ServerManager implements Runnable {
 
         try {
             socket = new ServerSocket(port);
+            QRCodeUtilities.generateQRCode(localIp, port);
             System.out.println("Server opened: " + localIp + ":" + port);
         } catch (IOException e){
             e.printStackTrace();
@@ -65,7 +69,24 @@ public class ServerManager implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            new ClientManager(clientSocket, playerId++).start();
+            ClientManager c = new ClientManager(clientSocket, playerId++);
+            clients.add(c);
+            c.start();
         }
+    }
+
+    public void writeToClient(Message m, int id) {
+        m.setSenderId(serverId);
+        ClientManager c;
+        if ((c = findClientWithId(id)) != null){
+            c.write(m);
+        }
+    }
+
+    private ClientManager findClientWithId(int id){
+        for (ClientManager c: clients){
+            if (c.getPlayerId() == id) return c;
+        }
+        return null;
     }
 }

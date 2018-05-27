@@ -5,15 +5,17 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.lpoo1718_t1g3.mariokart.model.GameModel;
 
 public class LobbyView extends ScreenAdapter {
-
     private Stage stage;
     private TextField partyName;
 
@@ -21,6 +23,12 @@ public class LobbyView extends ScreenAdapter {
         this.stage = new Stage();
 
         Table group = new Table();
+
+        TextButton.TextButtonStyle playBtnStyle = new TextButton.TextButtonStyle();
+
+        playBtnStyle.font = new BitmapFont();
+
+        TextButton playBtn = new TextButton("Play", playBtnStyle);
 
         group.setDebug(true);
 
@@ -54,13 +62,25 @@ public class LobbyView extends ScreenAdapter {
 
         partyNameGroup.add(this.partyName).pad(20);
 
-        Label ipLabel = new Label("000.000.000.0000:8888", labelStyle);
+        Label ipLabel = new Label(GameModel.getInstance().getIpAddress() + ":" + GameModel.getInstance().getPort(), labelStyle);
 
-        group.add(partyNameGroup).padBottom(250);
+        group.add(partyNameGroup).pad(100);
 
         group.row();
 
-        group.add(ipLabel).padTop(250);
+        group.add(playBtn).pad(100);
+
+        group.row();
+
+        group.add(ipLabel).pad(100);
+
+        playBtn.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+
+                //controller.startGame();
+            }
+        });
 
         this.stage.addActor(group);
 

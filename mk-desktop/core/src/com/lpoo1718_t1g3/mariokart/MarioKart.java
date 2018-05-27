@@ -2,17 +2,7 @@ package com.lpoo1718_t1g3.mariokart;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.lpoo1718_t1g3.mariokart.view.GameView;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.lpoo1718_t1g3.mariokart.view.MenuView;
-
-import java.io.*;
-import java.lang.reflect.Array;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MarioKart extends com.badlogic.gdx.Game {
     private static MarioKart ourInstance = null;
@@ -27,10 +17,7 @@ public class MarioKart extends com.badlogic.gdx.Game {
     }
 
     private void startGame() {
-        //setScreen(GameView.getInstance());
         setScreen(new MenuView());
-
-
     }
 
     public SpriteBatch getBatch() {
