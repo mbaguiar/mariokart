@@ -1,14 +1,18 @@
 package com.lpoo1718_t1g3.mariokart.controller;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.lpoo1718_t1g3.mariokart.controller.entities.KartBody;
+import com.lpoo1718_t1g3.mariokart.controller.entities.TireBody;
+import com.lpoo1718_t1g3.mariokart.controller.entities.TrackBody;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 import com.lpoo1718_t1g3.mariokart.networking.ServerManager;
+import com.lpoo1718_t1g3.mariokart.view.GameView;
 
 public class GameController {
 
@@ -16,6 +20,7 @@ public class GameController {
     private ServerManager server;
     private final World world;
     private final KartBody kartBody;
+    private final TrackBody trackBody;
     private float accumulator;
     private boolean gas = false;
     private boolean left = false;
@@ -23,7 +28,9 @@ public class GameController {
 
     private GameController() {
         world = new World(new Vector2(0, 0), true);
-        kartBody = new KartBody(world, GameModel.getInstance().getKart());
+        world.clearForces();
+        kartBody = new KartBody(world, GameModel.getInstance().getKart(), 1, 2, 10, 15, 20, 20,(float) Math.PI);
+        trackBody = new TrackBody(world, GameModel.getInstance().getTrack1());
         server = new ServerManager();
     }
 
@@ -40,27 +47,45 @@ public class GameController {
             accumulator -= 1/60f;
         }
 
+        kartBody.update(delta);
+
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
 
 
         for (Body body : bodies) {
 
-            ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
-            ((EntityModel) body.getUserData()).setRotation(body.getAngle());
+            verifyBounds(body);
+
+            if (!body.getUserData().equals(new Integer(0))) {
+                ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
+                ((EntityModel) body.getUserData()).setRotation(MathUtils.radiansToDegrees * kartBody.getAngle() + 180);
+            }
+
 
         }
-        if (kartBody.getBody().getLinearVelocity().y < 0.01) {
-            kartBody.getBody().setLinearVelocity(0f, 0f);
-        } else {
-            kartBody.getBody().setLinearDamping(kartBody.getBody().getLinearVelocity().y * 0.4f);
-        }
+
+
+    }
+
+    private void verifyBounds(Body body) {
+        if (body.getPosition().x < 0)
+            body.setTransform(0, body.getPosition().y, body.getAngle());
+
+        if (body.getPosition().y < 0)
+            body.setTransform(body.getPosition().x, 0, body.getAngle());
+
+        if (body.getPosition().x > GameView.VIEWPORT_WIDTH)
+            body.setTransform(GameView.VIEWPORT_WIDTH, body.getPosition().y, body.getAngle());
+
+        if (body.getPosition().y > GameView.VIEWPORT_WIDTH)
+            body.setTransform(body.getPosition().x, GameView.VIEWPORT_WIDTH, body.getAngle());
     }
 
     private void handleMovement() {
-        if (gas) accelerate();
-        if (left) rotateLeft();
-        if (right) rotateRight();
+        if (gas) setKartState(KartBody.acc_type.ACC_ACCELERATE);
+        if (left) setKartState(KartBody.steer_type.STEER_LEFT);
+        if (right) setKartState(KartBody.steer_type.STEER_RIGHT);
     }
 
     public void getControllerInput(Message m){
@@ -76,25 +101,11 @@ public class GameController {
         return world;
     }
 
-    public void accelerate() {
-        float x = 0.05f * - (float) Math.sin(kartBody.getAngle() * Math.PI / 180);
-        float y = 0.05f * (float) Math.cos(kartBody.getAngle() * Math.PI / 180);
-        System.out.println(x + " " + y);
-        kartBody.getBody().setTransform(kartBody.getX() + x, kartBody.getY() + y, kartBody.getAngle());
+    public void setKartState(KartBody.steer_type value) {
+        kartBody.setSteer(value);
     }
 
-    public void rotateLeft() {
-        if (kartBody.getBody().getAngle() == 360) {
-            kartBody.getBody().setTransform(kartBody.getX(), kartBody.getY(), 0);
-        }
-        kartBody.getBody().setTransform(kartBody.getX(), kartBody.getY(), kartBody.getAngle() + 1);
-    }
-
-    public void rotateRight() {
-        if (kartBody.getBody().getAngle() == 0) {
-            kartBody.getBody().setTransform(kartBody.getX(), kartBody.getY(), 360);
-        }
-        kartBody.getBody().setTransform(kartBody.getX(), kartBody.getY(), kartBody.getAngle() - 1);
-        System.out.println(kartBody.getAngle());
+    public void setKartState(KartBody.acc_type value) {
+        kartBody.setAccelerate(value);
     }
 }

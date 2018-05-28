@@ -9,9 +9,9 @@ public abstract class EntityBody {
 
     Body body;
 
-    public EntityBody(World world, EntityModel model) {
+    public EntityBody(World world, EntityModel model, BodyDef.BodyType bodyType) {
         BodyDef def = new BodyDef();
-        def.type = BodyDef.BodyType.DynamicBody;
+        def.type = bodyType;
         def.position.set(model.getX(), model.getY());
         def.angle = model.getRotation();
         body = world.createBody(def);
