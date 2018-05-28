@@ -11,12 +11,18 @@ import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
 import com.lpoo1718_t1g3.mariokart.controller.entities.KartBody;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
+import com.lpoo1718_t1g3.mariokart.model.Player;
+import com.lpoo1718_t1g3.mariokart.model.entities.MysteryBoxModel;
 import com.lpoo1718_t1g3.mariokart.view.entities.KartView;
+import com.lpoo1718_t1g3.mariokart.view.entities.MysteryBoxView;
 import com.lpoo1718_t1g3.mariokart.view.entities.TrackView;
+
+import java.util.ArrayList;
 
 public class RaceView extends ScreenAdapter {
 
-    private KartView kartView;
+    private ArrayList<KartView> kartViews = new ArrayList<KartView>();
+    private MysteryBoxView mysteryBoxView;
     private TrackView trackView;
     private OrthographicCamera camera;
     public static final float PIXEL_TO_METER = 0.04f;
@@ -24,8 +30,8 @@ public class RaceView extends ScreenAdapter {
 
     public RaceView() {
         loadAssets();
-        kartView = new KartView();
         trackView = new TrackView();
+        mysteryBoxView = new MysteryBoxView();
         camera = createCamera();
     }
 
@@ -39,6 +45,8 @@ public class RaceView extends ScreenAdapter {
     }
 
     private void loadAssets() {
+        MarioKart.getInstance().getAssetManager().load("luigikart.png", Texture.class);
+        MarioKart.getInstance().getAssetManager().load("mysteryBox.png", Texture.class);
         MarioKart.getInstance().getAssetManager().load( "mariokart.png" , Texture.class);
         MarioKart.getInstance().getAssetManager().load("track1.png", Texture.class);
         MarioKart.getInstance().getAssetManager().finishLoading();
@@ -66,27 +74,46 @@ public class RaceView extends ScreenAdapter {
     private void handleInputs(float delta) {
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            GameController.getInstance().getRaceController().setKartState(KartBody.acc_type.ACC_ACCELERATE);
+            GameController.getInstance().getRaceController().setKartState(KartBody.acc_type.ACC_ACCELERATE, 1);
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            GameController.getInstance().getRaceController().setKartState(KartBody.acc_type.ACC_BRAKE);
+            GameController.getInstance().getRaceController().setKartState(KartBody.acc_type.ACC_BRAKE, 1);
         } else {
-            GameController.getInstance().getRaceController().setKartState(KartBody.acc_type.ACC_NONE);
+            GameController.getInstance().getRaceController().setKartState(KartBody.acc_type.ACC_NONE, 1);
         }
 
 
         if (Gdx.input.isKeyPressed((Input.Keys.A))) {
-            GameController.getInstance().getRaceController().setKartState(KartBody.steer_type.STEER_LEFT);
+            GameController.getInstance().getRaceController().setKartState(KartBody.steer_type.STEER_LEFT, 1);
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            GameController.getInstance().getRaceController().setKartState(KartBody.steer_type.STEER_HARD_RIGHT);
+            GameController.getInstance().getRaceController().setKartState(KartBody.steer_type.STEER_HARD_RIGHT, 1);
         } else {
-            GameController.getInstance().getRaceController().setKartState(KartBody.steer_type.STEER_NONE);
+            GameController.getInstance().getRaceController().setKartState(KartBody.steer_type.STEER_NONE, 1);
+        }
+
+        if (Gdx.input.isKeyPressed(((Input.Keys.M)))) {
+            GameModel.getInstance().addPlayer(1, "mbaguiar" , "Mario");
+        }
+
+        if (Gdx.input.isKeyPressed(((Input.Keys.L)))) {
+            GameModel.getInstance().addPlayer(2, "tjfragoso", "Luigi");
         }
 
     }
 
     private void drawEntities() {
-        kartView.update(GameModel.getInstance().getKart());
         trackView.draw(MarioKart.getInstance().getBatch());
-        kartView.draw(MarioKart.getInstance().getBatch());
+        for (MysteryBoxModel box : GameModel.getInstance().getTrack1().getBoxes()) {
+            mysteryBoxView.update(box);
+            mysteryBoxView.draw(MarioKart.getInstance().getBatch());
+        }
+
+        for (int i = 0; i < kartViews.size(); i++) {
+            kartViews.get(i).update(GameModel.getInstance().getPlayers().get(i).getKartModel());
+            kartViews.get(i).draw(MarioKart.getInstance().getBatch());
+        }
+    }
+
+    public void addKartView(Player player) {
+        kartViews.add(new KartView(player.getSelectedCharacter().getFileName()));
     }
 }

@@ -5,14 +5,23 @@ public class Character {
     private int id;
 
     private String name;
+    private String kart;
 
     public Character(String name){
         this.name = name;
     }
 
+    public Character(String name, String kart) {
+        this(name);
+        this.kart = kart;
+    }
+
     public String getName() {
         return this.name;
     }
-    // Karts e cenas
+
+    public String getFileName() {
+        return kart;
+    }
 
 }

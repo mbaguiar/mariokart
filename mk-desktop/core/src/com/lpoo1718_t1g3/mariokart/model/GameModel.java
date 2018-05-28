@@ -1,16 +1,18 @@
 package com.lpoo1718_t1g3.mariokart.model;
 
+import com.lpoo1718_t1g3.mariokart.controller.GameController;
 import com.lpoo1718_t1g3.mariokart.model.entities.KartModel;
+import com.lpoo1718_t1g3.mariokart.model.entities.MysteryBoxModel;
 import com.lpoo1718_t1g3.mariokart.model.entities.TrackModel;
 import com.lpoo1718_t1g3.mariokart.networking.ServerManager;
+import com.lpoo1718_t1g3.mariokart.view.RaceView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameModel {
 
     private static GameModel ourInstance = new GameModel();
-    private final ArrayList<Character> characters = new ArrayList<Character>();
-    private ArrayList<Player> players = new ArrayList<Player>();
     private ServerManager server;
     private KartModel kart;
     private TrackModel track1;
@@ -20,18 +22,21 @@ public class GameModel {
     private ArrayList<String> connectedPlayers = new ArrayList<String>();
     private int MAX_PLAYERS;
     private boolean qrCode = false;
+    private ArrayList<Player> players = new ArrayList<Player>();
+    private final HashMap<String, Character> characters = new HashMap<String, Character>();
 
     private GameModel() {
-        initCharacters();
         kart = new KartModel(0, 0, 0);
         track1 = new TrackModel(-24, -16, 0);
+        setUpTrack1();
+        initCharacters();
     }
 
     public static GameModel getInstance() {
         return ourInstance;
     }
 
-    public ArrayList<Character> getCharacters() {
+    public HashMap<String, Character> getCharacters() {
         return characters;
     }
 
@@ -60,6 +65,39 @@ public class GameModel {
         return track1;
     }
 
+    private void setUpTrack1() {
+        MysteryBoxModel box = new MysteryBoxModel(10, 10, 0);
+        track1.addBox(box);
+    }
+
+    public boolean addPlayer(int playerId, String playerHandle, String selectedCharacter) {
+
+        for (Player p : players) {
+            if (p.getPlayerHandle().equals(playerHandle)) return false;
+        }
+
+        Character character = characters.get(selectedCharacter);
+        Player player = new Player(playerId, playerHandle, character);
+        players.add(player);
+        //RaceView.getInstance().addKartView(player);
+        //GameController.getInstance().addKartBody(player);
+
+        return true;
+    }
+
+    private void initCharacters() {
+        characters.put("Mario", new Character("Mario", "mariokart.png"));
+        characters.put("Luigi", new Character("Luigi", "luigikart.png"));
+        characters.put("Peach", new Character("Peach"));
+        characters.put("Toad", new Character("Toad"));
+        characters.put("Yoshi", new Character("Yoshi"));
+        characters.put("Bowser", new Character("Bowser"));
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
     public void startServer() {
         this.server = new ServerManager();
         updateServerData();
@@ -76,14 +114,5 @@ public class GameModel {
 
     public void setQrCode(boolean qrCode) {
         this.qrCode = qrCode;
-    }
-
-    private void initCharacters() {
-        characters.add(new Character("Mario"));
-        characters.add(new Character("Luigi"));
-        characters.add(new Character("Peach"));
-        characters.add(new Character("Toad"));
-        characters.add(new Character("Yoshi"));
-        characters.add(new Character("Bowser"));
     }
 }

@@ -10,8 +10,10 @@ import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
 abstract class EntityView {
 
     Sprite sprite;
+    String fileName;
 
-    public EntityView() {
+    public EntityView(String fileName) {
+        this.fileName = fileName;
         sprite = createSprite();
     }
 

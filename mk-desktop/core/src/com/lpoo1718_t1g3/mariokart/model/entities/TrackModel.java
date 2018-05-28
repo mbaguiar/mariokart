@@ -10,4 +10,12 @@ public class TrackModel extends EntityModel {
         super(x, y, rotation);
         boxes = new ArrayList<MysteryBoxModel>();
     }
+
+    public void addBox(MysteryBoxModel box) {
+        boxes.add(box);
+    }
+
+    public ArrayList<MysteryBoxModel> getBoxes() {
+        return boxes;
+    }
 }

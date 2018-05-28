@@ -1,21 +1,43 @@
 package com.lpoo1718_t1g3.mariokart.controller;
 
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
+import com.lpoo1718_t1g3.mariokart.controller.entities.KartBody;
+import com.lpoo1718_t1g3.mariokart.controller.entities.MysteryBoxBody;
+import com.lpoo1718_t1g3.mariokart.controller.entities.TireBody;
+import com.lpoo1718_t1g3.mariokart.controller.entities.TrackBody;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
+import com.lpoo1718_t1g3.mariokart.model.Player;
+import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
+import com.lpoo1718_t1g3.mariokart.model.entities.MysteryBoxModel;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
+import com.lpoo1718_t1g3.mariokart.networking.ServerManager;
 import com.lpoo1718_t1g3.mariokart.view.CharacterPickerView;
 import com.lpoo1718_t1g3.mariokart.view.LobbyView;
 import com.lpoo1718_t1g3.mariokart.view.RaceView;
+import java.util.HashMap;
 
 public class GameController {
 
-    private static GameController ourInstance = new GameController();
+
     private RaceController raceController;
+    private static GameController ourInstance = null;
+    private ServerManager server;
 
     private GameController() {
+        server = new ServerManager();
+        raceController = new RaceController();
     }
 
     public static GameController getInstance() {
+        if (ourInstance == null) {
+            ourInstance = new GameController();
+            return ourInstance;
+        }
+
         return ourInstance;
     }
 
@@ -23,8 +45,8 @@ public class GameController {
         return raceController;
     }
 
-    public void update (float delta) {
-        if (MarioKart.getInstance().getScreen().getClass() == RaceView.class){
+    public void update(float delta) {
+        if (MarioKart.getInstance().getScreen().getClass() == RaceView.class) {
             raceController.update(delta);
         }
     }
@@ -48,26 +70,28 @@ public class GameController {
         Message returnMessage = new Message(Message.MESSAGE_TYPE.CONNECTION, Message.SENDER.SERVER);
         returnMessage.addOption("connectionSuccessful", true); // or false
         writeToClient(returnMessage, m.getSenderId());
+
     }
+
 
     public void writeToClient(Message m, int id) {
         GameModel.getInstance().getServer().writeToClient(m, id);
 
     }
 
-    public void newPlayer(Message m){
-            Message returnMessage = new Message(Message.MESSAGE_TYPE.PLAYER_REGISTRY, Message.SENDER.SERVER);
-            if (registerPlayer(m.getSenderId(), (String) m.getOptions().get("playerHandle"))) {
-                returnMessage.addOption("registrySuccessful", true);
-            } else {
-                returnMessage.addOption("registrySuccessful", false);
-                returnMessage.addOption("error", "Player name already in use");
-            }
-            writeToClient(m, m.getSenderId());
-
+    public void newPlayer(Message m) {
+        Message returnMessage = new Message(Message.MESSAGE_TYPE.PLAYER_REGISTRY, Message.SENDER.SERVER);
+        if (registerPlayer(m.getSenderId(), (String) m.getOptions().get("playerHandle"))) {
+            returnMessage.addOption("registrySuccessful", true);
+        } else {
+            returnMessage.addOption("registrySuccessful", false);
+            returnMessage.addOption("error", "Player name already in use");
         }
+        writeToClient(m, m.getSenderId());
 
-    public void startGame(){
+    }
+
+    public void startGame() {
         MarioKart.getInstance().setScreen(new CharacterPickerView());
     }
 

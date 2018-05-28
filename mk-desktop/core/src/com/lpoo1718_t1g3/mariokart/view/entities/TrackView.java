@@ -7,13 +7,13 @@ import com.lpoo1718_t1g3.mariokart.MarioKart;
 public class TrackView extends EntityView {
 
     public TrackView() {
-        super();
+        super("track1.png");
     }
 
     @Override
     public Sprite createSprite() {
-        if (MarioKart.getInstance().getAssetManager().isLoaded("track1.png")) {
-            return new Sprite(MarioKart.getInstance().getAssetManager().get("track1.png", Texture.class));
+        if (MarioKart.getInstance().getAssetManager().isLoaded(fileName)) {
+            return new Sprite(MarioKart.getInstance().getAssetManager().get(fileName, Texture.class));
         }
         else System.out.print("not loaded");
         return null;
