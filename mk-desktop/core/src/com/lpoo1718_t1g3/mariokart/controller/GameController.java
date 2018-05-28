@@ -9,9 +9,9 @@ import com.lpoo1718_t1g3.mariokart.view.RaceView;
 
 public class GameController {
 
+    private static GameController ourInstance = new GameController();
     private RaceController raceController;
 
-    private static GameController ourInstance = new GameController();
     public static GameController getInstance() {
         return ourInstance;
     }
