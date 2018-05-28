@@ -11,11 +11,9 @@ import com.lpoo1718_t1g3.mk_android.R;
 import com.lpoo1718_t1g3.mariokart.networking.Connector;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 
-import java.io.ObjectOutputStream;
-
 public class MainActivity extends AppCompatActivity {
 
-    static ObjectOutputStream w;
+    static Message message = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +34,11 @@ public class MainActivity extends AppCompatActivity {
     protected void connect(String addr, int port){
         if (Connector.getInstance().connect(addr, port) != null){
             Connector.getInstance().write(new Message(Message.MESSAGE_TYPE.CONNECTION, Message.SENDER.CLIENT));
+            while(message == null){
+            }
             Intent i = new Intent(this, ControlActivity.class);
+            i.putExtra("partyName", (String)message.getOptions().get("partyName"));
+
             startActivity(i);
         }
 

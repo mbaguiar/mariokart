@@ -1,6 +1,5 @@
 package com.lpoo1718_t1g3.mariokart.view;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 

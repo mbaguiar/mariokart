@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.CheckBox;
 
 import com.lpoo1718_t1g3.mariokart.networking.Connector;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
@@ -27,7 +28,8 @@ public class ControlActivity extends AppCompatActivity implements SensorEventLis
     private Boolean upPressed = false;
     private Boolean leftPressed = false;
     private Boolean rightPressed = false;
-    private Boolean downPressed = false;
+
+    private CheckBox accData;
 
     private float accValue = 0;
 
@@ -35,6 +37,8 @@ public class ControlActivity extends AppCompatActivity implements SensorEventLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_control);
+
+        accData = (CheckBox) findViewById(R.id.accData);
 
         View.OnTouchListener o = new View.OnTouchListener() {
             @Override
@@ -50,9 +54,6 @@ public class ControlActivity extends AppCompatActivity implements SensorEventLis
                         case R.id.rightBtn:
                             rightPressed = true;
                             break;
-                        case R.id.downBtn:
-                            downPressed = true;
-                            break;
                     }
                 } else if (event.getAction() == MotionEvent.ACTION_POINTER_UP || event.getAction() == MotionEvent.ACTION_UP){
                     switch (v.getId()) {
@@ -65,9 +66,6 @@ public class ControlActivity extends AppCompatActivity implements SensorEventLis
                         case R.id.rightBtn:
                             rightPressed = false;
                             break;
-                        case R.id.downBtn:
-                            downPressed = false;
-                            break;
                     }
                 }
                 return true;
@@ -78,7 +76,6 @@ public class ControlActivity extends AppCompatActivity implements SensorEventLis
         findViewById(R.id.upBtn).setOnTouchListener(o);
         findViewById(R.id.leftBtn).setOnTouchListener(o);
         findViewById(R.id.rightBtn).setOnTouchListener(o);
-        findViewById(R.id.downBtn).setOnTouchListener(o);
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
@@ -103,6 +100,7 @@ public class ControlActivity extends AppCompatActivity implements SensorEventLis
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        accValue = event.values[1];
         Connector.getInstance().write(getControllerData());
     }
 
@@ -113,9 +111,21 @@ public class ControlActivity extends AppCompatActivity implements SensorEventLis
     Message getControllerData(){
         Message m = new Message(Message.MESSAGE_TYPE.CONTROLLER_ACTIVITY, Message.SENDER.CLIENT);
         m.addOption("upPressed", upPressed);
-        m.addOption("leftPressed", leftPressed);
-        m.addOption("rightPressed", rightPressed);
-        m.addOption("downPressed", downPressed);
+        if (accData.isChecked()){
+            boolean left = false, right = false;
+
+            if (accValue < -2) left = true;
+            else if (accValue > 2) right = true;
+
+            m.addOption("leftPressed", left);
+            m.addOption("rightPressed", right);
+
+        } else {
+            m.addOption("leftPressed", leftPressed);
+            m.addOption("rightPressed", rightPressed);
+        }
+
+
         return m;
     }
 

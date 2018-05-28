@@ -4,7 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
 
-import static com.lpoo1718_t1g3.mariokart.view.GameView.PIXEL_TO_METER;
+import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
+
 
 abstract class EntityView {
 

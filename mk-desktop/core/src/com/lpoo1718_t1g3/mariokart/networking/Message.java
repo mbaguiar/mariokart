@@ -9,9 +9,11 @@ public class Message implements Serializable {
 
     private SENDER sender;
 
+    private int senderId;
+
     private Hashtable<String, Object> options;
 
-    public enum MESSAGE_TYPE {CONNECTION, CONTROLLER_ACTIVITY, CHAR_PICK, TRACK_VOTE}
+    public enum MESSAGE_TYPE {CONNECTION, PLAYER_REGISTRY, DISCONNECTION, CONTROLLER_ACTIVITY, CHAR_PICK, TRACK_VOTE, STATE_UPDATE}
 
     public enum SENDER {SERVER, CLIENT}
 
@@ -33,10 +35,18 @@ public class Message implements Serializable {
         return options;
     }
 
+    public int getSenderId() { return this.senderId; }
+
+    public void setSenderId(int id){
+        this.senderId = id;
+    }
+
     @Override
     public String toString() {
         return "Message{" +
                 "type=" + type +
+                ", sender=" + sender +
+                ", senderId=" + senderId +
                 ", options=" + options +
                 '}';
     }
