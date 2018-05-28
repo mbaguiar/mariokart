@@ -8,25 +8,28 @@ import java.util.ArrayList;
 public class GameModel {
 
     private static GameModel ourInstance = new GameModel();
-
+    private final ArrayList<Character> characters = new ArrayList<Character>();
     private ArrayList<Player> players = new ArrayList<Player>();
-
     private ServerManager server;
-
     private KartModel kart;
     private String partyName = "MarioKart Party";
     private String ipAddress;
     private int port;
     private ArrayList<String> connectedPlayers = new ArrayList<String>();
     private int MAX_PLAYERS;
+    private boolean qrCode = false;
+
     private GameModel() {
+        initCharacters();
         kart = new KartModel(0, 0, 0);
     }
 
-    private boolean qrCode = false;
-
     public static GameModel getInstance() {
         return ourInstance;
+    }
+
+    public ArrayList<Character> getCharacters() {
+        return characters;
     }
 
     public String getIpAddress() {
@@ -41,11 +44,9 @@ public class GameModel {
         return kart;
     }
 
-    //private Image qrCode; Image?
+    public boolean addPlayer(int playerId, String playerHandle) {
 
-    public boolean addPlayer(int playerId, String playerHandle){
-
-        for (Player p: players){
+        for (Player p : players) {
             if (p.getPlayerHandle().equals(playerHandle)) return false;
         }
         players.add(new Player(playerId, playerHandle));
@@ -57,16 +58,25 @@ public class GameModel {
         updateServerData();
     }
 
-    public ServerManager getServer(){
+    public ServerManager getServer() {
         return server;
     }
 
-    private void updateServerData(){
+    private void updateServerData() {
         ipAddress = GameModel.getInstance().getServer().getLocalIp();
         port = GameModel.getInstance().getServer().getPort();
     }
 
     public void setQrCode(boolean qrCode) {
         this.qrCode = qrCode;
+    }
+
+    private void initCharacters() {
+        characters.add(new Character("Mario"));
+        characters.add(new Character("Luigi"));
+        characters.add(new Character("Peach"));
+        characters.add(new Character("Toad"));
+        characters.add(new Character("Yoshi"));
+        characters.add(new Character("Bowser"));
     }
 }

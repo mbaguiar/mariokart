@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.lpoo1718_t1g3.mariokart.controller.GameController;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 
 public class LobbyView extends ScreenAdapter {
@@ -64,7 +65,7 @@ public class LobbyView extends ScreenAdapter {
 
         partyGroup.setDebug(true);
 
-        partyGroup.setPosition(stage.getWidth()/2f,stage.getHeight() * 0.7f);
+        partyGroup.setPosition(stage.getWidth()/2f,stage.getHeight() * 0.7f, Align.center);
 
         Label partyNameLabel = new Label("Party name:", labelStyle);
 
@@ -90,7 +91,7 @@ public class LobbyView extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y){
 
-                //controller.startGame();
+                GameController.getInstance().startGame();
             }
         });
         p.setPosition(stage.getWidth()/2f, stage.getHeight()/2f, Align.center);

@@ -84,12 +84,9 @@ public class RaceController {
 
     public void handleInput(Message m) {
 
-        if ((Boolean) m.getOptions().get("upPressed")) gas = true;
-        else gas = false;
-        if ((Boolean) m.getOptions().get("leftPressed")) left = true;
-        else left = false;
-        if ((Boolean) m.getOptions().get("rightPressed")) right = true;
-        else right = false;
+        gas = (Boolean) m.getOptions().get("upPressed");
+        left = (Boolean) m.getOptions().get("leftPressed");
+        right = (Boolean) m.getOptions().get("rightPressed");
 
     }
 

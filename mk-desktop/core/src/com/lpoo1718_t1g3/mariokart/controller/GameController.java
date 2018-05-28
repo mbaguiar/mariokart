@@ -1,32 +1,30 @@
 package com.lpoo1718_t1g3.mariokart.controller;
 
-import com.badlogic.gdx.ScreenAdapter;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
+import com.lpoo1718_t1g3.mariokart.view.CharacterPickerView;
 import com.lpoo1718_t1g3.mariokart.view.LobbyView;
+import com.lpoo1718_t1g3.mariokart.view.RaceView;
 
 public class GameController {
 
+    private RaceController raceController;
+
     private static GameController ourInstance = new GameController();
-
-
     public static GameController getInstance() {
         return ourInstance;
     }
 
 
     public void update (float delta) {
-
+        if (MarioKart.getInstance().getScreen().getClass() == RaceView.class){
+            raceController.update(delta);
+        }
     }
 
     public void handleInput(Message m){
     }
-
-    public ScreenAdapter getView() {
-        return null;
-    }
-
 
     public boolean registerPlayer(int playerId, String playerHandle){
         return GameModel.getInstance().addPlayer(playerId, playerHandle);
@@ -57,5 +55,14 @@ public class GameController {
             returnMessage.addOption("error", "Player name already in use");
         }
         writeToClient(m, m.getSenderId());
+    }
+
+    public void startGame(){
+        MarioKart.getInstance().setScreen(new CharacterPickerView());
+    }
+
+    public void startRace() {
+        raceController = new RaceController();
+        MarioKart.getInstance().setScreen(new RaceView());
     }
 }
