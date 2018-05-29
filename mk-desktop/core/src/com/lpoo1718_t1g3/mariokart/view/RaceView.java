@@ -6,6 +6,8 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.physics.box2d.Box2D;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
 import com.lpoo1718_t1g3.mariokart.controller.entities.KartBody;
@@ -34,6 +36,8 @@ public class RaceView extends ScreenAdapter {
     public static final float VIEWPORT_HEIGHT = 43.2f;
     boolean mario = false, luigi = false;
 
+    Box2DDebugRenderer debugRenderer;
+
     public RaceView() {
         loadAssets();
         trackView = new TrackView();
@@ -41,6 +45,9 @@ public class RaceView extends ScreenAdapter {
         camera = createCamera();
         initKartViews();
         initObjectViews();
+        Box2D.init();
+        debugRenderer = new Box2DDebugRenderer();
+
     }
 
     private OrthographicCamera createCamera() {
@@ -78,6 +85,8 @@ public class RaceView extends ScreenAdapter {
         MarioKart.getInstance().getBatch().begin();
         drawEntities();
         MarioKart.getInstance().getBatch().end();
+
+        debugRenderer.render(GameController.getInstance().getRaceController().getWorld(), camera.combined);
     }
 
     private void handleInputs(float delta) {

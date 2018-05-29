@@ -1,13 +1,25 @@
 package com.lpoo1718_t1g3.mariokart.controller.entities;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.codeandweb.physicseditor.PhysicsShapeCache;
 import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
 
-public class TrackBody extends EntityBody {
+public class TrackBody {
+
+    Body body1;
+    Body body2;
+
+    PhysicsShapeCache physicsBodies;
+    PhysicsShapeCache physicsBodie1;
 
     public TrackBody(World world, EntityModel model) {
-        super(world, model, BodyDef.BodyType.StaticBody);
-        createFixture(body);
+        physicsBodies = new PhysicsShapeCache("track1.xml");
+        body1 = physicsBodies.createBody("track1", world, 1080/4033f, 1080/3875f);
+        body1.setUserData(model);
+        physicsBodie1 = new PhysicsShapeCache("track1-back.xml");
+        body2 = physicsBodie1.createBody("track1-back", world, 1080/4033f, 1080/3875f);
+        body2.setUserData(model);
+        //createFixture(body);
     }
 
     private void createFixture(Body body) {
@@ -24,7 +36,7 @@ public class TrackBody extends EntityBody {
     }
 
     public Body getBody() {
-        return body;
+        return body1;
     }
 
 }
