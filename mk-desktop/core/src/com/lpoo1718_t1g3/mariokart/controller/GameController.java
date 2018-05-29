@@ -46,7 +46,7 @@ public class GameController {
     public boolean registerPlayer(int playerId, String playerHandle) {
 
         if (GameModel.getInstance().addPlayer(playerId, playerHandle)) {
-            raceController.addKartBody(GameModel.getInstance().getPlayers().get(playerId));
+            //raceController.addKartBody(GameModel.getInstance().getPlayers().get(playerId));
             return true;
         }
 

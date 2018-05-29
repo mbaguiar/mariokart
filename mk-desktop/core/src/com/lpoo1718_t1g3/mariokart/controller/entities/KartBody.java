@@ -6,6 +6,8 @@ import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class KartBody extends EntityBody {
 
@@ -14,6 +16,7 @@ public class KartBody extends EntityBody {
     private steer_type steer;
     private acc_type accelerate;
     public List<TireBody> wheels;
+    boolean update;
 
     public enum steer_type {STEER_NONE, STEER_LEFT, STEER_RIGHT, STEER_HARD_LEFT, STEER_HARD_RIGHT}
 
@@ -37,6 +40,7 @@ public class KartBody extends EntityBody {
         this.maxSpeed = maxSpeed;
         this.power = power;
         this.wheelAngle = 0;
+        this.update = true;
 
         createFixture(body);
 
@@ -143,7 +147,7 @@ public class KartBody extends EntityBody {
 
         if ((this.accelerate == acc_type.ACC_ACCELERATE) && (this.getSpeedKMH() < this.maxSpeed)) {
             baseVector = new Vector2(0, -1);
-        } else if (this.accelerate == acc_type.ACC_BRAKE) {
+        } else if (this.accelerate == acc_type.ACC_BRAKE && (-this.getSpeedKMH() > -this.maxSpeed)) {
             if (this.getLocalVelocity().y < 0) {
                 baseVector = new Vector2(0f, 1.3f);
             } else {
@@ -169,5 +173,36 @@ public class KartBody extends EntityBody {
         }
     }
 
+    public void speedUp() {
+        this.power = 30;
+        this.maxSpeed = 40;
+        new Timer().schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        power = 15;
+                        maxSpeed = 20;
+                    }
+                }, 1000
+        );
+    }
 
+    public boolean isUpdate() {
+        return update;
+    }
+
+    public void steerHard() {
+        this.steer = steer_type.STEER_HARD_RIGHT;
+        this.update = false;
+        this.maxSteerAngle = 50;
+        new Timer().schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        update = true;
+                        maxSteerAngle = 25;
+                    }
+                }, 500
+        );
+    }
 }

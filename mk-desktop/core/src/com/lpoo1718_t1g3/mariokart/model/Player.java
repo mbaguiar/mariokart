@@ -1,6 +1,9 @@
 package com.lpoo1718_t1g3.mariokart.model;
 
+import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
 import com.lpoo1718_t1g3.mariokart.model.entities.KartModel;
+
+import java.util.Random;
 
 public class Player {
 
@@ -43,5 +46,6 @@ public class Player {
     public Character getSelectedCharacter() {
         return selectedCharacter;
     }
+
 
 }

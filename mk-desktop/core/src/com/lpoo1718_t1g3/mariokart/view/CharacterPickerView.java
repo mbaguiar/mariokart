@@ -46,9 +46,8 @@ public class CharacterPickerView extends ScreenAdapter {
         parameter.borderWidth = 4;
         parameter.size = 32;
         labelStyle.font = generator.generateFont(parameter);
-
-        for (int i = 0; i < GameModel.getInstance().getCharacters().size(); i++) {
-            Character c = GameModel.getInstance().getCharacters().get(i);
+        int i = 0;
+        for (Character c : GameModel.getInstance().getCharacters().values()) {
             Label characterBox = new Label(c.getName(), labelStyle);
             characterBox.addListener(new ClickListener() {
                 @Override
@@ -60,6 +59,7 @@ public class CharacterPickerView extends ScreenAdapter {
             if ((i + 1) % 3 == 0 && i + 1 < GameModel.getInstance().getCharacters().size()) {
                 characters.row();
             }
+            i++;
         }
 
 

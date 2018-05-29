@@ -10,6 +10,8 @@ import java.util.HashMap;
 
 public class GameModel {
 
+    public static enum object_type {BANANA, MUSHROOM};
+
     private static GameModel ourInstance = new GameModel();
     private ServerManager server;
     private KartModel kart;
@@ -65,7 +67,15 @@ public class GameModel {
 
     private void setUpTrack1() {
         MysteryBoxModel box = new MysteryBoxModel(10, 10, 0);
+        MysteryBoxModel box1 = new MysteryBoxModel(20, 10, 0);
+        MysteryBoxModel box2 = new MysteryBoxModel(20, 20, 0);
+        MysteryBoxModel box3 = new MysteryBoxModel(50, 40, 0);
+        MysteryBoxModel box4 = new MysteryBoxModel(30, 40, 0);
         track1.addBox(box);
+        track1.addBox(box1);
+        track1.addBox(box2);
+        track1.addBox(box3);
+        track1.addBox(box4);
     }
 
     public boolean addPlayer(int playerId, String playerHandle, String selectedCharacter) {

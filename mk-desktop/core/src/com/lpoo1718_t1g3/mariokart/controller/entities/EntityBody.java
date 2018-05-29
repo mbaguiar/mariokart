@@ -45,4 +45,8 @@ public abstract class EntityBody {
     public float getAngle() {
         return body.getAngle();
     }
+
+    public Body getBody() {
+        return  body;
+    }
 }

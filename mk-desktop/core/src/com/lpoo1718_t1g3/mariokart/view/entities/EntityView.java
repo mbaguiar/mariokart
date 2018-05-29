@@ -1,13 +1,15 @@
 package com.lpoo1718_t1g3.mariokart.view.entities;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
 
 import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
 
 
-abstract class EntityView {
+public abstract class EntityView {
 
     Sprite sprite;
     String fileName;
@@ -21,7 +23,16 @@ abstract class EntityView {
         sprite.draw(batch);
     }
 
-    public abstract Sprite createSprite();
+    public Sprite createSprite() {
+        if (MarioKart.getInstance().getAssetManager().isLoaded(fileName)) {
+            Sprite sprite = new Sprite(MarioKart.getInstance().getAssetManager().get(fileName, Texture.class));
+            return sprite;
+
+        } else {
+            System.out.println("not loaded");
+            return null;
+        }
+    }
 
     public void update(EntityModel model) {
         sprite.setCenter(model.getX() / PIXEL_TO_METER, model.getY() / PIXEL_TO_METER);

@@ -11,16 +11,4 @@ public class MysteryBoxView extends EntityView {
 
     }
 
-    @Override
-    public Sprite createSprite() {
-        if (MarioKart.getInstance().getAssetManager().isLoaded(fileName)) {
-            Sprite sprite = new Sprite(MarioKart.getInstance().getAssetManager().get(fileName, Texture.class));
-            //sprite.setSize(30, 30);
-            return sprite;
-
-        } else {
-            System.out.println("not loaded");
-            return null;
-        }
-    }
 }

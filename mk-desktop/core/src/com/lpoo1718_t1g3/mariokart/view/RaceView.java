@@ -11,7 +11,10 @@ import com.lpoo1718_t1g3.mariokart.controller.GameController;
 import com.lpoo1718_t1g3.mariokart.controller.entities.KartBody;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.model.Player;
+import com.lpoo1718_t1g3.mariokart.model.entities.BananaModel;
+import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
 import com.lpoo1718_t1g3.mariokart.model.entities.MysteryBoxModel;
+import com.lpoo1718_t1g3.mariokart.view.entities.EntityView;
 import com.lpoo1718_t1g3.mariokart.view.entities.KartView;
 import com.lpoo1718_t1g3.mariokart.view.entities.MysteryBoxView;
 import com.lpoo1718_t1g3.mariokart.view.entities.TrackView;
@@ -22,6 +25,7 @@ import java.util.HashMap;
 public class RaceView extends ScreenAdapter {
 
     private HashMap<String, KartView> kartViews = new HashMap<String, KartView>();
+    private HashMap<String, EntityView> objectViews = new HashMap<String, EntityView>();
     private MysteryBoxView mysteryBoxView;
     private TrackView trackView;
     private OrthographicCamera camera;
@@ -36,6 +40,7 @@ public class RaceView extends ScreenAdapter {
         mysteryBoxView = new MysteryBoxView();
         camera = createCamera();
         initKartViews();
+        initObjectViews();
     }
 
     private OrthographicCamera createCamera() {
@@ -48,6 +53,7 @@ public class RaceView extends ScreenAdapter {
     }
 
     private void loadAssets() {
+        MarioKart.getInstance().getAssetManager().load("banana.png", Texture.class);
         MarioKart.getInstance().getAssetManager().load("luigikart.png", Texture.class);
         MarioKart.getInstance().getAssetManager().load("mysteryBox.png", Texture.class);
         MarioKart.getInstance().getAssetManager().load("mariokart.png", Texture.class);
@@ -76,7 +82,7 @@ public class RaceView extends ScreenAdapter {
 
     private void handleInputs(float delta) {
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             GameController.getInstance().getRaceController().setKartState(KartBody.acc_type.ACC_ACCELERATE, 1);
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             GameController.getInstance().getRaceController().setKartState(KartBody.acc_type.ACC_BRAKE, 1);
@@ -130,12 +136,24 @@ public class RaceView extends ScreenAdapter {
             }
         }
 
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            GameController.getInstance().getRaceController().useObject(1);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+            GameController.getInstance().getRaceController().useObject(2);
+        }
+
     }
 
     public void initKartViews() {
         kartViews.put("Mario", new KartView("mariokart.png"));
         kartViews.put("Luigi", new KartView("luigikart.png"));
 
+    }
+
+    public void initObjectViews() {
+        objectViews.put("Banana", new KartView("banana.png"));
     }
 
     private void drawEntities() {
@@ -151,6 +169,14 @@ public class RaceView extends ScreenAdapter {
             KartView kartView = kartViews.get(player.getSelectedCharacter().getName());
             kartView.update(player.getKartModel());
             kartView.draw(MarioKart.getInstance().getBatch());
+        }
+
+        for (EntityModel object : GameModel.getInstance().getTrack1().getObjects()) {
+            if (object instanceof BananaModel) {
+                EntityView objView = objectViews.get("Banana");
+                objView.update(object);
+                objView.draw(MarioKart.getInstance().getBatch());
+            }
         }
     }
 
