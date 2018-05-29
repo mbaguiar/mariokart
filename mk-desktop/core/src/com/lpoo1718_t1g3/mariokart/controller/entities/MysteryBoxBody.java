@@ -13,12 +13,12 @@ public class MysteryBoxBody extends EntityBody {
     public void createFixture(Body body) {
         FixtureDef fixtureDef = new FixtureDef();
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(1, 1);
+        polygonShape.setAsBox(0.5f, 0.5f);
         fixtureDef.shape = polygonShape;
         fixtureDef.density = 1f;
         fixtureDef.friction = 1;
         fixtureDef.restitution = 0;
-        fixtureDef.isSensor = false;
+        fixtureDef.isSensor = true;
         body.createFixture(fixtureDef);
         polygonShape.dispose();
     }

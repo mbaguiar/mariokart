@@ -10,12 +10,17 @@ import com.lpoo1718_t1g3.mariokart.controller.entities.TrackBody;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.model.Player;
 import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
+import com.lpoo1718_t1g3.mariokart.model.entities.KartModel;
 import com.lpoo1718_t1g3.mariokart.model.entities.MysteryBoxModel;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 import com.lpoo1718_t1g3.mariokart.view.RaceView;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import static com.lpoo1718_t1g3.mariokart.view.RaceView.VIEWPORT_HEIGHT;
+import static com.lpoo1718_t1g3.mariokart.view.RaceView.VIEWPORT_WIDTH;
 
 public class RaceController implements ContactListener {
 
@@ -23,6 +28,7 @@ public class RaceController implements ContactListener {
     private final RaceView raceView;
     private final TrackBody trackBody;
     private HashMap<Integer, KartBody> kartBodies = new HashMap<Integer, KartBody>();
+    private ArrayList<MysteryBoxBody> mysteryBoxes = new ArrayList<MysteryBoxBody>();
     private float accumulator;
     private boolean gas = false;
     private boolean left = false;
@@ -33,6 +39,12 @@ public class RaceController implements ContactListener {
         world.clearForces();
         trackBody = new TrackBody(world, GameModel.getInstance().getTrack1());
         raceView = new RaceView();
+
+        for (MysteryBoxModel box : GameModel.getInstance().getTrack1().getBoxes()) {
+            mysteryBoxes.add(new MysteryBoxBody(world, box));
+        }
+
+        world.setContactListener(this);
 
     }
 
@@ -98,11 +110,11 @@ public class RaceController implements ContactListener {
         if (body.getPosition().y < 0)
             body.setTransform(body.getPosition().x, 0, body.getAngle());
 
-        if (body.getPosition().x > raceView.VIEWPORT_WIDTH)
-            body.setTransform(raceView.VIEWPORT_WIDTH, body.getPosition().y, body.getAngle());
+        if (body.getPosition().x > VIEWPORT_WIDTH)
+            body.setTransform(VIEWPORT_WIDTH, body.getPosition().y, body.getAngle());
 
-        if (body.getPosition().y > raceView.VIEWPORT_WIDTH)
-            body.setTransform(body.getPosition().x, raceView.VIEWPORT_WIDTH, body.getAngle());
+        if (body.getPosition().y > VIEWPORT_HEIGHT)
+            body.setTransform(body.getPosition().x, VIEWPORT_HEIGHT, body.getAngle());
     }
 
     public void setKartState(KartBody.steer_type value, int playerId) {
@@ -122,6 +134,18 @@ public class RaceController implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
+        Body bodyA = contact.getFixtureA().getBody();
+        Body bodyB = contact.getFixtureB().getBody();
+
+        if (bodyA.getUserData() instanceof KartModel && bodyB.getUserData() instanceof MysteryBoxModel) {
+            mysteryBoxCollision(bodyB, bodyA);
+            return;
+        }
+
+        if (bodyA.getUserData() instanceof MysteryBoxModel && bodyB.getUserData() instanceof KartModel) {
+           mysteryBoxCollision(bodyA, bodyB);
+           return;
+        }
 
     }
 
@@ -138,5 +162,14 @@ public class RaceController implements ContactListener {
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
+    }
+
+    private void mysteryBoxCollision(Body mysteryBox, Body kartBody) {
+        MysteryBoxModel box = (MysteryBoxModel) mysteryBox.getUserData();
+        KartModel kart = (KartModel) kartBody.getUserData();
+        if (box.isEnable()) {
+            box.setEnable(false);
+            //gerar objecto aleatorio
+        }
     }
 }

@@ -26,7 +26,8 @@ public class RaceView extends ScreenAdapter {
     private TrackView trackView;
     private OrthographicCamera camera;
     public static final float PIXEL_TO_METER = 0.04f;
-    public static final float VIEWPORT_WIDTH = 40.96f;
+    public static final float VIEWPORT_WIDTH = 76.8f;
+    public static final float VIEWPORT_HEIGHT = 43.2f;
     boolean mario = false, luigi = false;
 
     public RaceView() {
@@ -140,8 +141,10 @@ public class RaceView extends ScreenAdapter {
     private void drawEntities() {
         trackView.draw(MarioKart.getInstance().getBatch());
         for (MysteryBoxModel box : GameModel.getInstance().getTrack1().getBoxes()) {
-            mysteryBoxView.update(box);
-            mysteryBoxView.draw(MarioKart.getInstance().getBatch());
+            if (box.isEnable()) {
+                mysteryBoxView.update(box);
+                mysteryBoxView.draw(MarioKart.getInstance().getBatch());
+            }
         }
 
         for (Player player : GameModel.getInstance().getPlayers()) {
