@@ -19,7 +19,7 @@ public class LobbyView extends ScreenAdapter {
     private Stage stage;
     private TextField partyName;
 
-    public LobbyView(){
+    public LobbyView() {
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
@@ -37,7 +37,7 @@ public class LobbyView extends ScreenAdapter {
 
         Label lobbyLabel = new Label("Lobby", labelStyle);
 
-        lobbyLabel.setPosition(stage.getWidth()/2f, stage.getHeight() * 0.9f, Align.center);
+        lobbyLabel.setPosition(stage.getWidth() / 2f, stage.getHeight() * 0.9f, Align.center);
 
         TextButton.TextButtonStyle playBtnStyle = new TextButton.TextButtonStyle();
 
@@ -47,7 +47,7 @@ public class LobbyView extends ScreenAdapter {
 
         TextButton playBtn = new TextButton("Play", playBtnStyle);
 
-        playBtn.setPosition(stage.getWidth()/2f, stage.getHeight() * 0.1f, Align.center);
+        playBtn.setPosition(stage.getWidth() / 2f, stage.getHeight() * 0.1f, Align.center);
 
         TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
 
@@ -59,13 +59,13 @@ public class LobbyView extends ScreenAdapter {
 
         textFieldStyle.fontColor = new Color(1f, 1f, 1f, 1);
 
-        textFieldStyle.focusedFontColor = new Color(250/255f, 1f, 1f, 1);
+        textFieldStyle.focusedFontColor = new Color(250 / 255f, 1f, 1f, 1);
 
         Table partyGroup = new Table();
 
         partyGroup.setDebug(true);
 
-        partyGroup.setPosition(stage.getWidth()/2f,stage.getHeight() * 0.7f, Align.center);
+        partyGroup.setPosition(stage.getWidth() / 2f, stage.getHeight() * 0.7f, Align.center);
 
         Label partyNameLabel = new Label("Party name:", labelStyle);
 
@@ -85,16 +85,16 @@ public class LobbyView extends ScreenAdapter {
 
         Label ipLabel = new Label(GameModel.getInstance().getIpAddress() + ":" + GameModel.getInstance().getPort(), labelStyle);
 
-        ipLabel.setPosition(stage.getWidth()/2f, stage.getHeight()/2f - p.getHeight(), Align.center);
+        ipLabel.setPosition(stage.getWidth() / 2f, stage.getHeight() / 2f - p.getHeight(), Align.center);
 
-        playBtn.addListener(new ClickListener(){
+        playBtn.addListener(new ClickListener() {
             @Override
-            public void clicked(InputEvent event, float x, float y){
+            public void clicked(InputEvent event, float x, float y) {
 
                 GameController.getInstance().startGame();
             }
         });
-        p.setPosition(stage.getWidth()/2f, stage.getHeight()/2f, Align.center);
+        p.setPosition(stage.getWidth() / 2f, stage.getHeight() / 2f, Align.center);
 
         parameter.size = 50;
 
@@ -106,7 +106,7 @@ public class LobbyView extends ScreenAdapter {
 
         TextArea connectedPlayersLabel = new TextArea("Connected\nPlayers", subtitleStyle);
 
-        connectedPlayersLabel.setPosition(stage.getWidth()/8f, stage.getHeight() * 0.7f, Align.center);
+        connectedPlayersLabel.setPosition(stage.getWidth() / 8f, stage.getHeight() * 0.7f, Align.center);
         connectedPlayersLabel.setAlignment(Align.center);
         connectedPlayersLabel.setWidth(350);
         connectedPlayersLabel.setHeight(100);
@@ -121,15 +121,15 @@ public class LobbyView extends ScreenAdapter {
     }
 
     @Override
-    public void render (float delta) {
+    public void render(float delta) {
         drawBackground();
         stage.act();
         stage.draw();
     }
 
-    private void drawBackground(){
-        Gdx.gl.glClearColor( 0f, 0f, 1f, 1 );
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
+    private void drawBackground() {
+        Gdx.gl.glClearColor(0f, 0f, 1f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
     }
 
 }

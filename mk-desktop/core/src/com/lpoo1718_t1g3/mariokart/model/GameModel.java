@@ -1,11 +1,9 @@
 package com.lpoo1718_t1g3.mariokart.model;
 
-import com.lpoo1718_t1g3.mariokart.controller.GameController;
 import com.lpoo1718_t1g3.mariokart.model.entities.KartModel;
 import com.lpoo1718_t1g3.mariokart.model.entities.MysteryBoxModel;
 import com.lpoo1718_t1g3.mariokart.model.entities.TrackModel;
 import com.lpoo1718_t1g3.mariokart.networking.ServerManager;
-import com.lpoo1718_t1g3.mariokart.view.RaceView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -114,5 +112,14 @@ public class GameModel {
 
     public void setQrCode(boolean qrCode) {
         this.qrCode = qrCode;
+    }
+
+    public Player getPlayer(int id) {
+        for (Player player : players) {
+            if (player.getPlayerId() == id)
+                return player;
+        }
+
+        return null;
     }
 }

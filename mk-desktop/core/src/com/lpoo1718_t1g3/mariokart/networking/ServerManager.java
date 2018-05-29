@@ -34,7 +34,7 @@ public class ServerManager implements Runnable {
 
     private ArrayList<ClientManager> clients = new ArrayList<ClientManager>();
 
-    public ServerManager(){
+    public ServerManager() {
         try {
             Socket testSocket = new Socket(GOOGLE_URL, TEST_PORT);
             localIp = testSocket.getLocalAddress().getHostAddress();
@@ -51,7 +51,7 @@ public class ServerManager implements Runnable {
             socket = new ServerSocket(port);
             GameModel.getInstance().setQrCode(QRCodeUtilities.generateQRCode(localIp, port));
             System.out.println("Server opened: " + localIp + ":" + port);
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -62,7 +62,7 @@ public class ServerManager implements Runnable {
 
     @Override
     public void run() {
-        while (true){
+        while (true) {
             Socket clientSocket = null;
             try {
                 clientSocket = socket.accept();
@@ -80,13 +80,13 @@ public class ServerManager implements Runnable {
     public void writeToClient(Message m, int id) {
         m.setSenderId(serverId);
         ClientManager c;
-        if ((c = findClientWithId(id)) != null){
+        if ((c = findClientWithId(id)) != null) {
             c.write(m);
         }
     }
 
-    private ClientManager findClientWithId(int id){
-        for (ClientManager c: clients){
+    private ClientManager findClientWithId(int id) {
+        for (ClientManager c : clients) {
             if (c.getPlayerId() == id) return c;
         }
         return null;

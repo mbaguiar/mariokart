@@ -7,7 +7,7 @@ public class Character {
     private String name;
     private String kart;
 
-    public Character(String name){
+    public Character(String name) {
         this.name = name;
     }
 

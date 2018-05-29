@@ -24,7 +24,7 @@ abstract class EntityView {
     public abstract Sprite createSprite();
 
     public void update(EntityModel model) {
-        sprite.setCenter(model.getX()/PIXEL_TO_METER, model.getY()/PIXEL_TO_METER);
+        sprite.setCenter(model.getX() / PIXEL_TO_METER, model.getY() / PIXEL_TO_METER);
         sprite.setRotation(model.getRotation());
     }
 

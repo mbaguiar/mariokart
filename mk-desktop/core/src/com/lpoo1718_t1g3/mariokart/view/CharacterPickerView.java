@@ -1,6 +1,5 @@
 package com.lpoo1718_t1g3.mariokart.view;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
@@ -19,7 +18,7 @@ import com.lpoo1718_t1g3.mariokart.model.GameModel;
 public class CharacterPickerView extends ScreenAdapter {
     private Stage stage;
 
-    public CharacterPickerView(){
+    public CharacterPickerView() {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("SuperMario256.ttf"));
@@ -31,34 +30,34 @@ public class CharacterPickerView extends ScreenAdapter {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = generator.generateFont(parameter);
         Label viewTitle = new Label("Pick your character", labelStyle);
-        viewTitle.setPosition(stage.getWidth()/2f, stage.getHeight() * 0.9f, Align.center);
+        viewTitle.setPosition(stage.getWidth() / 2f, stage.getHeight() * 0.9f, Align.center);
 
         parameter.borderWidth = 2;
         parameter.size = 24;
         labelStyle.font = generator.generateFont(parameter);
 
         Label playerTurn = new Label("Player 1's turn to pick", labelStyle);
-        playerTurn.setPosition(stage.getWidth()/2f, stage.getHeight()-stage.getHeight()/3f, Align.center);
+        playerTurn.setPosition(stage.getWidth() / 2f, stage.getHeight() - stage.getHeight() / 3f, Align.center);
 
         Table characters = new Table();
         characters.setDebug(true);
-        characters.setPosition(stage.getWidth()/2f, stage.getHeight()/3f, Align.center);
+        characters.setPosition(stage.getWidth() / 2f, stage.getHeight() / 3f, Align.center);
 
         parameter.borderWidth = 4;
         parameter.size = 32;
         labelStyle.font = generator.generateFont(parameter);
 
-        for (int i = 0; i < GameModel.getInstance().getCharacters().size(); i++){
+        for (int i = 0; i < GameModel.getInstance().getCharacters().size(); i++) {
             Character c = GameModel.getInstance().getCharacters().get(i);
             Label characterBox = new Label(c.getName(), labelStyle);
-            characterBox.addListener(new ClickListener(){
+            characterBox.addListener(new ClickListener() {
                 @Override
-                public void clicked(InputEvent event, float x, float y){
+                public void clicked(InputEvent event, float x, float y) {
                     MarioKart.getInstance().setScreen(new TrackPickerView());
                 }
             });
             characters.add(characterBox).pad(75);
-            if ((i+1) % 3 == 0 && i + 1 < GameModel.getInstance().getCharacters().size()){
+            if ((i + 1) % 3 == 0 && i + 1 < GameModel.getInstance().getCharacters().size()) {
                 characters.row();
             }
         }
@@ -73,15 +72,15 @@ public class CharacterPickerView extends ScreenAdapter {
     }
 
     @Override
-    public void render(float delta){
+    public void render(float delta) {
         drawBackground();
         stage.act();
         stage.draw();
     }
 
     private void drawBackground() {
-        Gdx.gl.glClearColor( 1f, 1f, 0f, 1 );
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
+        Gdx.gl.glClearColor(1f, 1f, 0f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
     }
 
 }

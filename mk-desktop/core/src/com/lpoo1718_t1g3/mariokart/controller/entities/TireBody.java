@@ -10,7 +10,7 @@ public class TireBody {
 
     Body body;
 
-    public static  final  float PIXELS_PER_METER = 60.0f;
+    public static final float PIXELS_PER_METER = 60.0f;
 
     public KartBody kartBody;
     private float width;
@@ -57,7 +57,7 @@ public class TireBody {
         fixtureDef.density = 1.0f;
         fixtureDef.isSensor = true;
         PolygonShape wheelShape = new PolygonShape();
-        wheelShape.setAsBox(this.width/2, this.length/2);
+        wheelShape.setAsBox(this.width / 2, this.length / 2);
         fixtureDef.shape = wheelShape;
         this.body.createFixture(fixtureDef);
         wheelShape.dispose();
@@ -74,7 +74,7 @@ public class TireBody {
     public Vector2 getDirectionVector() {
         Vector2 directionVector;
         if (this.getLocalVelocity().y > 0) {
-            directionVector = new Vector2(0,1);
+            directionVector = new Vector2(0, 1);
         } else {
             directionVector = new Vector2(0, -1);
         }
@@ -86,15 +86,12 @@ public class TireBody {
         Vector2 velocity = this.body.getLinearVelocity();
         Vector2 sidewaysAxis = this.getDirectionVector();
         float dotprod = velocity.dot(sidewaysAxis);
-        return new Vector2(sidewaysAxis.x*dotprod, sidewaysAxis.y*dotprod);
+        return new Vector2(sidewaysAxis.x * dotprod, sidewaysAxis.y * dotprod);
     }
 
     public void killSidewaysVelocity() {
         this.body.setLinearVelocity(this.getKillVelocityVector());
     }
-
-
-
 
 
 }

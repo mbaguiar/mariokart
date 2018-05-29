@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
 public class ClientManager extends Thread {
 
     private Socket socket;
@@ -18,7 +19,7 @@ public class ClientManager extends Thread {
     private ObjectOutputStream outputStream;
     private final int playerId;
 
-    ClientManager(Socket client, int playerId){
+    ClientManager(Socket client, int playerId) {
         socket = client;
         this.playerId = playerId;
     }
@@ -33,10 +34,10 @@ public class ClientManager extends Thread {
         }
         Message input;
         try {
-            while ((input = (Message) inputStream.readObject()) != null){
+            while ((input = (Message) inputStream.readObject()) != null) {
                 handleMessage(input);
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -45,9 +46,9 @@ public class ClientManager extends Thread {
 
     }
 
-    private void handleMessage(Message m){
+    private void handleMessage(Message m) {
         m.setSenderId(playerId);
-        switch (m.getType()){
+        switch (m.getType()) {
             case CONNECTION:
                 GameController.getInstance().newConnection(m);
                 break;
@@ -60,12 +61,12 @@ public class ClientManager extends Thread {
         }
     }
 
-    void write(Message m){
+    void write(Message m) {
         final Message obj = m;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (outputStream != null){
+                if (outputStream != null) {
                     try {
                         outputStream.writeObject(obj);
                     } catch (IOException e) {

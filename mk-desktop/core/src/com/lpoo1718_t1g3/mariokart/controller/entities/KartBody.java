@@ -1,12 +1,8 @@
 package com.lpoo1718_t1g3.mariokart.controller.entities;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
-import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
-import com.lpoo1718_t1g3.mariokart.model.entities.KartModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +15,13 @@ public class KartBody extends EntityBody {
     private acc_type accelerate;
     public List<TireBody> wheels;
 
-    public enum steer_type {STEER_NONE, STEER_LEFT, STEER_RIGHT, STEER_HARD_LEFT, STEER_HARD_RIGHT};
-    public enum acc_type {ACC_NONE, ACC_ACCELERATE, ACC_BRAKE};
+    public enum steer_type {STEER_NONE, STEER_LEFT, STEER_RIGHT, STEER_HARD_LEFT, STEER_HARD_RIGHT}
+
+    ;
+
+    public enum acc_type {ACC_NONE, ACC_ACCELERATE, ACC_BRAKE}
+
+    ;
 
     public KartBody(World world, EntityModel model, float width, float length, float power, float minSteerAngle, float maxSteerAngle, float maxSpeed, float angle) {
         super(world, model, BodyDef.BodyType.DynamicBody);
@@ -54,7 +55,7 @@ public class KartBody extends EntityBody {
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.2f;
         PolygonShape kartShape = new PolygonShape();
-        kartShape.setAsBox(this.width/2, this.length/2);
+        kartShape.setAsBox(0.5f, 0.5f);
         fixtureDef.shape = kartShape;
         this.body.createFixture(fixtureDef);
     }
@@ -86,16 +87,16 @@ public class KartBody extends EntityBody {
         return revolvingWheels;
     }
 
-    public float getSpeedKMH () {
+    public float getSpeedKMH() {
         Vector2 velocity = this.body.getLinearVelocity();
         float len = velocity.len();
-        return (len/1000)*3600;
+        return (len / 1000) * 3600;
     }
 
     public void setSpeed(float speed) {
         Vector2 velocity = this.body.getLinearVelocity();
         velocity = velocity.nor();
-        velocity = new Vector2(velocity.x*((speed*1000.0f)/3600.0f), velocity.y*((speed*1000.0f)/3600.0f));
+        velocity = new Vector2(velocity.x * ((speed * 1000.0f) / 3600.0f), velocity.y * ((speed * 1000.0f) / 3600.0f));
         this.body.setLinearVelocity(velocity);
     }
 
@@ -138,7 +139,6 @@ public class KartBody extends EntityBody {
         }
 
 
-
         Vector2 baseVector;
 
         if ((this.accelerate == acc_type.ACC_ACCELERATE) && (this.getSpeedKMH() < this.maxSpeed)) {
@@ -159,9 +159,9 @@ public class KartBody extends EntityBody {
             } else if (this.getLocalVelocity().y > 0) {
                 baseVector = new Vector2(0, -0.7f);
             }
-        } else baseVector = new Vector2(0,0);
+        } else baseVector = new Vector2(0, 0);
 
-        Vector2 forceVector = new Vector2(this.power*baseVector.x, this.power*baseVector.y);
+        Vector2 forceVector = new Vector2(this.power * baseVector.x, this.power * baseVector.y);
 
         for (TireBody tire : getPoweredWheels()) {
             Vector2 position = tire.body.getWorldCenter();

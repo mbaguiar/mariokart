@@ -14,8 +14,7 @@ public class TrackView extends EntityView {
     public Sprite createSprite() {
         if (MarioKart.getInstance().getAssetManager().isLoaded(fileName)) {
             return new Sprite(MarioKart.getInstance().getAssetManager().get(fileName, Texture.class));
-        }
-        else System.out.print("not loaded");
+        } else System.out.print("not loaded");
         return null;
     }
 }

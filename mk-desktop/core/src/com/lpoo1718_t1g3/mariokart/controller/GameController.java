@@ -1,24 +1,12 @@
 package com.lpoo1718_t1g3.mariokart.controller;
 
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
-import com.lpoo1718_t1g3.mariokart.controller.entities.KartBody;
-import com.lpoo1718_t1g3.mariokart.controller.entities.MysteryBoxBody;
-import com.lpoo1718_t1g3.mariokart.controller.entities.TireBody;
-import com.lpoo1718_t1g3.mariokart.controller.entities.TrackBody;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
-import com.lpoo1718_t1g3.mariokart.model.Player;
-import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
-import com.lpoo1718_t1g3.mariokart.model.entities.MysteryBoxModel;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 import com.lpoo1718_t1g3.mariokart.networking.ServerManager;
 import com.lpoo1718_t1g3.mariokart.view.CharacterPickerView;
 import com.lpoo1718_t1g3.mariokart.view.LobbyView;
 import com.lpoo1718_t1g3.mariokart.view.RaceView;
-import java.util.HashMap;
 
 public class GameController {
 
@@ -56,8 +44,13 @@ public class GameController {
     }
 
     public boolean registerPlayer(int playerId, String playerHandle) {
-        return GameModel.getInstance().addPlayer(playerId, playerHandle);
 
+        if (GameModel.getInstance().addPlayer(playerId, playerHandle)) {
+            raceController.addKartBody(GameModel.getInstance().getPlayers().get(playerId));
+            return true;
+        }
+
+        return false;
     }
 
     public void startLobby() {

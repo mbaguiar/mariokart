@@ -13,6 +13,7 @@ import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
 import com.lpoo1718_t1g3.mariokart.model.entities.MysteryBoxModel;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 import com.lpoo1718_t1g3.mariokart.view.RaceView;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.util.HashMap;
 
@@ -30,13 +31,9 @@ public class RaceController implements ContactListener {
     RaceController() {
         world = new World(new Vector2(0, 0), true);
         world.clearForces();
-        //kartBody = new KartBody(world, GameModel.getInstance().getKart(), 1, 2, 10, 15, 20, 20, (float) Math.PI);
         trackBody = new TrackBody(world, GameModel.getInstance().getTrack1());
         raceView = new RaceView();
-        for (MysteryBoxModel box : GameModel.getInstance().getTrack1().getBoxes()) {
-            MysteryBoxBody boxBody = new MysteryBoxBody(world, box);
-        }
-        //kartBody = new KartBody(world, GameModel.getInstance().getKart());
+
     }
 
     public RaceView getRaceView() {

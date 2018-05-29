@@ -9,7 +9,7 @@ public class Player {
     private Character selectedCharacter;
     private KartModel kartModel;
 
-    Player(int playerId, String playerHandle){
+    Player(int playerId, String playerHandle) {
         this.playerId = playerId;
         this.playerHandle = playerHandle;
     }

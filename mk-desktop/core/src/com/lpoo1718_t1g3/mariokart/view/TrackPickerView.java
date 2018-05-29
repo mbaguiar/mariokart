@@ -16,7 +16,7 @@ import com.lpoo1718_t1g3.mariokart.controller.GameController;
 public class TrackPickerView extends ScreenAdapter {
     private Stage stage;
 
-    public TrackPickerView(){
+    public TrackPickerView() {
         this.stage = new Stage();
 
         Gdx.input.setInputProcessor(stage);
@@ -29,7 +29,7 @@ public class TrackPickerView extends ScreenAdapter {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = generator.generateFont(parameter);
         Label viewTitle = new Label("Pick the track", labelStyle);
-        viewTitle.setPosition(stage.getWidth()/2f, stage.getHeight() * 0.9f, Align.center);
+        viewTitle.setPosition(stage.getWidth() / 2f, stage.getHeight() * 0.9f, Align.center);
 
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
 
@@ -37,9 +37,9 @@ public class TrackPickerView extends ScreenAdapter {
         style.font = generator.generateFont(parameter);
 
         TextButton next = new TextButton("Race", style);
-        next.setPosition(stage.getWidth()/2f, stage.getHeight()/2f, Align.center);
+        next.setPosition(stage.getWidth() / 2f, stage.getHeight() / 2f, Align.center);
 
-        next.addListener(new ClickListener(){
+        next.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 GameController.getInstance().startRace();
@@ -53,7 +53,7 @@ public class TrackPickerView extends ScreenAdapter {
     }
 
     @Override
-    public void render(float delta){
+    public void render(float delta) {
         drawBackground();
         stage.act();
         stage.draw();
@@ -61,7 +61,7 @@ public class TrackPickerView extends ScreenAdapter {
     }
 
     private void drawBackground() {
-        Gdx.gl.glClearColor( 1f, 0.5f, 0f, 1 );
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
+        Gdx.gl.glClearColor(1f, 0.5f, 0f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
     }
 }

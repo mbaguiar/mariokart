@@ -17,17 +17,17 @@ public class Message implements Serializable {
 
     public enum SENDER {SERVER, CLIENT}
 
-    public Message(MESSAGE_TYPE t, SENDER s){
+    public Message(MESSAGE_TYPE t, SENDER s) {
         type = t;
         sender = s;
         options = new Hashtable<String, Object>();
     }
 
-    public MESSAGE_TYPE getType(){
+    public MESSAGE_TYPE getType() {
         return type;
     }
 
-    public void addOption(String s, Object o){
+    public void addOption(String s, Object o) {
         options.put(s, o);
     }
 
@@ -35,9 +35,11 @@ public class Message implements Serializable {
         return options;
     }
 
-    public int getSenderId() { return this.senderId; }
+    public int getSenderId() {
+        return this.senderId;
+    }
 
-    public void setSenderId(int id){
+    public void setSenderId(int id) {
         this.senderId = id;
     }
 

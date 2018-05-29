@@ -15,7 +15,8 @@ import com.lpoo1718_t1g3.mariokart.controller.GameController;
 
 public class MenuView extends ScreenAdapter {
     private Stage stage;
-    public MenuView(){
+
+    public MenuView() {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
@@ -44,28 +45,28 @@ public class MenuView extends ScreenAdapter {
         buttonGroup.row();
         buttonGroup.add(quitBtn).pad(20);
 
-        playBtn.addListener(new ClickListener(){
+        playBtn.addListener(new ClickListener() {
             @Override
-            public void clicked(InputEvent event, float x, float y){
+            public void clicked(InputEvent event, float x, float y) {
                 GameController.getInstance().startLobby();
             }
         });
 
-        buttonGroup.setPosition(stage.getWidth()/2f, stage.getHeight()/2f);
+        buttonGroup.setPosition(stage.getWidth() / 2f, stage.getHeight() / 2f);
         stage.addActor(buttonGroup);
 
     }
 
     @Override
-    public void render (float delta) {
+    public void render(float delta) {
         drawBackground();
         stage.act();
         stage.draw();
     }
 
-    private void drawBackground(){
-        Gdx.gl.glClearColor( 0f, 1f, 0f, 1 );
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
+    private void drawBackground() {
+        Gdx.gl.glClearColor(0f, 1f, 0f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
     }
 
 }
