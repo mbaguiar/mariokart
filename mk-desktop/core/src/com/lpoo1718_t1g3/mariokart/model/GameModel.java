@@ -86,4 +86,12 @@ public class GameModel {
         characters.add(new Character("Yoshi"));
         characters.add(new Character("Bowser"));
     }
+
+    public String getPartyName() {
+        return partyName;
+    }
+
+    public void setPartyName(String partyName) {
+        this.partyName = partyName;
+    }
 }

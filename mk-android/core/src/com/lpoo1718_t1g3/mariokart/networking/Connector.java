@@ -1,4 +1,6 @@
-package com.lpoo1718_t1g.mariokart.networking;
+package com.lpoo1718_t1g3.mariokart.networking;
+
+import com.lpoo1718_t1g3.mariokart.Controller.GameController;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -58,6 +60,7 @@ public class Connector {
                 Message input;
                 try {
                     while ((input = (Message) istream.readObject()) != null){
+                        handleMessage(input);
                     }
                 } catch (IOException | ClassNotFoundException e){
                     e.printStackTrace();
@@ -89,5 +92,17 @@ public class Connector {
             e.printStackTrace();
         }
 
+    }
+
+    private void handleMessage(Message m){
+        System.out.println(m.toString());
+        switch (m.getType()){
+            case CONNECTION:
+                GameController.getInstance().getConnectionAnswer(m);
+                break;
+            case PLAYER_REGISTRY:
+                GameController.getInstance().getRegistryAnswer(m);
+                break;
+        }
     }
 }

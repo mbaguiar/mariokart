@@ -60,6 +60,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.google.zxing:core:3.3.0"
         compile 'com.google.zxing:javase:3.3.0'
+        compile "com.codeandweb.physicseditor:gdx-pe-loader:1.1.0"
         
     }
 }

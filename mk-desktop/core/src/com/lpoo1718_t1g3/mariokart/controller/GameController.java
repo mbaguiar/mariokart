@@ -1,5 +1,6 @@
 package com.lpoo1718_t1g3.mariokart.controller;
 
+import com.badlogic.gdx.Game;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
@@ -47,6 +48,7 @@ public class GameController {
         //test if connection is possible (max players, state of game, etc)
         Message returnMessage = new Message(Message.MESSAGE_TYPE.CONNECTION, Message.SENDER.SERVER);
         returnMessage.addOption("connectionSuccessful", true); // or false
+        returnMessage.addOption("partyName", GameModel.getInstance().getPartyName());
         writeToClient(returnMessage, m.getSenderId());
     }
 
@@ -63,12 +65,13 @@ public class GameController {
                 returnMessage.addOption("registrySuccessful", false);
                 returnMessage.addOption("error", "Player name already in use");
             }
-            writeToClient(m, m.getSenderId());
-
+            writeToClient(returnMessage, m.getSenderId());
+            System.out.println(m);
         }
 
     public void startGame(){
-        MarioKart.getInstance().setScreen(new CharacterPickerView());
+        //MarioKart.getInstance().setScreen(new CharacterPickerView());
+        this.startRace();
     }
 
     public void startRace() {

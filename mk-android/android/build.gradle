@@ -18,7 +18,7 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
-        applicationId "com.lpoo1718_t1g.mariokart"
+        applicationId "com.lpoo1718_t1g3.mariokart"
         minSdkVersion 9
         targetSdkVersion 25
         versionCode 1
@@ -79,7 +79,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.lpoo1718_t1g.mariokart/com.lpoo1718_t1g.mariokart.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.lpoo1718_t1g3.mariokart/AndroidLauncher'
 }
 
 // sets up the Android Eclipse project, using the old Ant based build.

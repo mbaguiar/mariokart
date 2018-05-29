@@ -1,4 +1,4 @@
-package com.lpoo1718_t1g.mariokart.View;
+package com.lpoo1718_t1g3.mariokart.View;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -12,8 +12,8 @@ public class ViewDefaults {
     private static BitmapFont defaultButtonFont;
     private static BitmapFont defaultTextFieldFont;
 
-    public static BitmapFont getDefaultButtonFont(){
-        if (defaultButtonFont == null){
+    public static BitmapFont getDefaultButtonFont() {
+        if (defaultButtonFont == null) {
             parameter.borderColor = Color.BLACK;
             parameter.borderWidth = 5;
             parameter.size = 80;
@@ -23,8 +23,8 @@ public class ViewDefaults {
         return defaultButtonFont;
     }
 
-    public static BitmapFont getDefaultTextFieldFont(){
-        if (defaultTextFieldFont == null){
+    public static BitmapFont getDefaultTextFieldFont() {
+        if (defaultTextFieldFont == null) {
             parameter.borderColor = Color.BLACK;
             parameter.borderWidth = 5;
             parameter.size = 50;
@@ -33,8 +33,6 @@ public class ViewDefaults {
 
         return defaultTextFieldFont;
     }
-
-
 
 
 }
