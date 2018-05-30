@@ -51,15 +51,6 @@ public class GameModel {
         return kart;
     }
 
-    public boolean addPlayer(int playerId, String playerHandle) {
-
-        for (Player p : players) {
-            if (p.getPlayerHandle().equals(playerHandle)) return false;
-        }
-        players.add(new Player(playerId, playerHandle));
-        return true;
-    }
-
     public TrackModel getTrack1() {
         return track1;
     }

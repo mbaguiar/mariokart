@@ -36,8 +36,8 @@ import com.lpoo1718_t1g3.mariokart.view.RaceView;
 
         public boolean registerPlayer(int playerId, String playerHandle) {
 
-            if (GameModel.getInstance().addPlayer(playerId, playerHandle)) {
-                //raceController.addKartBody(GameModel.getInstance().getPlayers().get(playerId));xxx
+            if (GameModel.getInstance().addPlayer(playerId, playerHandle, "Mario")) {
+                //raceController.addKartBody(GameModel.getInstance().getPlayers().get(playerId));
                 return true;
             }
 
@@ -74,8 +74,6 @@ import com.lpoo1718_t1g3.mariokart.view.RaceView;
             }
             writeToClient(returnMessage, m.getSenderId());
             System.out.println(m);
-
-            writeToClient(m, m.getSenderId());
         }
 
         public void startGame(){

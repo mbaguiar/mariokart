@@ -3,7 +3,6 @@ package com.lpoo1718_t1g3.mariokart;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.lpoo1718_t1g3.mariokart.View.ButtonControlView;
 import com.lpoo1718_t1g3.mariokart.View.MenuView;
 
 public class MarioKart extends Game {
