@@ -28,8 +28,8 @@ public class TrackBody {
         TrackPart trackPart2 = new TrackPart(false, true, false);
 
         physicsBodies = new PhysicsShapeCache("track1.xml");
-        //body1 = physicsBodies.createBody("track1", world, bodyDef, 1013/4033f, 977/3875f);
-        //body1.setUserData(trackPart1);
+        body1 = physicsBodies.createBody("track1", world, bodyDef, 1013/4033f, 977/3875f);
+        body1.setUserData(trackPart1);
         physicsBodie1 = new PhysicsShapeCache("track1-back.xml");
         body2 = physicsBodie1.createBody("track1-back", world, bodyDef, 1013/4033f, 977/3875f);
 

@@ -103,7 +103,7 @@ public class RaceView extends ScreenAdapter {
         if (Gdx.input.isKeyPressed((Input.Keys.A))) {
             GameController.getInstance().getRaceController().setKartState(KartBody.steer_type.STEER_LEFT, 1);
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            GameController.getInstance().getRaceController().setKartState(KartBody.steer_type.STEER_HARD_RIGHT, 1);
+            GameController.getInstance().getRaceController().setKartState(KartBody.steer_type.STEER_RIGHT, 1);
         } else {
             GameController.getInstance().getRaceController().setKartState(KartBody.steer_type.STEER_NONE, 1);
         }

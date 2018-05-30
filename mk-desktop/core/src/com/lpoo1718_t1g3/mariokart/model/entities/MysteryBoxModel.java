@@ -6,6 +6,9 @@ import java.util.TimerTask;
 
 public class MysteryBoxModel extends EntityModel {
 
+    public static final float WIDTH = 16;
+    public static final float HEIGHT = 16;
+
     private boolean enable;
 
     public MysteryBoxModel(float x, float y, float rotation) {

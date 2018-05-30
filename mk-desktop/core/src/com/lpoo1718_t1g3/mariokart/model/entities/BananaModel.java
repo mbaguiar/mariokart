@@ -2,6 +2,9 @@ package com.lpoo1718_t1g3.mariokart.model.entities;
 
 public class BananaModel extends EntityModel {
 
+    public static final float WIDTH = 16;
+    public static final float HEIGHT = 16;
+
     public boolean toDelete;
 
     public BananaModel(float x, float y, float rotation) {

@@ -125,13 +125,13 @@ public class KartBody extends EntityBody {
 
         switch (this.steer) {
             case STEER_LEFT:
-                this.wheelAngle = Math.min(Math.max(this.wheelAngle, 0) + incr, this.minSteerAngle);
+                this.wheelAngle = Math.max(Math.min(this.wheelAngle, 0) + incr, this.minSteerAngle);
                 break;
             case STEER_RIGHT:
                 this.wheelAngle = Math.min(Math.max(this.wheelAngle, 0) - incr, -this.minSteerAngle);
                 break;
             case STEER_HARD_LEFT:
-                this.wheelAngle = Math.min(Math.min(this.wheelAngle, 0) + incr, this.maxSteerAngle);
+                this.wheelAngle = Math.max(Math.min(this.wheelAngle, 0) + incr, this.maxSteerAngle);
                 break;
             case STEER_HARD_RIGHT:
                 this.wheelAngle = Math.max(Math.min(this.wheelAngle, 0) - incr, -this.maxSteerAngle);
@@ -140,6 +140,8 @@ public class KartBody extends EntityBody {
                 this.wheelAngle = 0;
                 break;
         }
+
+        System.out.println(this.wheelAngle);
 
         for (TireBody tire : getRevolvingWheels()) {
             tire.setAngle(this.wheelAngle);
