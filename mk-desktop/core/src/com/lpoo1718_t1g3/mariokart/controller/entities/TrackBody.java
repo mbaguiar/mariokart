@@ -1,7 +1,7 @@
 package com.lpoo1718_t1g3.mariokart.controller.entities;
-
 import com.badlogic.gdx.physics.box2d.*;
 import com.codeandweb.physicseditor.PhysicsShapeCache;
+import com.lpoo1718_t1g3.mariokart.model.TrackPart;
 import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
 
 public class TrackBody {
@@ -9,30 +9,49 @@ public class TrackBody {
     Body body1;
     Body body2;
 
+    float y = 49*0.04f;
+    float x = 34*0.04f;
+
     PhysicsShapeCache physicsBodies;
     PhysicsShapeCache physicsBodie1;
 
     public TrackBody(World world, EntityModel model) {
-        physicsBodies = new PhysicsShapeCache("track1.xml");
-        body1 = physicsBodies.createBody("track1", world, 1080/4033f, 1080/3875f);
-        body1.setUserData(model);
-        physicsBodie1 = new PhysicsShapeCache("track1-back.xml");
-        body2 = physicsBodie1.createBody("track1-back", world, 1080/4033f, 1080/3875f);
-        body2.setUserData(model);
-        //createFixture(body);
-    }
 
-    private void createFixture(Body body) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(34, 49);
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.active = true;
+        bodyDef.awake = true;
+        bodyDef.angle = 0;
+
+        TrackPart trackPart1 = new TrackPart(true, false, false);
+        TrackPart trackPart2 = new TrackPart(false, true, false);
+
+        physicsBodies = new PhysicsShapeCache("track1.xml");
+        //body1 = physicsBodies.createBody("track1", world, bodyDef, 1013/4033f, 977/3875f);
+        //body1.setUserData(trackPart1);
+        physicsBodie1 = new PhysicsShapeCache("track1-back.xml");
+        body2 = physicsBodie1.createBody("track1-back", world, bodyDef, 1013/4033f, 977/3875f);
+
+        /*
+        body1 = world.createBody(bodyDef);
+        body1.setUserData(trackPart1);
+
         FixtureDef fixtureDef = new FixtureDef();
-        PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(10, 10);
-        fixtureDef.shape = polygonShape;
-        fixtureDef.density = 1f;
-        fixtureDef.friction = 1;
-        fixtureDef.restitution = 0;
         fixtureDef.isSensor = true;
-        body.createFixture(fixtureDef);
-        polygonShape.dispose();
+        fixtureDef.restitution = 0;
+        fixtureDef.friction = 1;
+        fixtureDef.density = 1;
+        PolygonShape polygonShape = new PolygonShape();
+        polygonShape.setAsBox(100, 100);
+        fixtureDef.shape = polygonShape;
+        body1.createFixture(fixtureDef);
+*/
+
+
+        body2.setUserData(trackPart2);
+
+
     }
 
     public Body getBody() {

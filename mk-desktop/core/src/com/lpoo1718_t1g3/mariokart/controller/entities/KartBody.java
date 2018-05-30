@@ -3,11 +3,14 @@ package com.lpoo1718_t1g3.mariokart.controller.entities;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
+import com.lpoo1718_t1g3.mariokart.model.entities.KartModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
 
 public class KartBody extends EntityBody {
 
@@ -45,10 +48,10 @@ public class KartBody extends EntityBody {
         createFixture(body);
 
         this.wheels = new ArrayList<TireBody>();
-        this.wheels.add(new TireBody(world, this, -0.5f, -0.6f, 0.2f, 0.4f, true, true));
-        this.wheels.add(new TireBody(world, this, 0.5f, -0.6f, 0.2f, 0.4f, true, true));
-        this.wheels.add(new TireBody(world, this, -0.5f, 0.6f, 0.2f, 0.4f, false, false));
-        this.wheels.add(new TireBody(world, this, 0.5f, 0.6f, 0.2f, 0.4f, false, false));
+        this.wheels.add(new TireBody(world, this, -12f, -14f, 5f, 10f, true, true));
+        this.wheels.add(new TireBody(world, this, 12f, -14f, 5f, 10f, true, true));
+        this.wheels.add(new TireBody(world, this, -12f, 14f, 5f, 10f, false, false));
+        this.wheels.add(new TireBody(world, this, 12f, 14f, 5f, 10f, false, false));
 
 
     }
@@ -59,7 +62,7 @@ public class KartBody extends EntityBody {
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.2f;
         PolygonShape kartShape = new PolygonShape();
-        kartShape.setAsBox(0.5f, 0.5f);
+        kartShape.setAsBox(KartModel.WIDTH/2, KartModel.HEIGHT/2);
         fixtureDef.shape = kartShape;
         this.body.createFixture(fixtureDef);
     }
@@ -128,7 +131,7 @@ public class KartBody extends EntityBody {
                 this.wheelAngle = Math.min(Math.max(this.wheelAngle, 0) - incr, -this.minSteerAngle);
                 break;
             case STEER_HARD_LEFT:
-                this.wheelAngle = Math.max(Math.min(this.wheelAngle, 0) + incr, this.maxSteerAngle);
+                this.wheelAngle = Math.min(Math.min(this.wheelAngle, 0) + incr, this.maxSteerAngle);
                 break;
             case STEER_HARD_RIGHT:
                 this.wheelAngle = Math.max(Math.min(this.wheelAngle, 0) - incr, -this.maxSteerAngle);
@@ -204,5 +207,13 @@ public class KartBody extends EntityBody {
                     }
                 }, 500
         );
+    }
+
+    public float getPower() {
+        return power;
+    }
+
+    public float getMaxSpeed() {
+        return maxSpeed;
     }
 }

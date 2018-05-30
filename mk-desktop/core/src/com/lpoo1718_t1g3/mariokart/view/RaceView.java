@@ -45,8 +45,7 @@ public class RaceView extends ScreenAdapter {
         camera = createCamera();
         initKartViews();
         initObjectViews();
-        Box2D.init();
-        debugRenderer = new Box2DDebugRenderer();
+        debugRenderer = new Box2DDebugRenderer(true, true, false, true, true, true);
 
     }
 
@@ -85,6 +84,7 @@ public class RaceView extends ScreenAdapter {
         MarioKart.getInstance().getBatch().begin();
         drawEntities();
         MarioKart.getInstance().getBatch().end();
+
 
         debugRenderer.render(GameController.getInstance().getRaceController().getWorld(), camera.combined);
     }

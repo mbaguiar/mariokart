@@ -7,10 +7,8 @@ import com.badlogic.gdx.utils.Array;
 import com.lpoo1718_t1g3.mariokart.controller.entities.*;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.model.Player;
-import com.lpoo1718_t1g3.mariokart.model.entities.BananaModel;
-import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
-import com.lpoo1718_t1g3.mariokart.model.entities.KartModel;
-import com.lpoo1718_t1g3.mariokart.model.entities.MysteryBoxModel;
+import com.lpoo1718_t1g3.mariokart.model.TrackPart;
+import com.lpoo1718_t1g3.mariokart.model.entities.*;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 import com.lpoo1718_t1g3.mariokart.view.RaceView;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
@@ -18,6 +16,7 @@ import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
 import static com.lpoo1718_t1g3.mariokart.view.RaceView.VIEWPORT_HEIGHT;
 import static com.lpoo1718_t1g3.mariokart.view.RaceView.VIEWPORT_WIDTH;
 
@@ -45,7 +44,7 @@ public class RaceController implements ContactListener {
         }
 
         for (Player player : GameModel.getInstance().getPlayers()) {
-            kartBodies.put(player.getPlayerId(), new KartBody(world, player.getKartModel(), 1, 2, 10, 20, 25, 20, (float) Math.PI));
+            kartBodies.put(player.getPlayerId(), new KartBody(world, player.getKartModel(), 1, 2, 30, 75, 75, 200, (float) Math.PI));
         }
 
         world.setContactListener(this);
@@ -72,6 +71,7 @@ public class RaceController implements ContactListener {
 
         for (KartBody kartBody : kartBodies.values()) {
             kartBody.update(delta);
+            System.out.println(kartBody.getLocalVelocity());
         }
 
         Array<Body> bodies = new Array<Body>();
@@ -83,8 +83,13 @@ public class RaceController implements ContactListener {
             verifyBounds(body);
 
             if (!body.getUserData().equals(0)) {
-                ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
-                ((EntityModel) body.getUserData()).setRotation(MathUtils.radiansToDegrees * body.getAngle() + 0);
+
+                ((EntityModel) body.getUserData()).setPosition(body.getPosition().x * PIXEL_TO_METER, body.getPosition().y * PIXEL_TO_METER);
+                ((EntityModel) body.getUserData()).setRotation(body.getAngle());
+
+                if (body.getUserData() instanceof KartModel) {
+
+                }
             }
         }
     }
@@ -111,11 +116,11 @@ public class RaceController implements ContactListener {
         if (body.getPosition().y < 0)
             body.setTransform(body.getPosition().x, 0, body.getAngle());
 
-        if (body.getPosition().x > VIEWPORT_WIDTH)
-            body.setTransform(VIEWPORT_WIDTH, body.getPosition().y, body.getAngle());
+        if (body.getPosition().x > 1080)
+            body.setTransform(1080, body.getPosition().y, body.getAngle());
 
-        if (body.getPosition().y > VIEWPORT_HEIGHT)
-            body.setTransform(body.getPosition().x, VIEWPORT_HEIGHT, body.getAngle());
+        if (body.getPosition().y > 1080)
+            body.setTransform(body.getPosition().x, 1080, body.getAngle());
     }
 
     public void setKartState(KartBody.steer_type value, int playerId) {
@@ -130,7 +135,7 @@ public class RaceController implements ContactListener {
 
 
     public void addKartBody(Player player) {
-        kartBodies.put(player.getPlayerId(), new KartBody(world, player.getKartModel(), 1, 2, 10, 20, 25, 20, (float) 0));
+        kartBodies.put(player.getPlayerId(), new KartBody(world, player.getKartModel(), 1, 2, 100000, 20, 45, 1000000, (float) Math.PI));
     }
 
     public void useObject(int playerId) {
@@ -170,34 +175,58 @@ public class RaceController implements ContactListener {
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
 
+        System.out.println("collision");
+
+        if (bodyA.getUserData() instanceof TrackPart && bodyB.getUserData() instanceof KartModel) {
+            if (((TrackPart) bodyA.getUserData()).isMain()) {
+                System.out.println("collision with main");
+            }
+
+            if (((TrackPart) bodyA.getUserData()).isBack()) {
+                System.out.println("collision with back");
+            }
+        }
+
+        if (bodyA.getUserData() instanceof KartModel && bodyB.getUserData() instanceof TrackPart) {
+            if (((TrackPart) bodyB.getUserData()).isMain()) {
+                System.out.println("collision with main");
+            }
+
+            if (((TrackPart) bodyA.getUserData()).isBack()) {
+                System.out.println("collision with back");
+            }
+        }
+
         if (bodyA.getUserData() instanceof KartModel && bodyB.getUserData() instanceof MysteryBoxModel) {
             mysteryBoxCollision(bodyB, bodyA);
-            return;
         }
 
         if (bodyA.getUserData() instanceof MysteryBoxModel && bodyB.getUserData() instanceof KartModel) {
            mysteryBoxCollision(bodyA, bodyB);
-           return;
+
         }
 
         if (bodyA.getUserData() instanceof BananaModel && bodyB.getUserData() instanceof KartModel) {
             if (((KartModel) bodyB.getUserData()).isCollision()) {
                 bananaCollision(bodyB);
             }
-            return;
+
         }
 
         if (bodyA.getUserData() instanceof  KartModel && bodyB.getUserData() instanceof BananaModel) {
             if (((KartModel) bodyA.getUserData()).isCollision()) {
                 bananaCollision(bodyA);
             }
-            return;
         }
+
 
     }
 
     @Override
     public void endContact(Contact contact) {
+
+        System.out.println("end collision");
+
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
 
@@ -219,12 +248,12 @@ public class RaceController implements ContactListener {
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
-
+        System.out.println("coiso");
     }
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
-
+        System.out.println("coiso");
     }
 
     private void mysteryBoxCollision(Body mysteryBox, Body kartBody) {
