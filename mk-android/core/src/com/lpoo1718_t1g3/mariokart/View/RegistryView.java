@@ -66,7 +66,7 @@ public class RegistryView extends ScreenAdapter {
         drawBackground();
         stage.act();
         stage.draw();
-        GameController.getInstance().update();
+        GameController.getInstance().updateStatus();
     }
 
     private void drawBackground() {

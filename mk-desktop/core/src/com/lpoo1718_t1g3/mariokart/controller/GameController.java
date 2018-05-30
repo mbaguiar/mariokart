@@ -30,13 +30,13 @@ import com.lpoo1718_t1g3.mariokart.view.RaceView;
         }
 
         public void handleInput(Message m) {
-
+            this.raceController.handleMovement(m);
         }
 
         public boolean registerPlayer(int playerId, String playerHandle) {
 
             if (GameModel.getInstance().addPlayer(playerId, playerHandle)) {
-                //raceController.addKartBody(GameModel.getInstance().getPlayers().get(playerId));
+                //raceController.addKartBody(GameModel.getInstance().getPlayers().get(playerId));xxx
                 return true;
             }
 

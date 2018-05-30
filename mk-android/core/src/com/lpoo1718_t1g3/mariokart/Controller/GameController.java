@@ -21,7 +21,7 @@ public class GameController {
         GameModel.getInstance().setNextScreen(GameModel.game_screen.CONNECTION);
     }
 
-    public void update(){
+    public void updateStatus(){
         if (GameModel.getInstance().getNextScreen() == null) return;
         switch (GameModel.getInstance().getNextScreen()){
             case MENU:
@@ -67,7 +67,10 @@ public class GameController {
 
     public void controllerMessage(boolean t, boolean b, float d){
         Message m = new Message(Message.MESSAGE_TYPE.CONTROLLER_ACTIVITY, Message.SENDER.CLIENT);
-        //TODO send message
+        m.addOption("throttle", t);
+        m.addOption("brake", b);
+        m.addOption("direction", d);
+        Connector.getInstance().write(m);
     }
 
     private void connectionMessage(){

@@ -22,6 +22,7 @@ public class ControlView extends ScreenAdapter {
     final TextButton brake;
     final TextButton changeControls;
     final TextButton powerUp;
+    private long lastMessage = 0;
 
     public ControlView(){
         this.stage = new Stage();
@@ -101,11 +102,14 @@ public class ControlView extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        System.out.println(direction);
+        if (System.currentTimeMillis() - this.lastMessage >= 50){
+            GameController.getInstance().controllerMessage(this.isAccelerating, this.isBraking, this.direction);
+            this.lastMessage = System.currentTimeMillis();
+        }
         drawBackground();
         stage.act();
         stage.draw();
-        GameController.getInstance().update();
+        GameController.getInstance().updateStatus();
     }
 
     private void drawBackground() {
