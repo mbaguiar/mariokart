@@ -2,6 +2,7 @@ package com.lpoo1718_t1g3.mariokart.controller.entities;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
+import com.lpoo1718_t1g3.mariokart.model.entities.MysteryBoxModel;
 
 public class MysteryBoxBody extends EntityBody {
 
@@ -13,7 +14,7 @@ public class MysteryBoxBody extends EntityBody {
     public void createFixture(Body body) {
         FixtureDef fixtureDef = new FixtureDef();
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(0.5f, 0.5f);
+        polygonShape.setAsBox(MysteryBoxModel.HEIGHT / 2, MysteryBoxModel.WIDTH / 2);
         fixtureDef.shape = polygonShape;
         fixtureDef.density = 1f;
         fixtureDef.friction = 1;

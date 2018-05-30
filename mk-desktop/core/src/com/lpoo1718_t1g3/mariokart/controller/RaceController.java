@@ -69,7 +69,6 @@ public class RaceController implements ContactListener {
 
         for (KartBody kartBody : kartBodies.values()) {
             kartBody.update(delta);
-            System.out.println(kartBody.getLocalVelocity());
         }
 
         Array<Body> bodies = new Array<Body>();
@@ -127,7 +126,7 @@ public class RaceController implements ContactListener {
 
 
     public void addKartBody(Player player) {
-        kartBodies.put(player.getPlayerId(), new KartBody(world, player.getKartModel(), 1, 2, 100000, 20, 45, 1000000, (float) Math.PI));
+        kartBodies.put(player.getPlayerId(), new KartBody(world, player.getKartModel(), 1, 2, 100000, 30, 45, 1000000, (float) Math.PI));
     }
 
     public void useObject(int playerId) {
