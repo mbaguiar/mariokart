@@ -138,7 +138,7 @@ public class RaceView extends ScreenAdapter {
 
         if (Gdx.input.isKeyPressed(((Input.Keys.L)))) {
             if (!this.luigi) {
-                GameModel.getInstance().addPlayer(2, "tjfragoso", "Luigi");
+                GameModel.getInstance().addPlayer(2, "tfragoso", "Luigi");
                 GameController.getInstance().getRaceController().addKartBody(GameModel.getInstance().getPlayer(2));
                 System.out.println("Added 1 Luigi");
                 this.luigi = true;

@@ -11,7 +11,6 @@ import com.lpoo1718_t1g3.mariokart.model.TrackPart;
 import com.lpoo1718_t1g3.mariokart.model.entities.*;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 import com.lpoo1718_t1g3.mariokart.view.RaceView;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +60,6 @@ public class RaceController implements ContactListener {
 
     public void update(float delta) {
 
-        handleMovement();
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
         while (accumulator >= 1 / 60f) {
@@ -93,18 +91,12 @@ public class RaceController implements ContactListener {
         }
     }
 
-    public void handleInput(Message m) {
-
-        gas = (Boolean) m.getOptions().get("upPressed");
-        left = (Boolean) m.getOptions().get("leftPressed");
-        right = (Boolean) m.getOptions().get("rightPressed");
-
-    }
-
-    private void handleMovement() {
-        if (gas) setKartState(KartBody.acc_type.ACC_ACCELERATE, 1);
-        if (left) setKartState(KartBody.steer_type.STEER_LEFT, 1);
-        if (right) setKartState(KartBody.steer_type.STEER_RIGHT, 1);
+    void handleMovement(Message m) {
+        if ((Boolean) m.getOptions().get("throttle")) setKartState(KartBody.acc_type.ACC_ACCELERATE, m.getSenderId());
+        if ((Boolean) m.getOptions().get("brake")) setKartState(KartBody.acc_type.ACC_BRAKE, m.getSenderId());
+        float direction = (Float) m.getOptions().get("direction");
+        if (direction >= 5) setKartState(KartBody.steer_type.STEER_RIGHT, m.getSenderId());
+        else if (direction <= -5) setKartState(KartBody.steer_type.STEER_LEFT, m.getSenderId());
     }
 
 

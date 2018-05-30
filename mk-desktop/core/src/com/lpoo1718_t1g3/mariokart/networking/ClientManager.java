@@ -1,7 +1,6 @@
 package com.lpoo1718_t1g3.mariokart.networking;
 
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
-import com.lpoo1718_t1g3.mariokart.model.GameModel;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
