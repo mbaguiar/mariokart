@@ -1,10 +1,8 @@
 package com.lpoo1718_t1g3.mariokart.model.entities;
-
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
-
 import java.util.Random;
 
-import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
+import static com.lpoo1718_t1g3.mariokart.model.entities.KartModel.speed_type.NORMAL;
 
 public class KartModel extends EntityModel {
 
@@ -15,8 +13,19 @@ public class KartModel extends EntityModel {
     public static final float WIDTH = 24;
     public static final float HEIGHT = 28;
 
+    public final static float POWER_HIGH = 100000;
+    public final static float MAXSPEED_HIGH = 10000000;
+
+    public final static float POWER_LOW = 1000;
+    public final static float MAXSPEED_LOW = 10000;
+
+    public enum speed_type {NORMAL, LOW, HIGH}
+
+    public speed_type speed = NORMAL;
+
     private GameModel.object_type object;
     private boolean collision;
+    boolean isColliding = false;
 
     public KartModel(float x, float y, float rotation) {
         super(x, y, rotation);
@@ -24,7 +33,16 @@ public class KartModel extends EntityModel {
         collision = true;
     }
 
+    public boolean isColliding() {
+        return isColliding;
+    }
+
+    public void setColliding(boolean colliding) {
+        isColliding = colliding;
+    }
+
     public void generateObject() {
+
         if (object == null) {
             Random rand = new Random();
             int n = rand.nextInt(2);
@@ -50,5 +68,13 @@ public class KartModel extends EntityModel {
 
     public void setCollision(boolean collision) {
         this.collision = collision;
+    }
+
+    public speed_type getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(speed_type speed) {
+        this.speed = speed;
     }
 }

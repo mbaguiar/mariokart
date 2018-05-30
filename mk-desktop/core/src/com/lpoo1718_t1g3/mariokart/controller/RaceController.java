@@ -14,10 +14,10 @@ import com.lpoo1718_t1g3.mariokart.view.RaceView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
-import static com.lpoo1718_t1g3.mariokart.view.RaceView.VIEWPORT_HEIGHT;
-import static com.lpoo1718_t1g3.mariokart.view.RaceView.VIEWPORT_WIDTH;
 
 public class RaceController implements ContactListener {
 
@@ -161,31 +161,32 @@ public class RaceController implements ContactListener {
 
     }
 
+    private KartBody getKartBody(Body body) {
+        for (KartBody kartBody : kartBodies.values()) {
+            if (kartBody.getBody() == body) {
+                return kartBody;
+            }
+        }
+
+        return null;
+    }
+
     @Override
     public void beginContact(Contact contact) {
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
 
-        System.out.println("collision");
 
         if (bodyA.getUserData() instanceof TrackPart && bodyB.getUserData() instanceof KartModel) {
-            if (((TrackPart) bodyA.getUserData()).isMain()) {
-                System.out.println("collision with main");
-            }
-
-            if (((TrackPart) bodyA.getUserData()).isBack()) {
-                System.out.println("collision with back");
-            }
+                ((KartModel) bodyB.getUserData()).setColliding(true);
+                ((KartModel) bodyB.getUserData()).setSpeed(KartModel.speed_type.LOW);
+                System.out.println("start collision");
         }
 
         if (bodyA.getUserData() instanceof KartModel && bodyB.getUserData() instanceof TrackPart) {
-            if (((TrackPart) bodyB.getUserData()).isMain()) {
-                System.out.println("collision with main");
-            }
-
-            if (((TrackPart) bodyA.getUserData()).isBack()) {
-                System.out.println("collision with back");
-            }
+            ((KartModel) bodyA.getUserData()).setColliding(true);     
+            ((KartModel) bodyA.getUserData()).setSpeed(KartModel.speed_type.LOW);
+            System.out.println("start collision");
         }
 
         if (bodyA.getUserData() instanceof KartModel && bodyB.getUserData() instanceof MysteryBoxModel) {
@@ -216,25 +217,56 @@ public class RaceController implements ContactListener {
     @Override
     public void endContact(Contact contact) {
 
-        System.out.println("end collision");
 
-        Body bodyA = contact.getFixtureA().getBody();
+        final Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
 
         if (bodyA.getUserData() instanceof BananaModel && bodyB.getUserData() instanceof KartModel) {
             if (!((KartModel) bodyB.getUserData()).isCollision()) {
                 ((KartModel) bodyB.getUserData()).setCollision(false);
             }
-            return;
         }
 
         if (bodyA.getUserData() instanceof  KartModel && bodyB.getUserData() instanceof BananaModel) {
             if (!((KartModel) bodyA.getUserData()).isCollision()) {
                 ((KartModel) bodyA.getUserData()).setCollision(true);
             }
-            return;
+
         }
 
+
+        if (bodyA.getUserData() instanceof TrackPart && bodyB.getUserData() instanceof KartModel) {
+
+             KartModel kart = (KartModel) bodyB.getUserData();
+             esparguete(kart);
+             kart.setColliding(false);
+            //((KartModel) bodyB.getUserData()).setSpeed(KartModel.speed_type.NORMAL);
+            System.out.println("end collision");
+        }
+
+        if (bodyA.getUserData() instanceof KartModel && bodyB.getUserData() instanceof TrackPart) {
+
+            KartModel kart = (KartModel) bodyA.getUserData();
+
+            esparguete(kart);
+            kart.setColliding(false);
+            //((KartModel) bodyA.getUserData()).setSpeed(KartModel.speed_type.NORMAL);
+            System.out.println("end collision");
+        }
+
+    }
+
+    private void esparguete(final KartModel kart)  {
+        TimerTask t = new TimerTask() {
+            @Override
+            public void run() {
+                if (!kart.isColliding()){
+                    kart.setSpeed(KartModel.speed_type.NORMAL);
+                }
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(t, 5);
     }
 
     @Override
