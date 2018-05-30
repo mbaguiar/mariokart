@@ -6,14 +6,14 @@ import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
 
 public class TrackBody {
 
-    Body body1;
-    Body body2;
+    private Body body1;
+    private Body body2;
 
     float y = 49*0.04f;
     float x = 34*0.04f;
 
-    PhysicsShapeCache physicsBodies;
-    PhysicsShapeCache physicsBodie1;
+    private PhysicsShapeCache physicsBodies;
+    private PhysicsShapeCache physicsBodie1;
 
     public TrackBody(World world, EntityModel model) {
 
@@ -32,25 +32,7 @@ public class TrackBody {
         body1.setUserData(trackPart1);
         physicsBodie1 = new PhysicsShapeCache("track1-back.xml");
         body2 = physicsBodie1.createBody("track1-back", world, bodyDef, 1013/4033f, 977/3875f);
-
-        /*
-        body1 = world.createBody(bodyDef);
-        body1.setUserData(trackPart1);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.isSensor = true;
-        fixtureDef.restitution = 0;
-        fixtureDef.friction = 1;
-        fixtureDef.density = 1;
-        PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(100, 100);
-        fixtureDef.shape = polygonShape;
-        body1.createFixture(fixtureDef);
-*/
-
-
         body2.setUserData(trackPart2);
-
 
     }
 

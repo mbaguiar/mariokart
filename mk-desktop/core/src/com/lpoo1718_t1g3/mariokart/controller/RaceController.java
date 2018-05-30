@@ -44,7 +44,7 @@ public class RaceController implements ContactListener {
         }
 
         for (Player player : GameModel.getInstance().getPlayers()) {
-            kartBodies.put(player.getPlayerId(), new KartBody(world, player.getKartModel(), 1, 2, 30, 75, 75, 200, (float) Math.PI));
+            kartBodies.put(player.getPlayerId(), new KartBody(world, player.getKartModel(), (float) Math.PI));
         }
 
         world.setContactListener(this);
@@ -134,7 +134,7 @@ public class RaceController implements ContactListener {
 
 
     public void addKartBody(Player player) {
-        kartBodies.put(player.getPlayerId(), new KartBody(world, player.getKartModel(), 1, 2, 100000, 30, 45, 1000000, (float) Math.PI));
+        kartBodies.put(player.getPlayerId(), new KartBody(world, player.getKartModel(), (float) Math.PI));
     }
 
     public void useObject(int playerId) {

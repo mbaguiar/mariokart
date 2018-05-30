@@ -10,11 +10,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
-
 public class KartBody extends EntityBody {
 
-    float width, length, maxSteerAngle, minSteerAngle, maxSpeed, power;
+    float maxSteerAngle, minSteerAngle, maxSpeed, power;
     float wheelAngle;
     private steer_type steer;
     private acc_type accelerate;
@@ -29,19 +27,16 @@ public class KartBody extends EntityBody {
 
     ;
 
-    public KartBody(World world, EntityModel model, float width, float length, float power, float minSteerAngle, float maxSteerAngle, float maxSpeed, float angle) {
+    public KartBody(World world, EntityModel model, float angle) {
         super(world, model, BodyDef.BodyType.DynamicBody);
 
         this.steer = steer_type.STEER_NONE;
         this.accelerate = acc_type.ACC_NONE;
-
-        this.width = width;
-        this.length = length;
         this.body.setTransform(body.getPosition().x, body.getPosition().y, angle);
-        this.maxSteerAngle = maxSteerAngle;
-        this.minSteerAngle = minSteerAngle;
-        this.maxSpeed = maxSpeed;
-        this.power = power;
+        this.maxSteerAngle = KartModel.MAXSTEERANGLE;
+        this.minSteerAngle = KartModel.MINSTEERANGLE;
+        this.maxSpeed = KartModel.MAXSPEED;
+        this.power = KartModel.POWER;
         this.wheelAngle = 0;
         this.update = true;
 

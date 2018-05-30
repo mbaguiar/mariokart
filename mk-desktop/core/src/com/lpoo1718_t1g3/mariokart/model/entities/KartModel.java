@@ -8,6 +8,10 @@ import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
 
 public class KartModel extends EntityModel {
 
+    public final static float POWER = 100000;
+    public final static float MINSTEERANGLE = 30;
+    public final static float MAXSTEERANGLE = 45;
+    public final static float MAXSPEED = 1000000;
     public static final float WIDTH = 24;
     public static final float HEIGHT = 28;
 
