@@ -1,5 +1,6 @@
 package com.lpoo1718_t1g3.mariokart.controller;
 
+import com.badlogic.gdx.physics.box2d.Box2D;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.networking.Message;

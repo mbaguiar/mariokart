@@ -4,7 +4,12 @@ import com.lpoo1718_t1g3.mariokart.model.GameModel;
 
 import java.util.Random;
 
+import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
+
 public class KartModel extends EntityModel {
+
+    public static final float WIDTH = 24;
+    public static final float HEIGHT = 28;
 
     private GameModel.object_type object;
     private boolean collision;

@@ -5,6 +5,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
 
+import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
+
 public abstract class EntityBody {
 
     Body body;
@@ -12,7 +14,7 @@ public abstract class EntityBody {
     public EntityBody(World world, EntityModel model, BodyDef.BodyType bodyType) {
         BodyDef def = new BodyDef();
         def.type = bodyType;
-        def.position.set(model.getX(), model.getY());
+        def.position.set(model.getX() / PIXEL_TO_METER, model.getY() / PIXEL_TO_METER);
         def.angle = model.getRotation();
         body = world.createBody(def);
         body.setUserData(model);

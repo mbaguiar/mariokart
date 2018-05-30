@@ -2,10 +2,7 @@ package com.lpoo1718_t1g3.mariokart.model.entities;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+
 
 public class MysteryBoxModel extends EntityModel {
 
