@@ -1,6 +1,7 @@
 package com.lpoo1718_t1g3.mariokart.networking;
 
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
+import com.lpoo1718_t1g3.mariokart.model.GameModel;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -61,7 +62,8 @@ public class ClientManager extends Thread {
         }
     }
 
-    void write(Message m) {
+    void write(Message m){
+        System.out.println(m);
         final Message obj = m;
         new Thread(new Runnable() {
             @Override
