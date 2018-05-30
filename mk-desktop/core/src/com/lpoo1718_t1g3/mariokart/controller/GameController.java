@@ -3,8 +3,6 @@ package com.lpoo1718_t1g3.mariokart.controller;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
-import com.lpoo1718_t1g3.mariokart.networking.ServerManager;
-import com.lpoo1718_t1g3.mariokart.view.CharacterPickerView;
 import com.lpoo1718_t1g3.mariokart.view.LobbyView;
 import com.lpoo1718_t1g3.mariokart.view.RaceView;
 
@@ -62,6 +60,7 @@ public class GameController {
         //test if connection is possible (max players, state of game, etc)
         Message returnMessage = new Message(Message.MESSAGE_TYPE.CONNECTION, Message.SENDER.SERVER);
         returnMessage.addOption("connectionSuccessful", true); // or false
+        returnMessage.addOption("partyName", GameModel.getInstance().getPartyName());
         writeToClient(returnMessage, m.getSenderId());
 
     }
@@ -72,20 +71,22 @@ public class GameController {
 
     }
 
-    public void newPlayer(Message m) {
-        Message returnMessage = new Message(Message.MESSAGE_TYPE.PLAYER_REGISTRY, Message.SENDER.SERVER);
-        if (registerPlayer(m.getSenderId(), (String) m.getOptions().get("playerHandle"))) {
-            returnMessage.addOption("registrySuccessful", true);
-        } else {
-            returnMessage.addOption("registrySuccessful", false);
-            returnMessage.addOption("error", "Player name already in use");
+    public void newPlayer(Message m){
+            Message returnMessage = new Message(Message.MESSAGE_TYPE.PLAYER_REGISTRY, Message.SENDER.SERVER);
+            if (registerPlayer(m.getSenderId(), (String) m.getOptions().get("playerHandle"))) {
+                returnMessage.addOption("registrySuccessful", true);
+            } else {
+                returnMessage.addOption("registrySuccessful", false);
+                returnMessage.addOption("error", "Player name already in use");
+            }
+            writeToClient(returnMessage, m.getSenderId());
+            System.out.println(m);
         }
         writeToClient(m, m.getSenderId());
 
-    }
-
-    public void startGame() {
-        MarioKart.getInstance().setScreen(new CharacterPickerView());
+    public void startGame(){
+        //MarioKart.getInstance().setScreen(new CharacterPickerView());
+        this.startRace();
     }
 
     public void startRace() {

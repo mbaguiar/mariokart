@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">mk-android</string>
-    <!--<string name="defaultIp">192.168.1.98</string>-->
-    <string name="defaultIp">172.30.29.253</string>
-    <string name="defaultPort">4444</string>
-</resources>

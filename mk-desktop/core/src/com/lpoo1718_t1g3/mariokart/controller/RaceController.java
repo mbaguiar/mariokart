@@ -86,10 +86,7 @@ public class RaceController implements ContactListener {
                 ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
                 ((EntityModel) body.getUserData()).setRotation(MathUtils.radiansToDegrees * body.getAngle() + 0);
             }
-
-
         }
-
     }
 
     public void handleInput(Message m) {
