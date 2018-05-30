@@ -136,10 +136,6 @@ public class GameModel {
         return partyName;
     }
 
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
-
     public void setPartyName(String partyName) {
         this.partyName = partyName;
     }

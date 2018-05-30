@@ -6,72 +6,64 @@ import com.lpoo1718_t1g3.mariokart.networking.Message;
 import com.lpoo1718_t1g3.mariokart.view.LobbyView;
 import com.lpoo1718_t1g3.mariokart.view.RaceView;
 
-public class GameController {
+    public class GameController {
 
 
-    private RaceController raceController;
-    private static GameController ourInstance = null;
-    private ServerManager server;
+        private RaceController raceController;
+        private static GameController ourInstance = new GameController();
 
-    private GameController() {
-        server = new ServerManager();
-        raceController = new RaceController();
-    }
+        private GameController() {
+        }
 
-    public static GameController getInstance() {
-        if (ourInstance == null) {
-            ourInstance = new GameController();
+        public static GameController getInstance() {
             return ourInstance;
         }
 
-        return ourInstance;
-    }
-
-    public RaceController getRaceController() {
-        return raceController;
-    }
-
-    public void update(float delta) {
-        if (MarioKart.getInstance().getScreen().getClass() == RaceView.class) {
-            raceController.update(delta);
-        }
-    }
-
-    public void handleInput(Message m) {
-
-    }
-
-    public boolean registerPlayer(int playerId, String playerHandle) {
-
-        if (GameModel.getInstance().addPlayer(playerId, playerHandle)) {
-            //raceController.addKartBody(GameModel.getInstance().getPlayers().get(playerId));
-            return true;
+        public RaceController getRaceController() {
+            return raceController;
         }
 
-        return false;
-    }
+        public void update(float delta) {
+            if (MarioKart.getInstance().getScreen().getClass() == RaceView.class) {
+                raceController.update(delta);
+            }
+        }
 
-    public void startLobby() {
-        GameModel.getInstance().startServer();
-        MarioKart.getInstance().setScreen(new LobbyView());
-    }
+        public void handleInput(Message m) {
 
-    public void newConnection(Message m) {
-        //test if connection is possible (max players, state of game, etc)
-        Message returnMessage = new Message(Message.MESSAGE_TYPE.CONNECTION, Message.SENDER.SERVER);
-        returnMessage.addOption("connectionSuccessful", true); // or false
-        returnMessage.addOption("partyName", GameModel.getInstance().getPartyName());
-        writeToClient(returnMessage, m.getSenderId());
+        }
 
-    }
+        public boolean registerPlayer(int playerId, String playerHandle) {
+
+            if (GameModel.getInstance().addPlayer(playerId, playerHandle)) {
+                //raceController.addKartBody(GameModel.getInstance().getPlayers().get(playerId));
+                return true;
+            }
+
+            return false;
+        }
+
+        public void startLobby() {
+            GameModel.getInstance().startServer();
+            MarioKart.getInstance().setScreen(new LobbyView());
+        }
+
+        public void newConnection(Message m) {
+            //test if connection is possible (max players, state of game, etc)
+            Message returnMessage = new Message(Message.MESSAGE_TYPE.CONNECTION, Message.SENDER.SERVER);
+            returnMessage.addOption("connectionSuccessful", true); // or false
+            returnMessage.addOption("partyName", GameModel.getInstance().getPartyName());
+            writeToClient(returnMessage, m.getSenderId());
+
+        }
 
 
-    public void writeToClient(Message m, int id) {
-        GameModel.getInstance().getServer().writeToClient(m, id);
+        public void writeToClient(Message m, int id) {
+            GameModel.getInstance().getServer().writeToClient(m, id);
 
-    }
+        }
 
-    public void newPlayer(Message m){
+        public void newPlayer(Message m){
             Message returnMessage = new Message(Message.MESSAGE_TYPE.PLAYER_REGISTRY, Message.SENDER.SERVER);
             if (registerPlayer(m.getSenderId(), (String) m.getOptions().get("playerHandle"))) {
                 returnMessage.addOption("registrySuccessful", true);
@@ -81,16 +73,17 @@ public class GameController {
             }
             writeToClient(returnMessage, m.getSenderId());
             System.out.println(m);
+
+            writeToClient(m, m.getSenderId());
         }
-        writeToClient(m, m.getSenderId());
 
-    public void startGame(){
-        //MarioKart.getInstance().setScreen(new CharacterPickerView());
-        this.startRace();
-    }
+        public void startGame(){
+            //MarioKart.getInstance().setScreen(new CharacterPickerView());
+            this.startRace();
+        }
 
-    public void startRace() {
-        raceController = new RaceController();
-        MarioKart.getInstance().setScreen(raceController.getRaceView());
+        public void startRace() {
+            raceController = new RaceController();
+            MarioKart.getInstance().setScreen(raceController.getRaceView());
+        }
     }
-}
