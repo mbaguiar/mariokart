@@ -2,6 +2,7 @@ package com.lpoo1718_t1g3.mariokart.Controller;
 
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.Model.GameModel;
+import com.lpoo1718_t1g3.mariokart.View.AccelerometerControlView;
 import com.lpoo1718_t1g3.mariokart.View.ButtonControlView;
 import com.lpoo1718_t1g3.mariokart.View.ConnectionView;
 import com.lpoo1718_t1g3.mariokart.View.MenuView;
@@ -36,8 +37,8 @@ public class GameController {
                 GameModel.getInstance().setNextScreen(null);
                 break;
             case CONTROL:
-                if (!GameModel.getInstance().getAccelerometer())
-                MarioKart.getInstance().setScreen(new ButtonControlView());
+                if (GameModel.getInstance().getAccelerometer()) MarioKart.getInstance().setScreen(new AccelerometerControlView());
+                else MarioKart.getInstance().setScreen(new ButtonControlView());
                 GameModel.getInstance().setNextScreen(null);
                 break;
         }
@@ -62,6 +63,11 @@ public class GameController {
         //if success -> set partyName and go to registry
         //else -> show error dialog
 
+    }
+
+    public void controllerMessage(boolean t, boolean b, float d){
+        Message m = new Message(Message.MESSAGE_TYPE.CONTROLLER_ACTIVITY, Message.SENDER.CLIENT);
+        //TODO send message
     }
 
     private void connectionMessage(){

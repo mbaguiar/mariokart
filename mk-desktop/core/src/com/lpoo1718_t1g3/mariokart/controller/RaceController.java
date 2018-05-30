@@ -36,35 +36,6 @@ public class RaceController {
         return raceView;
     }
 
-    /*
-    private void handleMovement() {
-        if (gas) accelerate();
-        if (left) rotateLeft();
-        if (right) rotateRight();
-    }
-
-    public void accelerate() {
-        float x = 0.05f * - (float) Math.sin(kartBody.getAngle() * Math.PI / 180);
-        float y = 0.05f * (float) Math.cos(kartBody.getAngle() * Math.PI / 180);
-        kartBody.getBody().setTransform(kartBody.getX() + x, kartBody.getY() + y, kartBody.getAngle());
-    }
-
-    public void rotateLeft() {
-        if (kartBody.getBody().getAngle() == 360) {
-            kartBody.getBody().setTransform(kartBody.getX(), kartBody.getY(), 0);
-        }
-        kartBody.getBody().setTransform(kartBody.getX(), kartBody.getY(), kartBody.getAngle() + 1);
-    }
-
-    public void rotateRight() {
-        if (kartBody.getBody().getAngle() == 0) {
-            kartBody.getBody().setTransform(kartBody.getX(), kartBody.getY(), 360);
-        }
-        kartBody.getBody().setTransform(kartBody.getX(), kartBody.getY(), kartBody.getAngle() - 1);
-        System.out.println(kartBody.getAngle());
-    }
-    */
-
     public World getWorld() {
         return world;
     }
@@ -93,10 +64,7 @@ public class RaceController {
                 ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
                 ((EntityModel) body.getUserData()).setRotation(MathUtils.radiansToDegrees * kartBody.getAngle() + 180);
             }
-
-
         }
-
     }
 
     public void handleInput(Message m) {

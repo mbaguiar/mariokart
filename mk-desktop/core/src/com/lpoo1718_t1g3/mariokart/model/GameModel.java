@@ -17,7 +17,6 @@ public class GameModel {
     private String partyName = "MarioKart Party";
     private String ipAddress;
     private int port;
-    private ArrayList<String> connectedPlayers = new ArrayList<String>();
     private int MAX_PLAYERS;
     private boolean qrCode = false;
 
@@ -89,6 +88,10 @@ public class GameModel {
 
     public String getPartyName() {
         return partyName;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 
     public void setPartyName(String partyName) {

@@ -1,10 +1,8 @@
 package com.lpoo1718_t1g3.mariokart.controller;
 
-import com.badlogic.gdx.Game;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
-import com.lpoo1718_t1g3.mariokart.view.CharacterPickerView;
 import com.lpoo1718_t1g3.mariokart.view.LobbyView;
 import com.lpoo1718_t1g3.mariokart.view.RaceView;
 

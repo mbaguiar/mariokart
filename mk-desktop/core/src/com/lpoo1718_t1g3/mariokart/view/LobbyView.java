@@ -14,10 +14,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
+import com.lpoo1718_t1g3.mariokart.model.Player;
 
 public class LobbyView extends ScreenAdapter {
     private Stage stage;
     private TextField partyName;
+    private Table connectedPlayers;
+    private Label.LabelStyle labelStyle;
 
     public LobbyView(){
         this.stage = new Stage();
@@ -31,7 +34,7 @@ public class LobbyView extends ScreenAdapter {
         parameter.borderWidth = 5;
         parameter.size = 100;
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle = new Label.LabelStyle();
 
         labelStyle.font = generator.generateFont(parameter);
 
@@ -79,13 +82,13 @@ public class LobbyView extends ScreenAdapter {
 
         Texture qrCodeTexture = new Texture(Gdx.files.internal("qrcode/qrcode.png"));
 
-        Image p = new Image(qrCodeTexture);
+        Image qrCode = new Image(qrCodeTexture);
 
-        p.setSize(qrCodeTexture.getWidth(), qrCodeTexture.getHeight());
+        qrCode.setSize(qrCodeTexture.getWidth(), qrCodeTexture.getHeight());
 
         Label ipLabel = new Label(GameModel.getInstance().getIpAddress() + ":" + GameModel.getInstance().getPort(), labelStyle);
 
-        ipLabel.setPosition(stage.getWidth()/2f, stage.getHeight()/2f - p.getHeight(), Align.center);
+        ipLabel.setPosition(stage.getWidth()/2f, stage.getHeight()/2f - qrCode.getHeight(), Align.center);
 
         playBtn.addListener(new ClickListener(){
             @Override
@@ -94,7 +97,7 @@ public class LobbyView extends ScreenAdapter {
                 GameController.getInstance().startGame();
             }
         });
-        p.setPosition(stage.getWidth()/2f, stage.getHeight()/2f, Align.center);
+        qrCode.setPosition(stage.getWidth()/2f, stage.getHeight()/2f, Align.center);
 
         parameter.size = 50;
 
@@ -111,17 +114,37 @@ public class LobbyView extends ScreenAdapter {
         connectedPlayersLabel.setWidth(350);
         connectedPlayersLabel.setHeight(100);
 
-        this.stage.addActor(p);
+        connectedPlayers = new Table();
+        connectedPlayers.setDebug(true);
+
+        connectedPlayers.setPosition(stage.getWidth()/8f, stage.getHeight() * 0.6f, Align.top);
+
+        reloadTable(labelStyle);
+
+        this.stage.addActor(qrCode);
         this.stage.addActor(lobbyLabel);
         this.stage.addActor(partyGroup);
         this.stage.addActor(ipLabel);
         this.stage.addActor(playBtn);
         this.stage.addActor(connectedPlayersLabel);
+        this.stage.addActor(connectedPlayers);
         generator.dispose();
+    }
+
+    private void reloadTable(Label.LabelStyle labelStyle) {
+        connectedPlayers.clearChildren();
+        int t = 0;
+        for (Player p: GameModel.getInstance().getPlayers()){
+            Label playerLabel = new Label(p.getPlayerHandle(), labelStyle);
+            connectedPlayers.add(playerLabel).pad(20);
+            t++;
+            if (t < GameModel.getInstance().getPlayers().size()) connectedPlayers.row();
+        }
     }
 
     @Override
     public void render (float delta) {
+        reloadTable(this.labelStyle);
         drawBackground();
         stage.act();
         stage.draw();
