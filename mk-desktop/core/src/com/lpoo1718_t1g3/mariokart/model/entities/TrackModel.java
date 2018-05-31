@@ -10,6 +10,8 @@ public class TrackModel extends EntityModel {
     ArrayList<EntityModel> objects;
     FinishLineModel finishLineModel;
 
+    public static final int LAPS = 3;
+
     public TrackModel(float x, float y, float rotation) {
         super(x, y, rotation);
         boxes = new ArrayList<MysteryBoxModel>();

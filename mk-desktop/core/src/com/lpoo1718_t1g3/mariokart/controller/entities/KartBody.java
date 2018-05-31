@@ -194,6 +194,10 @@ public class KartBody extends EntityBody {
         return update;
     }
 
+    public void disable() {
+        this.update = false;
+    }
+
     public void steerHard() {
         this.steer = steer_type.STEER_HARD_RIGHT;
         this.update = false;

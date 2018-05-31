@@ -10,6 +10,7 @@ public class KartModel extends EntityModel {
     public final static float MINSTEERANGLE = 30;
     public final static float MAXSTEERANGLE = 45;
     public final static float MAXSPEED = 500;
+
     public static final float WIDTH = 24;
     public static final float HEIGHT = 28;
 
@@ -29,12 +30,11 @@ public class KartModel extends EntityModel {
 
     private int playerId;
 
-    private int laps = -1;
-
     public KartModel(float x, float y, float rotation, int playerId) {
         super(x, y, rotation);
         object = null;
         collision = true;
+        this.playerId = playerId;
     }
 
     public boolean isColliding() {
@@ -82,13 +82,8 @@ public class KartModel extends EntityModel {
         this.speed = speed;
     }
 
-    public int getLaps() {
-        return laps;
-    }
-
-    public void incLaps() {
-        this.laps++;
-        System.out.println("inc laps");
+    public int getPlayerId() {
+        return playerId;
     }
 }
 

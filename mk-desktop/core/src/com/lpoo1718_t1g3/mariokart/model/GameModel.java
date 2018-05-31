@@ -85,10 +85,10 @@ public class GameModel {
     private void initCharacters() {
         characters.put("Mario", new Character("Mario", "mariokart.png"));
         characters.put("Luigi", new Character("Luigi", "luigikart.png"));
-        characters.put("Peach", new Character("Peach"));
-        characters.put("Toad", new Character("Toad"));
-        characters.put("Yoshi", new Character("Yoshi"));
-        characters.put("Bowser", new Character("Bowser"));
+        characters.put("Peach", new Character("Peach", "peachkart.png"));
+        characters.put("Toad", new Character("Toad", "toadkart.png"));
+        characters.put("Yoshi", new Character("Yoshi", "yoshikart.png"));
+        characters.put("Bowser", new Character("Bowser", "bowserkart.png"));
     }
 
     public ArrayList<Player> getPlayers() {

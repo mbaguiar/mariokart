@@ -11,6 +11,7 @@ public class Player {
     private String playerHandle;
     private Character selectedCharacter;
     private KartModel kartModel;
+    private Position position;
 
     Player(int playerId, String playerHandle) {
         this.playerId = playerId;
@@ -21,6 +22,7 @@ public class Player {
         this(playerId, playerHandle);
         this.selectedCharacter = selectedCharacter;
         kartModel = new KartModel(5, 5, 90, playerId);
+        this.position = new Position(playerId);
     }
 
     public int getPlayerId() {
@@ -47,5 +49,12 @@ public class Player {
         return selectedCharacter;
     }
 
+    public Position getPosition() {
+        return position;
+    }
 
+    public void resetPosition() {
+        this.position.laps = -1;
+        this.position.time = 0;
+    }
 }

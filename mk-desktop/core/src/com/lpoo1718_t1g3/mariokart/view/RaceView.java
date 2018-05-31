@@ -63,6 +63,10 @@ public class RaceView extends ScreenAdapter {
         MarioKart.getInstance().getAssetManager().load("luigikart.png", Texture.class);
         MarioKart.getInstance().getAssetManager().load("mysteryBox.png", Texture.class);
         MarioKart.getInstance().getAssetManager().load("mariokart.png", Texture.class);
+        MarioKart.getInstance().getAssetManager().load("peachkart.png", Texture.class);
+        MarioKart.getInstance().getAssetManager().load("toadkart.png", Texture.class);
+        MarioKart.getInstance().getAssetManager().load("yoshikart.png", Texture.class);
+        MarioKart.getInstance().getAssetManager().load("bowserkart.png", Texture.class);
         MarioKart.getInstance().getAssetManager().load("track1.png", Texture.class);
         MarioKart.getInstance().getAssetManager().finishLoading();
     }
@@ -72,9 +76,6 @@ public class RaceView extends ScreenAdapter {
         handleInputs(delta);
 
         GameController.getInstance().update(delta);
-
-        //camera.position.set(GameModel.getInstance().getKart().getX(), GameModel.getInstance().getKart().getY(), 0);
-        //camera.position.set(GameModel.getInstance().getTrack1().getX(), GameModel.getInstance().getTrack1().getY(), 0);
         camera.update();
         MarioKart.getInstance().getBatch().setProjectionMatrix(camera.combined);
 
@@ -86,7 +87,7 @@ public class RaceView extends ScreenAdapter {
         MarioKart.getInstance().getBatch().end();
 
 
-        debugRenderer.render(GameController.getInstance().getRaceController().getWorld(), camera.combined);
+        //debugRenderer.render(GameController.getInstance().getRaceController().getWorld(), camera.combined);
     }
 
     private void handleInputs(float delta) {
@@ -162,6 +163,10 @@ public class RaceView extends ScreenAdapter {
     public void initKartViews() {
         kartViews.put("Mario", new KartView("mariokart.png"));
         kartViews.put("Luigi", new KartView("luigikart.png"));
+        kartViews.put("Peach", new KartView("peachkart.png"));
+        kartViews.put("Toad", new KartView("toadkart.png"));
+        kartViews.put("Yoshi", new KartView("yoshikart.png"));
+        kartViews.put("Bowser", new KartView("bowserkart.png"));
 
     }
 
