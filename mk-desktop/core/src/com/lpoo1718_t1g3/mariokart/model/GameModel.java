@@ -25,7 +25,6 @@ public class GameModel {
     private final HashMap<String, Character> characters = new HashMap<String, Character>();
 
     private GameModel() {
-        kart = new KartModel(0, 0, 0);
         track1 = new TrackModel(-24, -16, 0);
         setUpTrack1();
         initCharacters();
@@ -47,9 +46,6 @@ public class GameModel {
         return port;
     }
 
-    public KartModel getKart() {
-        return kart;
-    }
 
     public TrackModel getTrack1() {
         return track1;

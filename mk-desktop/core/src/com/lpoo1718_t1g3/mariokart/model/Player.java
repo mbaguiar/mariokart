@@ -20,7 +20,7 @@ public class Player {
     Player(int playerId, String playerHandle, Character selectedCharacter) {
         this(playerId, playerHandle);
         this.selectedCharacter = selectedCharacter;
-        kartModel = new KartModel(5, 5, 90);
+        kartModel = new KartModel(5, 5, 90, playerId);
     }
 
     public int getPlayerId() {

@@ -37,13 +37,22 @@ public class RaceController implements ContactListener {
         trackBody = new TrackBody(world, GameModel.getInstance().getTrack1());
         raceView = new RaceView();
 
+        GameModel.getInstance().addPlayer(1, "mbaguiar", "Mario");
+        GameModel.getInstance().addPlayer(2, "tfragoso", "Luigi");
+
         for (MysteryBoxModel box : GameModel.getInstance().getTrack1().getBoxes()) {
             mysteryBoxes.add(new MysteryBoxBody(world, box));
         }
 
+        float x = GameModel.getInstance().getTrack1().xStartPosition;
+        float y = GameModel.getInstance().getTrack1().yStartPosition;
+
         for (Player player : GameModel.getInstance().getPlayers()) {
-            kartBodies.put(player.getPlayerId(), new KartBody(world, player.getKartModel(), (float) Math.PI));
+            player.getKartModel().setPosition(x, y);
+            x += GameModel.getInstance().getTrack1().incStartPosition;
+            kartBodies.put(player.getPlayerId(), new KartBody(world, player.getKartModel(), - (float) Math.PI / 2));
         }
+
 
         world.setContactListener(this);
 
@@ -209,6 +218,20 @@ public class RaceController implements ContactListener {
         if (bodyA.getUserData() instanceof  KartModel && bodyB.getUserData() instanceof BananaModel) {
             if (((KartModel) bodyA.getUserData()).isCollision()) {
                 bananaCollision(bodyA);
+            }
+        }
+
+        if (bodyA.getUserData() instanceof KartModel && bodyB.getUserData() instanceof FinishLineModel) {
+            if (bodyA.getLinearVelocity().x < 0) {
+                ((KartModel) bodyA.getUserData()).incLaps();
+
+            }
+        }
+
+        if (bodyB.getUserData() instanceof KartModel && bodyA.getUserData() instanceof FinishLineModel) {
+            if (bodyB.getLinearVelocity().x < 0) {
+                ((KartModel) bodyB.getUserData()).incLaps();
+
             }
         }
 

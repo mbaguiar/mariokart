@@ -38,7 +38,7 @@ public class MysteryBoxModel extends EntityModel {
                     public void run() {
                         enable();
                     }
-                }, 3000
+                }, 1500
         );
     }
 }

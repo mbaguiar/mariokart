@@ -27,7 +27,11 @@ public class KartModel extends EntityModel {
     private boolean collision;
     boolean isColliding = false;
 
-    public KartModel(float x, float y, float rotation) {
+    private int playerId;
+
+    private int laps = -1;
+
+    public KartModel(float x, float y, float rotation, int playerId) {
         super(x, y, rotation);
         object = null;
         collision = true;
@@ -77,4 +81,14 @@ public class KartModel extends EntityModel {
     public void setSpeed(speed_type speed) {
         this.speed = speed;
     }
+
+    public int getLaps() {
+        return laps;
+    }
+
+    public void incLaps() {
+        this.laps++;
+        System.out.println("inc laps");
+    }
 }
+

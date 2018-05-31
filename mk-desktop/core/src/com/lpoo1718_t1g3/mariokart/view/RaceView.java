@@ -78,7 +78,7 @@ public class RaceView extends ScreenAdapter {
         camera.update();
         MarioKart.getInstance().getBatch().setProjectionMatrix(camera.combined);
 
-        Gdx.gl.glClearColor(103 / 255f, 69 / 255f, 117 / 255f, 1);
+        Gdx.gl.glClearColor(1, 1, 1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         MarioKart.getInstance().getBatch().begin();
@@ -127,6 +127,8 @@ public class RaceView extends ScreenAdapter {
 
         //eventualmente desaparecer
 
+        /*
+
         if (Gdx.input.isKeyPressed(((Input.Keys.M)))) {
             if (!this.mario) {
                 GameModel.getInstance().addPlayer(1, "mbaguiar", "Mario");
@@ -144,6 +146,8 @@ public class RaceView extends ScreenAdapter {
                 this.luigi = true;
             }
         }
+
+        */
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             GameController.getInstance().getRaceController().useObject(1);
