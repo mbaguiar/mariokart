@@ -176,7 +176,7 @@ public class RaceView extends ScreenAdapter {
 
     private void drawEntities() {
         trackView.draw(MarioKart.getInstance().getBatch());
-        for (MysteryBoxModel box : GameModel.getInstance().getTrack1().getBoxes()) {
+        for (MysteryBoxModel box : GameModel.getInstance().getCurrentRace().getTrack().getBoxes()) {
             if (box.isEnable()) {
                 mysteryBoxView.update(box);
                 mysteryBoxView.draw(MarioKart.getInstance().getBatch());
@@ -189,7 +189,7 @@ public class RaceView extends ScreenAdapter {
             kartView.draw(MarioKart.getInstance().getBatch());
         }
 
-        for (EntityModel object : GameModel.getInstance().getTrack1().getObjects()) {
+        for (EntityModel object : GameModel.getInstance().getCurrentRace().getTrack().getObjects()) {
             if (object instanceof BananaModel) {
                 EntityView objView = objectViews.get("Banana");
                 objView.update(object);

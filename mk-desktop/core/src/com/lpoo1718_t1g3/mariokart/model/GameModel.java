@@ -14,8 +14,6 @@ public class GameModel {
 
     private static GameModel ourInstance = new GameModel();
     private ServerManager server;
-    private KartModel kart;
-    private TrackModel track1;
     private String partyName = "MarioKart Party";
     private String ipAddress;
     private int port;
@@ -23,10 +21,13 @@ public class GameModel {
     private boolean qrCode = false;
     private ArrayList<Player> players = new ArrayList<Player>();
     private final HashMap<String, Character> characters = new HashMap<String, Character>();
+    private Race currentRace;
+    private TrackModel choosenTrack;
 
     private GameModel() {
-        track1 = new TrackModel(-24, -16, 0);
-        setUpTrack1();
+        TrackModel track1 = new TrackModel(-24, -16, 0);
+        choosenTrack = track1;
+        setUpTrack1(track1);
         initCharacters();
     }
 
@@ -47,11 +48,7 @@ public class GameModel {
     }
 
 
-    public TrackModel getTrack1() {
-        return track1;
-    }
-
-    private void setUpTrack1() {
+    private void setUpTrack1(TrackModel track1) {
         track1.addBox(new MysteryBoxModel(458, 107, 0));
         track1.addBox(new MysteryBoxModel(414, 107, 0));
         track1.addBox(new MysteryBoxModel(370, 107, 0));
@@ -128,5 +125,17 @@ public class GameModel {
 
     public void setPartyName(String partyName) {
         this.partyName = partyName;
+    }
+
+    public TrackModel getChoosenTrack() {
+        return choosenTrack;
+    }
+
+    public Race getCurrentRace() {
+        return currentRace;
+    }
+
+    public void setCurrentRace(Race currentRace) {
+        this.currentRace = currentRace;
     }
 }

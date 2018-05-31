@@ -3,6 +3,7 @@ package com.lpoo1718_t1g3.mariokart.controller;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
+import com.lpoo1718_t1g3.mariokart.model.Race;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 import com.lpoo1718_t1g3.mariokart.view.LobbyView;
 import com.lpoo1718_t1g3.mariokart.view.RaceView;
@@ -82,6 +83,7 @@ import com.lpoo1718_t1g3.mariokart.view.RaceView;
         }
 
         public void startRace() {
+            GameModel.getInstance().setCurrentRace(new Race(GameModel.getInstance().getChoosenTrack()));
             raceController = new RaceController();
             MarioKart.getInstance().setScreen(raceController.getRaceView());
         }

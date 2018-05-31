@@ -25,7 +25,6 @@ public class RaceController implements ContactListener {
     private HashMap<Integer, KartBody> kartBodies = new HashMap<Integer, KartBody>();
     private ArrayList<MysteryBoxBody> mysteryBoxes = new ArrayList<MysteryBoxBody>();
     private ArrayList<EntityBody> objectBodies = new ArrayList<EntityBody>();
-    private List<com.lpoo1718_t1g3.mariokart.model.Position> playerPositions = new ArrayList<com.lpoo1718_t1g3.mariokart.model.Position>();
     private float accumulator;
     private boolean gas = false;
     private boolean left = false;
@@ -34,7 +33,7 @@ public class RaceController implements ContactListener {
     RaceController() {
         world = new World(new Vector2(0, 0), true);
         world.clearForces();
-        trackBody = new TrackBody(world, GameModel.getInstance().getTrack1());
+        trackBody = new TrackBody(world, GameModel.getInstance().getCurrentRace().getTrack());
         raceView = new RaceView();
 
         GameModel.getInstance().addPlayer(1, "mbaguiar", "Mario");
@@ -44,42 +43,27 @@ public class RaceController implements ContactListener {
         GameModel.getInstance().addPlayer(5, "coiso3", "Peach");
         GameModel.getInstance().addPlayer(6, "coiso4", "Bowser");
 
-        for (MysteryBoxModel box : GameModel.getInstance().getTrack1().getBoxes()) {
+        for (MysteryBoxModel box : GameModel.getInstance().getCurrentRace().getTrack().getBoxes()) {
             mysteryBoxes.add(new MysteryBoxBody(world, box));
         }
 
-        float x = GameModel.getInstance().getTrack1().xStartPosition;
-        float y = GameModel.getInstance().getTrack1().yStartPosition;
+        float x = GameModel.getInstance().getCurrentRace().getTrack().xStartPosition;
+        float y = GameModel.getInstance().getCurrentRace().getTrack().yStartPosition;
 
         for (Player player : GameModel.getInstance().getPlayers()) {
             player.getKartModel().setPosition(x, y);
-            x += GameModel.getInstance().getTrack1().incStartPosition;
+            x += GameModel.getInstance().getCurrentRace().getTrack().incStartPosition;
             kartBodies.put(player.getPlayerId(), new KartBody(world, player.getKartModel(), - (float) Math.PI / 2));
             player.resetPosition();
-            playerPositions.add(player.getPosition());
+            GameModel.getInstance().getCurrentRace().addPosition(player.getPosition());
         }
 
-        sortPositions();
+        GameModel.getInstance().getCurrentRace().sortPositions();
         world.setContactListener(this);
 
     }
 
-    private void sortPositions() {
-        Collections.sort(playerPositions, new Comparator<com.lpoo1718_t1g3.mariokart.model.Position>() {
-            @Override
-            public int compare(com.lpoo1718_t1g3.mariokart.model.Position o1, com.lpoo1718_t1g3.mariokart.model.Position o2) {
-                if (o1.laps == o2.laps) {
-                    return Long.compare(o1.time, o2.time);
-                }
 
-                return - Integer.compare(o1.laps, o2.laps);
-            }
-        });
-
-        for (com.lpoo1718_t1g3.mariokart.model.Position position : playerPositions) {
-            System.out.println(position.laps + " " + position.time + " " + position.playerId );
-        }
-    }
 
     public RaceView getRaceView() {
         return raceView;
@@ -102,7 +86,7 @@ public class RaceController implements ContactListener {
             kartBody.update(delta);
         }
 
-        for (com.lpoo1718_t1g3.mariokart.model.Position position : playerPositions) {
+        for (com.lpoo1718_t1g3.mariokart.model.Position position : GameModel.getInstance().getCurrentRace().getPlayerPositions()) {
             if (position.isFinished() && kartBodies.get(position.playerId).isUpdate()) {
                 kartBodies.get(position.playerId).disable();
                 world.destroyBody(kartBodies.get(position.playerId).getBody());
@@ -188,7 +172,7 @@ public class RaceController implements ContactListener {
         kartModel.setCollision(false);
         BananaModel banana = new BananaModel(kartModel.getX() + 0.1f, kartModel.getY(), 0);
         objectBodies.add(new BananaBody(world, banana));
-        GameModel.getInstance().getTrack1().addObject(banana);
+        GameModel.getInstance().getCurrentRace().getTrack().addObject(banana);
     }
 
     public void useMushroom(int playerId) {
@@ -254,7 +238,7 @@ public class RaceController implements ContactListener {
         if (bodyA.getUserData() instanceof KartModel && bodyB.getUserData() instanceof FinishLineModel) {
             if (bodyA.getLinearVelocity().x < 0) {
                 GameModel.getInstance().getPlayer(((KartModel) bodyA.getUserData()).getPlayerId()).getPosition().incLaps();
-                sortPositions();
+                GameModel.getInstance().getCurrentRace().sortPositions();
 
             }
         }
@@ -262,7 +246,8 @@ public class RaceController implements ContactListener {
         if (bodyB.getUserData() instanceof KartModel && bodyA.getUserData() instanceof FinishLineModel) {
             if (bodyB.getLinearVelocity().x < 0) {
                 GameModel.getInstance().getPlayer(((KartModel) bodyB.getUserData()).getPlayerId()).getPosition().incLaps();
-                sortPositions();
+                System.out.println("sort positions");
+                GameModel.getInstance().getCurrentRace().sortPositions();
             }
         }
 
