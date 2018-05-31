@@ -9,15 +9,15 @@ public class KartModel extends EntityModel {
     public final static float POWER = 100000;
     public final static float MINSTEERANGLE = 30;
     public final static float MAXSTEERANGLE = 45;
-    public final static float MAXSPEED = 1000000;
+    public final static float MAXSPEED = 500;
     public static final float WIDTH = 24;
     public static final float HEIGHT = 28;
 
     public final static float POWER_HIGH = 100000;
-    public final static float MAXSPEED_HIGH = 10000000;
+    public final static float MAXSPEED_HIGH = 500;
 
     public final static float POWER_LOW = 1000;
-    public final static float MAXSPEED_LOW = 10000;
+    public final static float MAXSPEED_LOW = 100;
 
     public enum speed_type {NORMAL, LOW, HIGH}
 

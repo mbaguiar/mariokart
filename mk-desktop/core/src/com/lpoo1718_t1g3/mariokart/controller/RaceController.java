@@ -1,6 +1,5 @@
 package com.lpoo1718_t1g3.mariokart.controller;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
@@ -138,7 +137,7 @@ public class RaceController implements ContactListener {
                     useBanana(playerId);
                     break;
                 case MUSHROOM:
-                    userMushroom(playerId);
+                    useMushroom(playerId);
                     break;
             }
         }
@@ -153,7 +152,7 @@ public class RaceController implements ContactListener {
         GameModel.getInstance().getTrack1().addObject(banana);
     }
 
-    public void userMushroom(int playerId) {
+    public void useMushroom(int playerId) {
         KartBody body = kartBodies.get(playerId);
         body.speedUp();
         System.out.println("used mushroom");
@@ -176,7 +175,7 @@ public class RaceController implements ContactListener {
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
 
-
+        /*
         if (bodyA.getUserData() instanceof TrackPart && bodyB.getUserData() instanceof KartModel) {
                 ((KartModel) bodyB.getUserData()).setColliding(true);
                 ((KartModel) bodyB.getUserData()).setSpeed(KartModel.speed_type.LOW);
@@ -188,6 +187,8 @@ public class RaceController implements ContactListener {
             ((KartModel) bodyA.getUserData()).setSpeed(KartModel.speed_type.LOW);
             System.out.println("start collision");
         }
+
+        */
 
         if (bodyA.getUserData() instanceof KartModel && bodyB.getUserData() instanceof MysteryBoxModel) {
             mysteryBoxCollision(bodyB, bodyA);
@@ -234,6 +235,7 @@ public class RaceController implements ContactListener {
 
         }
 
+        /*
 
         if (bodyA.getUserData() instanceof TrackPart && bodyB.getUserData() instanceof KartModel) {
 
@@ -253,6 +255,8 @@ public class RaceController implements ContactListener {
             //((KartModel) bodyA.getUserData()).setSpeed(KartModel.speed_type.NORMAL);
             System.out.println("end collision");
         }
+
+        */
 
     }
 

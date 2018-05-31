@@ -56,16 +56,19 @@ public class GameModel {
     }
 
     private void setUpTrack1() {
-        MysteryBoxModel box = new MysteryBoxModel(10, 10, 0);
-        MysteryBoxModel box1 = new MysteryBoxModel(20, 10, 0);
-        MysteryBoxModel box2 = new MysteryBoxModel(20, 20, 0);
-        MysteryBoxModel box3 = new MysteryBoxModel(50, 40, 0);
-        MysteryBoxModel box4 = new MysteryBoxModel(30, 40, 0);
-        track1.addBox(box);
-        track1.addBox(box1);
-        track1.addBox(box2);
-        track1.addBox(box3);
-        track1.addBox(box4);
+        track1.addBox(new MysteryBoxModel(458, 107, 0));
+        track1.addBox(new MysteryBoxModel(414, 107, 0));
+        track1.addBox(new MysteryBoxModel(370, 107, 0));
+        track1.addBox(new MysteryBoxModel(458, 76, 0));
+        track1.addBox(new MysteryBoxModel(417, 76, 0));
+        track1.addBox(new MysteryBoxModel(370, 76, 0));
+        track1.addBox(new MysteryBoxModel(72, 807, 0));
+        track1.addBox(new MysteryBoxModel(103, 821, 0));
+        track1.addBox(new MysteryBoxModel(136, 844, 0));
+        track1.addBox(new MysteryBoxModel(503, 529, 0));
+        track1.addBox(new MysteryBoxModel(459, 629, 0));
+        track1.addBox(new MysteryBoxModel(505, 763, 0));
+        track1.addBox(new MysteryBoxModel(473, 852, 0));
     }
 
     public boolean addPlayer(int playerId, String playerHandle, String selectedCharacter) {

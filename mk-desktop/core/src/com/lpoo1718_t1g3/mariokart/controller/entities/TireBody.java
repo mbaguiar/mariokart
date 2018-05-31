@@ -37,6 +37,7 @@ public class TireBody {
         body = world.createBody(def);
         createFixture(body);
         body.setUserData(new Integer(0));
+        body.setLinearDamping(0);
 
         if (this.revolving) {
             RevoluteJointDef jointDef = new RevoluteJointDef();

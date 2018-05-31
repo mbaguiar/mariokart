@@ -61,6 +61,7 @@ public class KartBody extends EntityBody {
         kartShape.setAsBox(KartModel.WIDTH/2, KartModel.HEIGHT/2);
         fixtureDef.shape = kartShape;
         this.body.createFixture(fixtureDef);
+        this.body.setLinearDamping(0);
     }
 
     public List<TireBody> getPoweredWheels() {
@@ -113,7 +114,7 @@ public class KartBody extends EntityBody {
 
     public void update(float deltaTime) {
 
-        updateSpeed();
+        //updateSpeed();
 
         for (TireBody tire : wheels) {
             tire.killSidewaysVelocity();
@@ -173,9 +174,11 @@ public class KartBody extends EntityBody {
             Vector2 position = tire.body.getWorldCenter();
             tire.body.applyForce(tire.body.getWorldVector(new Vector2(forceVector.x, forceVector.y)), position, true);
         }
+
     }
 
     public void speedUp() {
+        System.out.println("impluso");
         setHighSpeed();
         new Timer().schedule(
                 new TimerTask() {
@@ -183,7 +186,7 @@ public class KartBody extends EntityBody {
                     public void run() {
                         setNormalSpeed();
                     }
-                }, 1000
+                }, 2000
         );
     }
 
