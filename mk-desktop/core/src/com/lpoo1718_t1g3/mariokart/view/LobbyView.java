@@ -13,8 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
-import com.lpoo1718_t1g3.mariokart.model.GameModel;
-import com.lpoo1718_t1g3.mariokart.model.Player;
+import com.lpoo1718_t1g3.mariokart.Model.GameModel;
+import com.lpoo1718_t1g3.mariokart.Model.Player;
 
 public class LobbyView extends ScreenAdapter {
     private Stage stage;
@@ -94,7 +94,7 @@ public class LobbyView extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
-                GameController.getInstance().startGame();
+                GameController.getInstance().startCharPick();
             }
         });
         qrCode.setPosition(stage.getWidth()/2f, stage.getHeight()/2f, Align.center);
@@ -148,6 +148,7 @@ public class LobbyView extends ScreenAdapter {
         drawBackground();
         stage.act();
         stage.draw();
+        GameController.getInstance().updateStatus();
     }
 
     private void drawBackground() {

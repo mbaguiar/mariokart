@@ -1,8 +1,8 @@
 package com.lpoo1718_t1g3.mariokart.controller.entities;
 import com.badlogic.gdx.physics.box2d.*;
 import com.codeandweb.physicseditor.PhysicsShapeCache;
-import com.lpoo1718_t1g3.mariokart.model.TrackPart;
-import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
+import com.lpoo1718_t1g3.mariokart.Model.TrackPart;
+import com.lpoo1718_t1g3.mariokart.Model.entities.EntityModel;
 
 public class TrackBody {
 

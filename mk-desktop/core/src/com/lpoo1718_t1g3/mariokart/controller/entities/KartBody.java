@@ -2,8 +2,8 @@ package com.lpoo1718_t1g3.mariokart.controller.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
-import com.lpoo1718_t1g3.mariokart.model.entities.KartModel;
+import com.lpoo1718_t1g3.mariokart.Model.entities.EntityModel;
+import com.lpoo1718_t1g3.mariokart.Model.entities.KartModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,6 +112,8 @@ public class KartBody extends EntityBody {
 
     public void update(float deltaTime) {
 
+        System.out.println(steer + "; " + accelerate);
+
         for (TireBody tire : wheels) {
             tire.killSidewaysVelocity();
         }
@@ -136,7 +138,7 @@ public class KartBody extends EntityBody {
                 break;
         }
 
-        System.out.println(this.wheelAngle);
+        //System.out.println(this.wheelAngle);
 
         for (TireBody tire : getRevolvingWheels()) {
             tire.setAngle(this.wheelAngle);

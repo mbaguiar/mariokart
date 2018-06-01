@@ -57,7 +57,7 @@ public class TrackPickerView extends ScreenAdapter {
         drawBackground();
         stage.act();
         stage.draw();
-        GameController.getInstance().update(delta);
+        GameController.getInstance().updateRaceController(delta);
     }
 
     private void drawBackground() {

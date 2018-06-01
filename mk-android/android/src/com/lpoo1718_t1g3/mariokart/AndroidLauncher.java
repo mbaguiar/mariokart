@@ -10,6 +10,6 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(com.lpoo1718_t1g3.mariokart.MarioKart.getInstance(), config);
+		initialize(MarioKart.getInstance(), config);
 	}
 }

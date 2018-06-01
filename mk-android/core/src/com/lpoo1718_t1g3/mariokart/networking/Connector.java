@@ -1,5 +1,6 @@
 package com.lpoo1718_t1g3.mariokart.networking;
 
+import com.badlogic.gdx.Game;
 import com.lpoo1718_t1g3.mariokart.Controller.GameController;
 
 import java.io.IOException;
@@ -71,6 +72,7 @@ public class Connector {
     }
 
     public void write(Message o){
+        System.out.println(o.toString());
         final Message obj = o;
         Thread t = new Thread(new Runnable() {
             @Override
@@ -98,10 +100,16 @@ public class Connector {
         System.out.println(m.toString());
         switch (m.getType()){
             case CONNECTION:
-                GameController.getInstance().getConnectionAnswer(m);
+                GameController.getInstance().handleConnectionMessage(m);
                 break;
             case PLAYER_REGISTRY:
-                GameController.getInstance().getRegistryAnswer(m);
+                GameController.getInstance().handleRegistryMessage(m);
+                break;
+            case CHAR_PICK:
+                GameController.getInstance().handleCharPickMessage(m);
+                break;
+            case CONTROLLER_ACTIVITY:
+                GameController.getInstance().handleControlMessage(m);
                 break;
         }
     }

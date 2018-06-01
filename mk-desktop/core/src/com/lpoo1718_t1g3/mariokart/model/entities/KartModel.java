@@ -1,10 +1,8 @@
-package com.lpoo1718_t1g3.mariokart.model.entities;
+package com.lpoo1718_t1g3.mariokart.Model.entities;
 
-import com.lpoo1718_t1g3.mariokart.model.GameModel;
+import com.lpoo1718_t1g3.mariokart.Model.GameModel;
 
 import java.util.Random;
-
-import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
 
 public class KartModel extends EntityModel {
 

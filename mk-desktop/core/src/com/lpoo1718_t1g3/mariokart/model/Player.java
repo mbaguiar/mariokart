@@ -1,9 +1,6 @@
-package com.lpoo1718_t1g3.mariokart.model;
+package com.lpoo1718_t1g3.mariokart.Model;
 
-import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
-import com.lpoo1718_t1g3.mariokart.model.entities.KartModel;
-
-import java.util.Random;
+import com.lpoo1718_t1g3.mariokart.Model.entities.KartModel;
 
 public class Player {
 
@@ -15,12 +12,6 @@ public class Player {
     Player(int playerId, String playerHandle) {
         this.playerId = playerId;
         this.playerHandle = playerHandle;
-    }
-
-    Player(int playerId, String playerHandle, Character selectedCharacter) {
-        this(playerId, playerHandle);
-        this.selectedCharacter = selectedCharacter;
-        kartModel = new KartModel(5, 5, 90);
     }
 
     public int getPlayerId() {
@@ -43,8 +34,16 @@ public class Player {
         return kartModel;
     }
 
+    public void setKartModel(KartModel k){
+        this.kartModel = k;
+    }
+
     public Character getSelectedCharacter() {
         return selectedCharacter;
+    }
+
+    public void setSelectedCharacter(Character selectedCharacter) {
+        this.selectedCharacter = selectedCharacter;
     }
 
 

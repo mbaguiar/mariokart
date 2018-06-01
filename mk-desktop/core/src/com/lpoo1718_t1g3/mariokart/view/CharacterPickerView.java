@@ -11,9 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.lpoo1718_t1g3.mariokart.MarioKart;
-import com.lpoo1718_t1g3.mariokart.model.Character;
-import com.lpoo1718_t1g3.mariokart.model.GameModel;
+import com.lpoo1718_t1g3.mariokart.Model.Character;
+import com.lpoo1718_t1g3.mariokart.Model.GameModel;
+import com.lpoo1718_t1g3.mariokart.controller.GameController;
 
 public class CharacterPickerView extends ScreenAdapter {
     private Stage stage;
@@ -47,12 +47,12 @@ public class CharacterPickerView extends ScreenAdapter {
         parameter.size = 32;
         labelStyle.font = generator.generateFont(parameter);
         int i = 0;
-        for (Character c : GameModel.getInstance().getCharacters().values()) {
+        for (Character c : GameModel.getInstance().getCharacters()) {
             Label characterBox = new Label(c.getName(), labelStyle);
             characterBox.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    MarioKart.getInstance().setScreen(new TrackPickerView());
+                    //MarioKart.getInstance().setScreen(new TrackPickerView());
                 }
             });
             characters.add(characterBox).pad(75);
@@ -76,6 +76,7 @@ public class CharacterPickerView extends ScreenAdapter {
         drawBackground();
         stage.act();
         stage.draw();
+        GameController.getInstance().updateStatus();
     }
 
     private void drawBackground() {

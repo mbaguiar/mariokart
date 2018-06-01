@@ -1,18 +1,18 @@
-package com.lpoo1718_t1g3.mariokart.model;
+package com.lpoo1718_t1g3.mariokart.Model;
 
-import com.lpoo1718_t1g3.mariokart.model.entities.KartModel;
-import com.lpoo1718_t1g3.mariokart.model.entities.MysteryBoxModel;
-import com.lpoo1718_t1g3.mariokart.model.entities.TrackModel;
+import com.lpoo1718_t1g3.mariokart.Model.entities.KartModel;
+import com.lpoo1718_t1g3.mariokart.Model.entities.MysteryBoxModel;
+import com.lpoo1718_t1g3.mariokart.Model.entities.TrackModel;
+import com.lpoo1718_t1g3.mariokart.networking.Message;
 import com.lpoo1718_t1g3.mariokart.networking.ServerManager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class GameModel {
 
-    public static enum object_type {BANANA, MUSHROOM};
-
-    private static GameModel ourInstance = new GameModel();
+    private static GameModel ourInstance = new GameModel();;
+    private ArrayList<Character> characters = new ArrayList<Character>();
+    private Message pickMessage;
     private ServerManager server;
     private KartModel kart;
     private TrackModel track1;
@@ -22,8 +22,7 @@ public class GameModel {
     private int MAX_PLAYERS;
     private boolean qrCode = false;
     private ArrayList<Player> players = new ArrayList<Player>();
-    private final HashMap<String, Character> characters = new HashMap<String, Character>();
-
+    private game_screen nextScreen;
     private GameModel() {
         kart = new KartModel(0, 0, 0);
         track1 = new TrackModel(-24, -16, 0);
@@ -35,8 +34,28 @@ public class GameModel {
         return ourInstance;
     }
 
-    public HashMap<String, Character> getCharacters() {
+    public game_screen getNextScreen() {
+        return nextScreen;
+    }
+
+    public void setNextScreen(game_screen nextScreen) {
+        this.nextScreen = nextScreen;
+    }
+
+    public Message getPickMessage() {
+        return pickMessage;
+    }
+
+    public void setPickMessage(Message pickMessage) {
+        this.pickMessage = pickMessage;
+    }
+
+    public ArrayList<Character> getCharacters() {
         return characters;
+    }
+
+    public void setCharacters(ArrayList<Character> characters) {
+        this.characters = characters;
     }
 
     public String getIpAddress() {
@@ -68,14 +87,13 @@ public class GameModel {
         track1.addBox(box4);
     }
 
-    public boolean addPlayer(int playerId, String playerHandle, String selectedCharacter) {
+    public boolean addPlayer(int playerId, String playerHandle) {
 
         for (Player p : players) {
             if (p.getPlayerHandle().equals(playerHandle)) return false;
         }
 
-        Character character = characters.get(selectedCharacter);
-        Player player = new Player(playerId, playerHandle, character);
+        Player player = new Player(playerId, playerHandle);
         players.add(player);
         //RaceView.getInstance().addKartView(player);
         //GameController.getInstance().addKartBody(player);
@@ -84,12 +102,12 @@ public class GameModel {
     }
 
     private void initCharacters() {
-        characters.put("Mario", new Character("Mario", "mariokart.png"));
-        characters.put("Luigi", new Character("Luigi", "luigikart.png"));
-        characters.put("Peach", new Character("Peach"));
-        characters.put("Toad", new Character("Toad"));
-        characters.put("Yoshi", new Character("Yoshi"));
-        characters.put("Bowser", new Character("Bowser"));
+        characters.add(new Character("Mario", "mariokart.png"));
+        characters.add(new Character("Luigi", "luigikart.png"));
+        characters.add(new Character("Peach"));
+        characters.add(new Character("Toad"));
+        characters.add(new Character("Yoshi"));
+        characters.add(new Character("Bowser"));
     }
 
     public ArrayList<Player> getPlayers() {
@@ -123,6 +141,10 @@ public class GameModel {
         return null;
     }
 
+    public void setCharacterUnavailable(int index){
+        this.characters.get(index).setAvailable(false);
+    }
+
     public String getPartyName() {
         return partyName;
     }
@@ -130,4 +152,10 @@ public class GameModel {
     public void setPartyName(String partyName) {
         this.partyName = partyName;
     }
+
+    public enum object_type { BANANA, MUSHROOM }
+
+    public enum char_pick_state { WAIT, PICK, PICKED }
+
+    public enum game_screen { MENU, LOBBY, CHAR_PICK, TRACK_VOTE, RACE, RESULTS }
 }

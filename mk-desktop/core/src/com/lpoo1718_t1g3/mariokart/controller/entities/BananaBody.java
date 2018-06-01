@@ -1,8 +1,8 @@
 package com.lpoo1718_t1g3.mariokart.controller.entities;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.lpoo1718_t1g3.mariokart.model.entities.BananaModel;
-import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
+import com.lpoo1718_t1g3.mariokart.Model.entities.BananaModel;
+import com.lpoo1718_t1g3.mariokart.Model.entities.EntityModel;
 
 public class BananaBody extends EntityBody {
 

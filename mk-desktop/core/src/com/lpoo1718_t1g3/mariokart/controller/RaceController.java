@@ -1,14 +1,13 @@
 package com.lpoo1718_t1g3.mariokart.controller;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.lpoo1718_t1g3.mariokart.controller.entities.*;
-import com.lpoo1718_t1g3.mariokart.model.GameModel;
-import com.lpoo1718_t1g3.mariokart.model.Player;
-import com.lpoo1718_t1g3.mariokart.model.TrackPart;
-import com.lpoo1718_t1g3.mariokart.model.entities.*;
+import com.lpoo1718_t1g3.mariokart.Model.GameModel;
+import com.lpoo1718_t1g3.mariokart.Model.Player;
+import com.lpoo1718_t1g3.mariokart.Model.TrackPart;
+import com.lpoo1718_t1g3.mariokart.Model.entities.*;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 import com.lpoo1718_t1g3.mariokart.view.RaceView;
 
@@ -16,8 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
-import static com.lpoo1718_t1g3.mariokart.view.RaceView.VIEWPORT_HEIGHT;
-import static com.lpoo1718_t1g3.mariokart.view.RaceView.VIEWPORT_WIDTH;
 
 public class RaceController implements ContactListener {
 
@@ -28,9 +25,6 @@ public class RaceController implements ContactListener {
     private ArrayList<MysteryBoxBody> mysteryBoxes = new ArrayList<MysteryBoxBody>();
     private ArrayList<EntityBody> objectBodies = new ArrayList<EntityBody>();
     private float accumulator;
-    private boolean gas = false;
-    private boolean left = false;
-    private boolean right = false;
 
     RaceController() {
         world = new World(new Vector2(0, 0), true);
@@ -43,6 +37,7 @@ public class RaceController implements ContactListener {
         }
 
         for (Player player : GameModel.getInstance().getPlayers()) {
+            player.setKartModel(new KartModel(5, 5, 90));
             kartBodies.put(player.getPlayerId(), new KartBody(world, player.getKartModel(), (float) Math.PI));
         }
 
@@ -92,11 +87,14 @@ public class RaceController implements ContactListener {
     }
 
     void handleMovement(Message m) {
+        //System.out.println(m.toString());
         if ((Boolean) m.getOptions().get("throttle")) setKartState(KartBody.acc_type.ACC_ACCELERATE, m.getSenderId());
         if ((Boolean) m.getOptions().get("brake")) setKartState(KartBody.acc_type.ACC_BRAKE, m.getSenderId());
+        if (!(Boolean) m.getOptions().get("throttle") && !(Boolean) m.getOptions().get("brake")) setKartState(KartBody.acc_type.ACC_NONE, m.getSenderId());
         float direction = (Float) m.getOptions().get("direction");
         if (direction >= 5) setKartState(KartBody.steer_type.STEER_RIGHT, m.getSenderId());
         else if (direction <= -5) setKartState(KartBody.steer_type.STEER_LEFT, m.getSenderId());
+        else setKartState(KartBody.steer_type.STEER_NONE, m.getSenderId());
     }
 
 

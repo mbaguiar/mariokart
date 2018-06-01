@@ -1,27 +1,23 @@
 package com.lpoo1718_t1g3.mariokart.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
-import com.lpoo1718_t1g3.mariokart.controller.entities.KartBody;
-import com.lpoo1718_t1g3.mariokart.model.GameModel;
-import com.lpoo1718_t1g3.mariokart.model.Player;
-import com.lpoo1718_t1g3.mariokart.model.entities.BananaModel;
-import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
-import com.lpoo1718_t1g3.mariokart.model.entities.MysteryBoxModel;
+import com.lpoo1718_t1g3.mariokart.Model.GameModel;
+import com.lpoo1718_t1g3.mariokart.Model.Player;
+import com.lpoo1718_t1g3.mariokart.Model.entities.BananaModel;
+import com.lpoo1718_t1g3.mariokart.Model.entities.EntityModel;
+import com.lpoo1718_t1g3.mariokart.Model.entities.MysteryBoxModel;
 import com.lpoo1718_t1g3.mariokart.view.entities.EntityView;
 import com.lpoo1718_t1g3.mariokart.view.entities.KartView;
 import com.lpoo1718_t1g3.mariokart.view.entities.MysteryBoxView;
 import com.lpoo1718_t1g3.mariokart.view.entities.TrackView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RaceView extends ScreenAdapter {
@@ -45,7 +41,6 @@ public class RaceView extends ScreenAdapter {
         camera = createCamera();
         initKartViews();
         initObjectViews();
-        debugRenderer = new Box2DDebugRenderer(true, true, false, true, true, true);
 
     }
 
@@ -71,7 +66,7 @@ public class RaceView extends ScreenAdapter {
     public void render(float delta) {
         handleInputs(delta);
 
-        GameController.getInstance().update(delta);
+        GameController.getInstance().updateRaceController(delta);
 
         //camera.position.set(GameModel.getInstance().getKart().getX(), GameModel.getInstance().getKart().getY(), 0);
         //camera.position.set(GameModel.getInstance().getTrack1().getX(), GameModel.getInstance().getTrack1().getY(), 0);
@@ -86,11 +81,12 @@ public class RaceView extends ScreenAdapter {
         MarioKart.getInstance().getBatch().end();
 
 
-        debugRenderer.render(GameController.getInstance().getRaceController().getWorld(), camera.combined);
+        //debugRenderer.render(GameController.getInstance().getRaceController().getWorld(), camera.combined);
     }
 
     private void handleInputs(float delta) {
 
+        /*
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             GameController.getInstance().getRaceController().setKartState(KartBody.acc_type.ACC_ACCELERATE, 1);
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
@@ -152,6 +148,7 @@ public class RaceView extends ScreenAdapter {
         if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
             GameController.getInstance().getRaceController().useObject(2);
         }
+        */
 
     }
 

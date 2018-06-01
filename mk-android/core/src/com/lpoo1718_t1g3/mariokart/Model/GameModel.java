@@ -1,6 +1,28 @@
 package com.lpoo1718_t1g3.mariokart.Model;
 
+
+import com.lpoo1718_t1g3.mariokart.networking.Message;
+
+import java.util.ArrayList;
+
 public class GameModel {
+
+    private static final GameModel ourInstance = new GameModel();
+    private ArrayList<Character> characters = new ArrayList<>();
+    private Boolean accelerometer = false;
+    private String partyName;
+    private game_screen nextScreen;
+    private Message.char_pick_state pickState;
+    private Character selectedCharacter;
+    private String playerHandle = "duriola";
+    private int selectedCharacterIndex;
+
+    private GameModel() {
+    }
+
+    public static GameModel getInstance() {
+        return ourInstance;
+    }
 
     public game_screen getNextScreen() {
         return nextScreen;
@@ -10,8 +32,6 @@ public class GameModel {
         this.nextScreen = nextScreen;
     }
 
-    private Boolean accelerometer = false;
-
     public Boolean getAccelerometer() {
         return accelerometer;
     }
@@ -20,19 +40,12 @@ public class GameModel {
         this.accelerometer = accelerometer;
     }
 
-    public enum game_screen{ MENU, CONNECTION, REGISTRY, CONTROL }
-
-    private static final GameModel ourInstance = new GameModel();
-
-    private String partyName;
-
-    private game_screen nextScreen;
-
-    private GameModel() {
+    public ArrayList<Character> getCharacters() {
+        return characters;
     }
 
-    public static GameModel getInstance() {
-        return ourInstance;
+    public void setCharacters(ArrayList<Character> characters) {
+        this.characters = characters;
     }
 
     public String getPartyName() {
@@ -42,4 +55,43 @@ public class GameModel {
     public void setPartyName(String partyName) {
         this.partyName = partyName;
     }
+
+    public String getPlayerHandle() {
+        return playerHandle;
+    }
+
+    public void setPlayerHandle(String playerHandle) {
+        this.playerHandle = playerHandle;
+    }
+
+    public Message.char_pick_state getPickState() {
+        return pickState;
+    }
+
+    public void setPickState(Message.char_pick_state pickState) {
+        this.pickState = pickState;
+    }
+
+    public Character getSelectedCharacter() {
+        return selectedCharacter;
+    }
+
+    public void setSelectedCharacter(Character selectedCharacter) {
+        this.selectedCharacter = selectedCharacter;
+    }
+
+    public void setUnavailable(int index){
+        this.characters.get(index).setAvailable(false);
+    }
+
+    public int getSelectedCharacterIndex() {
+        return selectedCharacterIndex;
+    }
+
+    public void setSelectedCharacterIndex(int selectedCharacterIndex) {
+        this.selectedCharacterIndex = selectedCharacterIndex;
+    }
+
+    public enum game_screen{ MENU, CONNECTION, REGISTRY, CONTROL, CHAR_PICK }
+
 }

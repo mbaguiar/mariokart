@@ -52,4 +52,6 @@ public class Message implements Serializable {
                 ", options=" + options +
                 '}';
     }
+
+    public enum char_pick_state { WAIT, PICK, PICKED, PICK_ERROR }
 }

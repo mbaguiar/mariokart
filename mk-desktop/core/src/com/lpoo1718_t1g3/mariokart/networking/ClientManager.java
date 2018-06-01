@@ -6,22 +6,23 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.LinkedList;
 
 public class ClientManager extends Thread {
 
+    private final int playerId;
+    private final LinkedList<Message> messageQueue = new LinkedList<Message>();
     private Socket socket;
-
-    public int getPlayerId() {
-        return playerId;
-    }
-
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
-    private final int playerId;
-
+    private Thread writerThread;
     ClientManager(Socket client, int playerId) {
         socket = client;
         this.playerId = playerId;
+    }
+
+    public int getPlayerId() {
+        return playerId;
     }
 
     @Override
@@ -29,6 +30,24 @@ public class ClientManager extends Thread {
         try {
             inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream = new ObjectOutputStream(socket.getOutputStream());
+/*            writerThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if (outputStream != null) {
+                        while(true){
+                            Message m;
+                            if ((m = messageQueue.pollFirst()) != null){
+                                try {
+                                    outputStream.writeObject(m);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            writerThread.start();*/
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,11 +62,11 @@ public class ClientManager extends Thread {
             e.printStackTrace();
         }
 
-
     }
 
     private void handleMessage(Message m) {
         m.setSenderId(playerId);
+        System.out.println(m.toString());
         switch (m.getType()) {
             case CONNECTION:
                 GameController.getInstance().newConnection(m);
@@ -58,23 +77,19 @@ public class ClientManager extends Thread {
             case CONTROLLER_ACTIVITY:
                 GameController.getInstance().handleInput(m);
                 break;
+            case CHAR_PICK:
+                GameController.getInstance().pickMessage(m);
+                break;
         }
     }
 
-    void write(Message m){
-        System.out.println(m);
-        final Message obj = m;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (outputStream != null) {
-                    try {
-                        outputStream.writeObject(obj);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+    void write(Message m) {
+        if (outputStream != null) {
+            try {
+                outputStream.writeObject(m);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }).start();
+        }
     }
 }
