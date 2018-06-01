@@ -13,14 +13,14 @@ public class Position {
         this.laps = -1;
         this.time = 0;
         this.playerId = playerId;
-        this.description = "0/" + TrackModel.LAPS + " laps";
+        this.description = "0/" + TrackModel.LAPS;
     }
 
 
     public void incLaps() {
         this.laps++;
         this.time = System.currentTimeMillis();
-        description = laps+1 + "/" + TrackModel.LAPS + " laps";
+        description = laps+1 + "/" + TrackModel.LAPS;
         if (isFinished()) {
             description = "Finished!";
         }

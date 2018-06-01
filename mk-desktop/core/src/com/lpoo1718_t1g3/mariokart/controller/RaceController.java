@@ -106,11 +106,9 @@ public class RaceController implements ContactListener {
                 ((EntityModel) body.getUserData()).setPosition(body.getPosition().x * PIXEL_TO_METER, body.getPosition().y * PIXEL_TO_METER);
                 ((EntityModel) body.getUserData()).setRotation(body.getAngle());
 
-                if (body.getUserData() instanceof KartModel) {
-
-                }
             }
         }
+
     }
 
     void handleMovement(Message m) {
@@ -159,8 +157,10 @@ public class RaceController implements ContactListener {
                 case BANANA:
                     useBanana(playerId);
                     break;
-                case MUSHROOM:
-                    useMushroom(playerId);
+                case FAKE_MYSTERY_BOX:
+                    useFakeMysteryBox(playerId);
+                    break;
+                case NULL:
                     break;
             }
         }
@@ -170,17 +170,17 @@ public class RaceController implements ContactListener {
     public void useBanana(int playerId) {
         KartModel kartModel = ((KartModel) kartBodies.get(playerId).getUserdata());
         kartModel.setCollision(false);
-        BananaModel banana = new BananaModel(kartModel.getX() + 0.1f, kartModel.getY(), 0);
+        BananaModel banana = new BananaModel(kartModel.getX(), kartModel.getY(), 0);
         objectBodies.add(new BananaBody(world, banana));
         GameModel.getInstance().getCurrentRace().getTrack().addObject(banana);
     }
 
-    public void useMushroom(int playerId) {
-        KartBody body = kartBodies.get(playerId);
-        body.speedUp();
-        //System.out.println("used mushroom");
-
-
+    public void useFakeMysteryBox(int playerId) {
+        KartModel kartModel = ((KartModel) kartBodies.get(playerId).getUserdata());
+        kartModel.setCollision(false);
+        FakeMysteryBoxModel fakeBox = new FakeMysteryBoxModel(kartModel.getX() , kartModel.getY(), 0);
+        objectBodies.add(new FakeMysteryBoxBody(world, fakeBox));
+        GameModel.getInstance().getCurrentRace().getTrack().addObject(fakeBox);
     }
 
     private KartBody getKartBody(Body body) {
@@ -213,26 +213,53 @@ public class RaceController implements ContactListener {
 
         */
 
+        if (bodyA.getUserData() instanceof FakeMysteryBoxModel && bodyB.getUserData() instanceof KartModel) {
+            if (((KartModel) bodyB.getUserData()).isCollision()) {
+                fakeMysteryBoxCollision(bodyB);
+                ((FakeMysteryBoxModel) bodyA.getUserData()).setToDelete();
+            }
+
+            return;
+        }
+
+        if (bodyA.getUserData() instanceof KartModel && bodyB.getUserData() instanceof  FakeMysteryBoxModel) {
+            if (((KartModel) bodyA.getUserData()).isCollision()) {
+                fakeMysteryBoxCollision(bodyA);
+                ((FakeMysteryBoxModel) bodyB.getUserData()).setToDelete();
+            }
+
+            return;
+
+        }
+
         if (bodyA.getUserData() instanceof KartModel && bodyB.getUserData() instanceof MysteryBoxModel) {
             mysteryBoxCollision(bodyB, bodyA);
+
         }
 
         if (bodyA.getUserData() instanceof MysteryBoxModel && bodyB.getUserData() instanceof KartModel) {
            mysteryBoxCollision(bodyA, bodyB);
+
 
         }
 
         if (bodyA.getUserData() instanceof BananaModel && bodyB.getUserData() instanceof KartModel) {
             if (((KartModel) bodyB.getUserData()).isCollision()) {
                 bananaCollision(bodyB);
+                ((BananaModel) bodyA.getUserData()).setToDelete();
             }
+
+            return;
 
         }
 
         if (bodyA.getUserData() instanceof  KartModel && bodyB.getUserData() instanceof BananaModel) {
             if (((KartModel) bodyA.getUserData()).isCollision()) {
                 bananaCollision(bodyA);
+                ((BananaModel) bodyB.getUserData()).setToDelete();
             }
+
+            return;
         }
 
         if (bodyA.getUserData() instanceof KartModel && bodyB.getUserData() instanceof FinishLineModel) {
@@ -263,8 +290,10 @@ public class RaceController implements ContactListener {
 
         if (bodyA.getUserData() instanceof BananaModel && bodyB.getUserData() instanceof KartModel) {
             if (!((KartModel) bodyB.getUserData()).isCollision()) {
-                ((KartModel) bodyB.getUserData()).setCollision(false);
+                ((KartModel) bodyB.getUserData()).setCollision(true);
             }
+
+            return;
         }
 
         if (bodyA.getUserData() instanceof  KartModel && bodyB.getUserData() instanceof BananaModel) {
@@ -272,7 +301,27 @@ public class RaceController implements ContactListener {
                 ((KartModel) bodyA.getUserData()).setCollision(true);
             }
 
+            return;
+
         }
+
+        if (bodyA.getUserData() instanceof FakeMysteryBoxModel && bodyB.getUserData() instanceof KartModel) {
+            if (!((KartModel) bodyB.getUserData()).isCollision()) {
+                ((KartModel) bodyB.getUserData()).setCollision(true);
+            }
+
+            return;
+        }
+
+        if (bodyA.getUserData() instanceof  KartModel && bodyB.getUserData() instanceof FakeMysteryBoxModel) {
+            if (!((KartModel) bodyA.getUserData()).isCollision()) {
+                ((KartModel) bodyA.getUserData()).setCollision(true);
+            }
+
+            return;
+
+        }
+
 
         /*
 
@@ -325,6 +374,7 @@ public class RaceController implements ContactListener {
     private void mysteryBoxCollision(Body mysteryBox, Body kartBody) {
         MysteryBoxModel box = (MysteryBoxModel) mysteryBox.getUserData();
         KartModel kart = (KartModel) kartBody.getUserData();
+        System.out.println("collision box");
         if (box.isEnable()) {
             box.disable();
             kart.generateObject();
@@ -336,6 +386,27 @@ public class RaceController implements ContactListener {
             if (body.getBody() == kartBody) {
                 body.steerHard();
                 //System.out.println("banana collision");
+            }
+        }
+    }
+
+    private void fakeMysteryBoxCollision(Body kartBody) {
+        kartBody.setLinearVelocity(0, 0);
+        //System.out.println("banana collision");
+    }
+
+    public void removeFlagged() {
+        for (EntityBody body : objectBodies) {
+            if (body.getUserdata() instanceof FakeMysteryBoxModel) {
+                if ( ((FakeMysteryBoxModel) body.getUserdata()).isToDelete()) {
+                    world.destroyBody(body.getBody());
+                }
+            }
+
+            if (body.getUserdata() instanceof BananaModel) {
+                if ( ((BananaModel) body.getUserdata()).isToDelete()) {
+                    world.destroyBody(body.getBody());
+                }
             }
         }
     }

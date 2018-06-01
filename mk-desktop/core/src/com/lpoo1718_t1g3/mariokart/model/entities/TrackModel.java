@@ -42,4 +42,24 @@ public class TrackModel extends EntityModel {
     public FinishLineModel getFinishLineModel() {
         return finishLineModel;
     }
+
+    public void removeFlagged() {
+
+        for (EntityModel object : objects) {
+
+            if (object instanceof FakeMysteryBoxModel) {
+                if ( ((FakeMysteryBoxModel) object).isToDelete()) {
+                    objects.remove(object);
+                    continue;
+                }
+            }
+
+            if (object instanceof BananaModel) {
+                if ( ((BananaModel)object).isToDelete()) {
+                    objects.remove(object);
+                    continue;
+                }
+            }
+        }
+    }
 }

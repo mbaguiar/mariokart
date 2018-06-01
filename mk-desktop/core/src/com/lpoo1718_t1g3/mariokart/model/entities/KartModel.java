@@ -1,4 +1,5 @@
 package com.lpoo1718_t1g3.mariokart.model.entities;
+import com.lpoo1718_t1g3.mariokart.controller.entities.EntityBody;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import java.util.Random;
 
@@ -49,7 +50,7 @@ public class KartModel extends EntityModel {
 
         if (object == null) {
             Random rand = new Random();
-            int n = rand.nextInt(2);
+            int n = rand.nextInt(2) + 1;
             object = GameModel.object_type.values()[n];
             System.out.println(object);
         }
@@ -57,12 +58,13 @@ public class KartModel extends EntityModel {
 
     public GameModel.object_type getObject() {
         if (object == null) {
-            System.out.println("Object is null");
+            //System.out.println("Object is null");
             return null;
         }
         System.out.println("Released object " + object);
-        int obj = object.ordinal();
-        object = null;
+        int obj = this.object.ordinal();
+        this.object = null;
+        System.out.println(object);
         return GameModel.object_type.values()[obj];
     }
 

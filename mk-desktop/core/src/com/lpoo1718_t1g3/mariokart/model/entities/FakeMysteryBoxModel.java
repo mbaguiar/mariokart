@@ -2,16 +2,16 @@ package com.lpoo1718_t1g3.mariokart.model.entities;
 
 import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
 
-public class BananaModel extends EntityModel {
+public class FakeMysteryBoxModel extends EntityModel {
 
     public static final float WIDTH = 16;
     public static final float HEIGHT = 16;
 
-    public boolean toDelete;
+    private boolean toDelete;
 
-    public BananaModel(float x, float y, float rotation) {
+    public FakeMysteryBoxModel(float x, float y, float rotation) {
         super(x, y, rotation);
-        toDelete = false;
+        this.toDelete = false;
     }
 
     public void setToDelete() {

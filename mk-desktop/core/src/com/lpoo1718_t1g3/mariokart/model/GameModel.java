@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class GameModel {
 
-    public static enum object_type {BANANA, MUSHROOM};
+    public static enum object_type {NULL, BANANA, FAKE_MYSTERY_BOX}
 
     private static GameModel ourInstance = new GameModel();
     private ServerManager server;

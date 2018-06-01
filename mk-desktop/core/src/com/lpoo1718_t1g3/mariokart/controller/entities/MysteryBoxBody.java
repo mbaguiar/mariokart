@@ -14,7 +14,7 @@ public class MysteryBoxBody extends EntityBody {
     public void createFixture(Body body) {
         FixtureDef fixtureDef = new FixtureDef();
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(MysteryBoxModel.HEIGHT / 2, MysteryBoxModel.WIDTH / 2);
+        polygonShape.setAsBox(MysteryBoxModel.WIDTH / 2, MysteryBoxModel.HEIGHT / 2);
         fixtureDef.shape = polygonShape;
         fixtureDef.density = 1f;
         fixtureDef.friction = 1;

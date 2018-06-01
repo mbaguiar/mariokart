@@ -22,11 +22,9 @@ import com.lpoo1718_t1g3.mariokart.model.Player;
 import com.lpoo1718_t1g3.mariokart.model.Position;
 import com.lpoo1718_t1g3.mariokart.model.entities.BananaModel;
 import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
+import com.lpoo1718_t1g3.mariokart.model.entities.FakeMysteryBoxModel;
 import com.lpoo1718_t1g3.mariokart.model.entities.MysteryBoxModel;
-import com.lpoo1718_t1g3.mariokart.view.entities.EntityView;
-import com.lpoo1718_t1g3.mariokart.view.entities.KartView;
-import com.lpoo1718_t1g3.mariokart.view.entities.MysteryBoxView;
-import com.lpoo1718_t1g3.mariokart.view.entities.TrackView;
+import com.lpoo1718_t1g3.mariokart.view.entities.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -164,6 +162,8 @@ public class RaceView extends ScreenAdapter {
         MarioKart.getInstance().getAssetManager().load("yoshikart.png", Texture.class);
         MarioKart.getInstance().getAssetManager().load("bowserkart.png", Texture.class);
         MarioKart.getInstance().getAssetManager().load("track1.png", Texture.class);
+        MarioKart.getInstance().getAssetManager().load("mysteryBox2.png", Texture.class);
+        MarioKart.getInstance().getAssetManager().load("fakeMysteryBox.png", Texture.class);
         MarioKart.getInstance().getAssetManager().finishLoading();
     }
 
@@ -191,6 +191,10 @@ public class RaceView extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
+
+        //GameModel.getInstance().getCurrentRace().getTrack().removeFlagged();
+        GameController.getInstance().getRaceController().removeFlagged();
+
         handleInputs(delta);
 
         reloadTable(this.labelStyle, this.labelStyleSmall);
@@ -203,7 +207,6 @@ public class RaceView extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         MarioKart.getInstance().getBatch().begin();
-
         drawEntities();
         MarioKart.getInstance().getBatch().end();
 
@@ -211,7 +214,7 @@ public class RaceView extends ScreenAdapter {
         stage.draw();
 
 
-        //debugRenderer.render(GameController.getInstance().getRaceController().getWorld(), camera.combined);
+        debugRenderer.render(GameController.getInstance().getRaceController().getWorld(), camera.combined);
     }
 
     private void handleInputs(float delta) {
@@ -295,7 +298,8 @@ public class RaceView extends ScreenAdapter {
     }
 
     public void initObjectViews() {
-        objectViews.put("Banana", new KartView("banana.png"));
+        objectViews.put("Banana", new BananaView());
+        objectViews.put("FakeBox", new FakeMysteryBoxView());
     }
 
     private void drawEntities() {
@@ -315,9 +319,20 @@ public class RaceView extends ScreenAdapter {
 
         for (EntityModel object : GameModel.getInstance().getCurrentRace().getTrack().getObjects()) {
             if (object instanceof BananaModel) {
-                EntityView objView = objectViews.get("Banana");
-                objView.update(object);
-                objView.draw(MarioKart.getInstance().getBatch());
+                if (!((BananaModel) object).isToDelete()) {
+
+                    EntityView objView = objectViews.get("Banana");
+                    objView.update(object);
+                    objView.draw(MarioKart.getInstance().getBatch());
+                }
+            }
+
+            if (object instanceof FakeMysteryBoxModel) {
+                if (!((FakeMysteryBoxModel) object).isToDelete()) {
+                    EntityView objView = objectViews.get("FakeBox");
+                    objView.update(object);
+                    objView.draw(MarioKart.getInstance().getBatch());
+                }
             }
         }
     }
