@@ -2,8 +2,8 @@ package com.lpoo1718_t1g3.mariokart.controller.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.lpoo1718_t1g3.mariokart.Model.entities.EntityModel;
-import com.lpoo1718_t1g3.mariokart.Model.entities.KartModel;
+import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
+import com.lpoo1718_t1g3.mariokart.model.entities.KartModel;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,10 +1,10 @@
-package com.lpoo1718_t1g3.mariokart.Model.entities;
+package com.lpoo1718_t1g3.mariokart.model.entities;
 
-import com.lpoo1718_t1g3.mariokart.Model.GameModel;
+import com.lpoo1718_t1g3.mariokart.model.GameModel;
 
 import java.util.Random;
 
-import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
+import static com.lpoo1718_t1g3.mariokart.model.entities.KartModel.speed_type.NORMAL;
 
 public class KartModel extends EntityModel {
 

@@ -1,6 +1,4 @@
-package com.lpoo1718_t1g3.mariokart.Model.entities;
-
-import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
+package com.lpoo1718_t1g3.mariokart.model.entities;
 
 public class BananaModel extends EntityModel {
 

@@ -1,8 +1,8 @@
 package com.lpoo1718_t1g3.mariokart.controller.entities;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.lpoo1718_t1g3.mariokart.Model.entities.EntityModel;
-import com.lpoo1718_t1g3.mariokart.Model.entities.MysteryBoxModel;
+import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
+import com.lpoo1718_t1g3.mariokart.model.entities.MysteryBoxModel;
 
 public class MysteryBoxBody extends EntityBody {
 
