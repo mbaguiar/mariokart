@@ -1,4 +1,4 @@
-package com.lpoo1718_t1g3.mariokart.Model.entities;
+package com.lpoo1718_t1g3.mariokart.model.entities;
 
 public abstract class EntityModel {
 

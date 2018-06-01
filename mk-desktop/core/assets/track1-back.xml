@@ -3,10 +3,10 @@
 <bodydef>
 
 	<body name="track1-back">
-		<linear_damping>0</linear_damping>
+		<linear_damping>0.2</linear_damping>
 		<angular_damping>0</angular_damping>
 		<fixture>
-			<density>1</density>
+			<density>10</density>
 			<friction>1</friction>
 			<restitution>0</restitution>
 			<filter_category_bits>1</filter_category_bits>

@@ -1,5 +1,7 @@
 package com.lpoo1718_t1g3.mariokart.Model.entities;
 
+import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
+
 public class BananaModel extends EntityModel {
 
     public static final float WIDTH = 16;

@@ -3,6 +3,8 @@ package com.lpoo1718_t1g3.mariokart.Model.entities;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
+
 
 public class MysteryBoxModel extends EntityModel {
 
@@ -12,7 +14,7 @@ public class MysteryBoxModel extends EntityModel {
     private boolean enable;
 
     public MysteryBoxModel(float x, float y, float rotation) {
-        super(x, y, rotation);
+        super(x * PIXEL_TO_METER, y * PIXEL_TO_METER, rotation);
         this.enable = true;
     }
 
@@ -36,7 +38,7 @@ public class MysteryBoxModel extends EntityModel {
                     public void run() {
                         enable();
                     }
-                }, 3000
+                }, 1500
         );
     }
 }

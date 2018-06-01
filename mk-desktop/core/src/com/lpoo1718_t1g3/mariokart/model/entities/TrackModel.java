@@ -2,16 +2,26 @@ package com.lpoo1718_t1g3.mariokart.Model.entities;
 
 import java.util.ArrayList;
 
+import static com.lpoo1718_t1g3.mariokart.view.RaceView.PIXEL_TO_METER;
+
 public class TrackModel extends EntityModel {
 
     ArrayList<MysteryBoxModel> boxes;
     ArrayList<EntityModel> objects;
+    FinishLineModel finishLineModel;
+
+    public static final int LAPS = 3;
 
     public TrackModel(float x, float y, float rotation) {
         super(x, y, rotation);
         boxes = new ArrayList<MysteryBoxModel>();
         objects = new ArrayList<EntityModel>();
+        finishLineModel = new FinishLineModel(495 * PIXEL_TO_METER, 90 * PIXEL_TO_METER, 0);
     }
+
+    public float xStartPosition = 530 * PIXEL_TO_METER;
+    public float yStartPosition = 90 * PIXEL_TO_METER;
+    public float incStartPosition = 50 * PIXEL_TO_METER;
 
     public void addBox(MysteryBoxModel box) {
         boxes.add(box);
@@ -27,5 +37,29 @@ public class TrackModel extends EntityModel {
 
     public ArrayList<EntityModel> getObjects() {
         return objects;
+    }
+
+    public FinishLineModel getFinishLineModel() {
+        return finishLineModel;
+    }
+
+    public void removeFlagged() {
+
+        for (EntityModel object : objects) {
+
+            if (object instanceof FakeMysteryBoxModel) {
+                if ( ((FakeMysteryBoxModel) object).isToDelete()) {
+                    objects.remove(object);
+                    continue;
+                }
+            }
+
+            if (object instanceof BananaModel) {
+                if ( ((BananaModel)object).isToDelete()) {
+                    objects.remove(object);
+                    continue;
+                }
+            }
+        }
     }
 }

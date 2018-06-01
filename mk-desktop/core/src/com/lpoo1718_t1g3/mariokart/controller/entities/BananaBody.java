@@ -24,5 +24,7 @@ public class BananaBody extends EntityBody {
         polygonShape.dispose();
     }
 
-
+    public Body getBody() {
+        return body;
+    }
 }

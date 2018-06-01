@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.lpoo1718_t1g3.mariokart.Controller.GameController;
-import com.lpoo1718_t1g3.mariokart.Model.GameModel;
+import com.lpoo1718_t1g3.mariokart.model.GameModel;
 
 public class RegistryView extends ScreenAdapter {
     private Stage stage;

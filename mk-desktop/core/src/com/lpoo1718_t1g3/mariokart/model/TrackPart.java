@@ -1,6 +1,6 @@
-package com.lpoo1718_t1g3.mariokart.Model;
+package com.lpoo1718_t1g3.mariokart.model;
 
-import com.lpoo1718_t1g3.mariokart.Model.entities.EntityModel;
+import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
 
 public class TrackPart extends EntityModel {
 

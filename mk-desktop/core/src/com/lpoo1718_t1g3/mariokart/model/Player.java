@@ -1,6 +1,6 @@
-package com.lpoo1718_t1g3.mariokart.Model;
+package com.lpoo1718_t1g3.mariokart.model;
 
-import com.lpoo1718_t1g3.mariokart.Model.entities.KartModel;
+import com.lpoo1718_t1g3.mariokart.model.entities.KartModel;
 
 public class Player {
 
@@ -8,10 +8,13 @@ public class Player {
     private String playerHandle;
     private Character selectedCharacter;
     private KartModel kartModel;
+    private Position position;
 
     Player(int playerId, String playerHandle) {
         this.playerId = playerId;
         this.playerHandle = playerHandle;
+        this.kartModel = new KartModel(5, 5, 90, playerId);
+        this.position = new com.lpoo1718_t1g3.mariokart.model.Position(playerId);
     }
 
     public int getPlayerId() {
@@ -46,5 +49,12 @@ public class Player {
         this.selectedCharacter = selectedCharacter;
     }
 
+    public Position getPosition() {
+        return position;
+    }
 
+    public void resetPosition() {
+        this.position.laps = -1;
+        this.position.time = 0;
+    }
 }

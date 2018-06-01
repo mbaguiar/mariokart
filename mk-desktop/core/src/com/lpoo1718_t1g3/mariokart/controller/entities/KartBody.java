@@ -19,6 +19,7 @@ public class KartBody extends EntityBody {
     public List<TireBody> wheels;
     boolean update;
 
+
     public enum steer_type {STEER_NONE, STEER_LEFT, STEER_RIGHT, STEER_HARD_LEFT, STEER_HARD_RIGHT}
 
     ;
@@ -60,6 +61,7 @@ public class KartBody extends EntityBody {
         kartShape.setAsBox(KartModel.WIDTH/2, KartModel.HEIGHT/2);
         fixtureDef.shape = kartShape;
         this.body.createFixture(fixtureDef);
+        this.body.setLinearDamping(0);
     }
 
     public List<TireBody> getPoweredWheels() {
@@ -112,7 +114,7 @@ public class KartBody extends EntityBody {
 
     public void update(float deltaTime) {
 
-        System.out.println(steer + "; " + accelerate);
+        //updateSpeed();
 
         for (TireBody tire : wheels) {
             tire.killSidewaysVelocity();
@@ -138,7 +140,6 @@ public class KartBody extends EntityBody {
                 break;
         }
 
-        //System.out.println(this.wheelAngle);
 
         for (TireBody tire : getRevolvingWheels()) {
             tire.setAngle(this.wheelAngle);
@@ -173,24 +174,28 @@ public class KartBody extends EntityBody {
             Vector2 position = tire.body.getWorldCenter();
             tire.body.applyForce(tire.body.getWorldVector(new Vector2(forceVector.x, forceVector.y)), position, true);
         }
+
     }
 
     public void speedUp() {
-        this.power = 30;
-        this.maxSpeed = 40;
+        System.out.println("impluso");
+        setHighSpeed();
         new Timer().schedule(
                 new TimerTask() {
                     @Override
                     public void run() {
-                        power = 15;
-                        maxSpeed = 20;
+                        setNormalSpeed();
                     }
-                }, 1000
+                }, 2000
         );
     }
 
     public boolean isUpdate() {
         return update;
+    }
+
+    public void disable() {
+        this.update = false;
     }
 
     public void steerHard() {
@@ -207,6 +212,37 @@ public class KartBody extends EntityBody {
                 }, 500
         );
     }
+
+    public void setHighSpeed() {
+        this.maxSpeed = KartModel.MAXSPEED_HIGH;
+        this.power = KartModel.POWER_HIGH;
+    }
+
+    public void setNormalSpeed() {
+        this.maxSpeed = KartModel.MAXSPEED;
+        this.power = KartModel.POWER;
+    }
+
+    public void setLowSpeed() {
+        this.maxSpeed = KartModel.MAXSPEED_LOW;
+        this.power = KartModel.POWER_LOW;
+    }
+
+    private void updateSpeed() {
+        switch (((KartModel) body.getUserData()).getSpeed()) {
+            case NORMAL:
+                setNormalSpeed();
+                break;
+            case LOW:
+                setLowSpeed();
+                break;
+            case HIGH:
+                setHighSpeed();
+                break;
+        }
+    }
+
+
 
     public float getPower() {
         return power;

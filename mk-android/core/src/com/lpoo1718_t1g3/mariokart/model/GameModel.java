@@ -1,4 +1,4 @@
-package com.lpoo1718_t1g3.mariokart.Model;
+package com.lpoo1718_t1g3.mariokart.model;
 
 
 import com.lpoo1718_t1g3.mariokart.networking.Message;

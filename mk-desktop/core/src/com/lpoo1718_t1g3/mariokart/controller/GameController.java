@@ -1,9 +1,10 @@
 package com.lpoo1718_t1g3.mariokart.controller;
 
 import com.lpoo1718_t1g3.mariokart.MarioKart;
-import com.lpoo1718_t1g3.mariokart.Model.Character;
-import com.lpoo1718_t1g3.mariokart.Model.GameModel;
-import com.lpoo1718_t1g3.mariokart.Model.Player;
+import com.lpoo1718_t1g3.mariokart.model.Character;
+import com.lpoo1718_t1g3.mariokart.model.GameModel;
+import com.lpoo1718_t1g3.mariokart.model.Player;
+import com.lpoo1718_t1g3.mariokart.model.Race;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 import com.lpoo1718_t1g3.mariokart.view.CharacterPickerView;
 import com.lpoo1718_t1g3.mariokart.view.LobbyView;
@@ -11,7 +12,7 @@ import com.lpoo1718_t1g3.mariokart.view.MenuView;
 
 import java.util.ArrayList;
 
-import static com.lpoo1718_t1g3.mariokart.Model.GameModel.game_screen.*;
+import static com.lpoo1718_t1g3.mariokart.model.GameModel.game_screen.*;
 
 public class GameController {
 
@@ -45,6 +46,7 @@ public class GameController {
                 GameModel.getInstance().setNextScreen(null);
                 break;
             case RACE:
+                GameModel.getInstance().setCurrentRace(new Race(GameModel.getInstance().getChoosenTrack()));
                 raceController = new RaceController();
                 MarioKart.getInstance().setScreen(raceController.getRaceView());
                 GameModel.getInstance().setNextScreen(null);

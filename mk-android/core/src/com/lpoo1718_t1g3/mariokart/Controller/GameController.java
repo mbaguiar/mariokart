@@ -1,10 +1,9 @@
 package com.lpoo1718_t1g3.mariokart.Controller;
 
 
-import com.badlogic.gdx.Game;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
-import com.lpoo1718_t1g3.mariokart.Model.Character;
-import com.lpoo1718_t1g3.mariokart.Model.GameModel;
+import com.lpoo1718_t1g3.mariokart.model.Character;
+import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.View.AccelerometerControlView;
 import com.lpoo1718_t1g3.mariokart.View.ButtonControlView;
 import com.lpoo1718_t1g3.mariokart.View.CharacterPickerView;
