@@ -39,7 +39,7 @@ public class KartBody extends EntityBody {
         this.maxSpeed = KartModel.MAXSPEED;
         this.power = KartModel.POWER;
         this.wheelAngle = 0;
-        this.update = true;
+        this.update = false;
 
         createFixture(body);
 
@@ -196,6 +196,10 @@ public class KartBody extends EntityBody {
 
     public void disable() {
         this.update = false;
+    }
+
+    public void enable() {
+        this.update = true;
     }
 
     public void steerHard() {

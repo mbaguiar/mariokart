@@ -37,6 +37,8 @@ public class RaceView extends ScreenAdapter {
     private OrthographicCamera camera;
     private Label.LabelStyle labelStyle;
     private Label.LabelStyle labelStyleSmall;
+    private Label.LabelStyle labelStyleBig;
+    private Label raceLabel;
     private Table connectedPlayers;
     private HashMap<Integer, Image> place_numbers = new HashMap<Integer, Image>();
     private HashMap<String, Image> characters_symbols = new HashMap<String, Image>();
@@ -95,6 +97,20 @@ public class RaceView extends ScreenAdapter {
 
         labelStyleSmall = new Label.LabelStyle();
         labelStyleSmall.font = generator.generateFont(parameter);
+
+        parameter.size = 150;
+        parameter.color = Color.GOLD;
+        parameter.borderColor = Color.BROWN;
+        parameter.borderWidth = 5;
+
+        labelStyleBig = new Label.LabelStyle();
+        labelStyleBig.font = generator.generateFont(parameter);
+
+        raceLabel = new Label("3", labelStyleBig);
+        raceLabel.setPosition(stage.getHeight() / 2, stage.getHeight() / 2, Align.center);
+        raceLabel.setAlignment(Align.center);
+
+        stage.addActor(raceLabel);
 
         debugRenderer = new Box2DDebugRenderer(true, true, false, true, true, true);
 
@@ -208,6 +224,8 @@ public class RaceView extends ScreenAdapter {
         MarioKart.getInstance().getBatch().begin();
         drawEntities();
         MarioKart.getInstance().getBatch().end();
+
+        reloadRaceLabel();
 
         stage.act();
         stage.draw();
@@ -332,6 +350,26 @@ public class RaceView extends ScreenAdapter {
                     objView.draw(MarioKart.getInstance().getBatch());
                 }
             }
+        }
+    }
+
+    private void reloadRaceLabel() {
+        switch (GameModel.getInstance().getCurrentRace().getState()) {
+            case READY:
+                raceLabel.setText("3");
+                break;
+            case SET:
+                raceLabel.setText("2");
+                break;
+            case GO:
+                raceLabel.setText("1");
+                break;
+            case RACE:
+                raceLabel.setText("");
+                break;
+            case OVER:
+                raceLabel.setText("Race Over!");
+                break;
         }
     }
 

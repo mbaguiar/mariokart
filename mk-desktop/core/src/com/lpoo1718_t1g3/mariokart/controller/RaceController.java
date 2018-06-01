@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Array;
 import com.lpoo1718_t1g3.mariokart.controller.entities.*;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.model.Player;
+import com.lpoo1718_t1g3.mariokart.model.Position;
 import com.lpoo1718_t1g3.mariokart.model.entities.*;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 import com.lpoo1718_t1g3.mariokart.view.RaceView;
@@ -55,6 +56,8 @@ public class RaceController implements ContactListener {
         GameModel.getInstance().getCurrentRace().sortPositions();
         world.setContactListener(this);
 
+        GameModel.getInstance().getCurrentRace().initRace();
+
     }
 
 
@@ -80,7 +83,7 @@ public class RaceController implements ContactListener {
             kartBody.update(delta);
         }
 
-        for (com.lpoo1718_t1g3.mariokart.model.Position position : GameModel.getInstance().getCurrentRace().getPlayerPositions()) {
+        for (Position position : GameModel.getInstance().getCurrentRace().getPlayerPositions()) {
             if (position.isFinished() && kartBodies.get(position.playerId).isUpdate()) {
                 kartBodies.get(position.playerId).disable();
                 world.destroyBody(kartBodies.get(position.playerId).getBody());
@@ -102,6 +105,8 @@ public class RaceController implements ContactListener {
 
             }
         }
+
+        if (checkRaceOver()) GameModel.getInstance().getCurrentRace().finishRace();
 
     }
 
@@ -406,5 +411,19 @@ public class RaceController implements ContactListener {
                 }
             }
         }
+    }
+
+    public void enableKarts() {
+        for (KartBody kartBody : kartBodies.values()) {
+            kartBody.enable();
+        }
+    }
+
+    public boolean checkRaceOver() {
+        for (com.lpoo1718_t1g3.mariokart.model.Position position : GameModel.getInstance().getCurrentRace().getPlayerPositions()) {
+            if (!position.isFinished()) return false;
+        }
+
+        return true;
     }
 }

@@ -1,20 +1,22 @@
 package com.lpoo1718_t1g3.mariokart.model;
 
+import com.lpoo1718_t1g3.mariokart.controller.GameController;
 import com.lpoo1718_t1g3.mariokart.model.entities.TrackModel;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+
+import static com.lpoo1718_t1g3.mariokart.model.Race.race_state.*;
 
 public class Race {
-
     private TrackModel track;
 
     private List<Position> playerPositions = new ArrayList<Position>();
+    public static enum race_state {READY, SET, GO, RACE, OVER}
+    private race_state state;
 
     public Race(TrackModel track) {
         this.track = track;
+        state = race_state.READY;
     }
 
     public void sortPositions() {
@@ -34,6 +36,10 @@ public class Race {
         }
     }
 
+    public void finishRace() {
+        this.state = OVER;
+    }
+
     public TrackModel getTrack() {
         return track;
     }
@@ -44,5 +50,48 @@ public class Race {
 
     public List<Position> getPlayerPositions() {
         return playerPositions;
+    }
+
+    public void initRace() {
+        for (Position position : playerPositions) {
+            position.description = "Ready";
+        }
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                state = SET;
+                for (Position position : playerPositions) {
+                    position.description = "Set";
+                }
+
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        state = GO;
+                        for (Position position : playerPositions) {
+                            position.description = "Go";
+                        }
+
+                        new Timer().schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                state = RACE;
+                                for (Position position : playerPositions) {
+                                    position.description = "0/3";
+                                }
+
+                                GameController.getInstance().getRaceController().enableKarts();
+                            }
+                        }, 1000);
+
+                    }
+                }, 1000);
+            }
+        }, 1000);
+    }
+
+    public race_state getState() {
+        return state;
     }
 }
