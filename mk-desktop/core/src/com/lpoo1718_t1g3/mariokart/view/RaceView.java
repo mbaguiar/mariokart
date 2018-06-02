@@ -74,7 +74,7 @@ public class RaceView extends ScreenAdapter {
         labelStyle.font = generator.generateFont(parameter);
         Label lobbyLabel = new Label("Players", labelStyle);
 
-        lobbyLabel.setPosition((stage.getWidth() + 1080)/2f, stage.getHeight() * 0.9f, Align.center);
+        lobbyLabel.setPosition((stage.getWidth() + stage.getHeight())/2f, stage.getHeight() * 0.9f, Align.center);
         setUpPlaceNumbers();
         setUpCharacterSymbols();
 
@@ -82,7 +82,7 @@ public class RaceView extends ScreenAdapter {
         connectedPlayers.setDebug(false);
 
 
-        connectedPlayers.setPosition((stage.getWidth() + 1080)/2f, stage.getHeight() * 0.45f, Align.top);
+        connectedPlayers.setPosition((stage.getWidth() + stage.getHeight())/2f, stage.getHeight() * 0.45f, Align.top);
 
         stage.addActor(connectedPlayers);
         stage.addActor(lobbyLabel);
@@ -98,7 +98,7 @@ public class RaceView extends ScreenAdapter {
         labelStyleSmall = new Label.LabelStyle();
         labelStyleSmall.font = generator.generateFont(parameter);
 
-        parameter.size = 150;
+        parameter.size = 130;
         parameter.color = Color.GOLD;
         parameter.borderColor = Color.BROWN;
         parameter.borderWidth = 5;
