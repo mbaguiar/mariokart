@@ -5,7 +5,6 @@ import com.lpoo1718_t1g3.mariokart.model.entities.TrackModel;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 import com.lpoo1718_t1g3.mariokart.networking.ServerManager;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class GameModel {
@@ -163,6 +162,10 @@ public class GameModel {
 
     public void setCurrentRace(Race currentRace) {
         this.currentRace = currentRace;
+    }
+
+    public void kickPlayer(int playerId) {
+        if (getPlayer(playerId) != null) players.remove(getPlayer(playerId));
     }
 
     public enum object_type { NULL, BANANA, FAKE_MYSTERY_BOX }

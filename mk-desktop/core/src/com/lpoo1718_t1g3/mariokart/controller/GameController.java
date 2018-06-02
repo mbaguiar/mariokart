@@ -198,4 +198,8 @@ public class GameController {
     public void usePowerUp(Message m) {
         GameController.getInstance().getRaceController().useObject(m.getSenderId());
     }
+
+    public void playerDisconnected(int playerId) {
+        GameModel.getInstance().kickPlayer(playerId);
+    }
 }

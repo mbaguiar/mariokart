@@ -2,6 +2,7 @@ package com.lpoo1718_t1g3.mariokart.networking;
 
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -56,6 +57,14 @@ public class ClientManager extends Thread {
             while ((input = (Message) inputStream.readObject()) != null) {
                 handleMessage(input);
             }
+        } catch (EOFException e){
+            GameController.getInstance().playerDisconnected(this.playerId);
+            try {
+                this.socket.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            return;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
