@@ -77,7 +77,7 @@ public class CharacterPickerView extends ScreenAdapter {
                     Label characterLabel = new Label("", labelStyle);
                     for (Player player : GameModel.getInstance().getPlayers()) {
                         if (player.getSelectedCharacter() != null) {
-                            if (player.getSelectedCharacter().getName().equals(GameModel.getInstance().getCharacters().get(t))) {
+                            if (player.getSelectedCharacter().getName().equals(GameModel.getInstance().getCharacters().get(t).getName())) {
                                 characterLabel = new Label(player.getPlayerHandle(), labelStyle);
                             }
                         }
