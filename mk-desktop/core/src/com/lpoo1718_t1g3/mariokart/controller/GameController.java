@@ -130,6 +130,7 @@ public class GameController {
             @Override
             public void run() {
                 for (Player p : GameModel.getInstance().getPlayers()) {
+                    GameModel.getInstance().setCurrentPickerId(p.getPlayerId());
                     GameController.getInstance().writeToClient(newPickerMessage(Message.char_pick_state.PICK), p.getPlayerId());
                     broadcastToNotPicked(newPickerMessage(Message.char_pick_state.WAIT), p.getPlayerId());
 

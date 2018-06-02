@@ -4,12 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
 
 
@@ -17,6 +19,8 @@ public class MenuView extends ScreenAdapter {
     private Stage stage;
 
     public MenuView() {
+
+        loadAssests();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
@@ -29,7 +33,7 @@ public class MenuView extends ScreenAdapter {
         Table buttonGroup = new Table();
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
 
-        parameter.size = 32;
+        parameter.size = 100;
 
         style.font = generator.generateFont(parameter);
 
@@ -39,11 +43,11 @@ public class MenuView extends ScreenAdapter {
         TextButton instructionsBtn = new TextButton("Instructions", style);
         TextButton quitBtn = new TextButton("Quit", style);
 
-        buttonGroup.add(playBtn).pad(20);
+        buttonGroup.add(playBtn).pad(30);
         buttonGroup.row();
-        buttonGroup.add(instructionsBtn).pad(20);
+        buttonGroup.add(instructionsBtn).pad(30);
         buttonGroup.row();
-        buttonGroup.add(quitBtn).pad(20);
+        buttonGroup.add(quitBtn).pad(30);
 
         playBtn.addListener(new ClickListener() {
             @Override
@@ -57,9 +61,16 @@ public class MenuView extends ScreenAdapter {
 
     }
 
+    private void loadAssests() {
+        MarioKart.getInstance().getAssetManager().load("menubackground.jpg", Texture.class);
+        MarioKart.getInstance().getAssetManager().finishLoading();
+    }
+
     @Override
     public void render(float delta) {
+        MarioKart.getInstance().getBatch().begin();
         drawBackground();
+        MarioKart.getInstance().getBatch().end();
         stage.act();
         stage.draw();
         GameController.getInstance().updateStatus();
@@ -68,6 +79,9 @@ public class MenuView extends ScreenAdapter {
     private void drawBackground() {
         Gdx.gl.glClearColor(0f, 1f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        Texture background = MarioKart.getInstance().getAssetManager().get("menubackground.jpg", Texture.class);
+        background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+        MarioKart.getInstance().getBatch().draw(background, 0, 0, 0, 0, 1920, 1080);
     }
 
 }

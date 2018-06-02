@@ -4,21 +4,29 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.lpoo1718_t1g3.mariokart.model.Character;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
+import com.lpoo1718_t1g3.mariokart.model.Player;
+
+import java.util.HashMap;
 
 public class CharacterPickerView extends ScreenAdapter {
     private Stage stage;
+    private HashMap<String, Image> charactersImages = new HashMap<String, Image>();
+    private Label playerTurn;
+    private Table characters;
+    private Label.LabelStyle labelStyle;
 
     public CharacterPickerView() {
+        loadCharacters();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("SuperMario256.ttf"));
@@ -27,7 +35,7 @@ public class CharacterPickerView extends ScreenAdapter {
         parameter.borderWidth = 5;
         parameter.size = 100;
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle = new Label.LabelStyle();
         labelStyle.font = generator.generateFont(parameter);
         Label viewTitle = new Label("Pick your character", labelStyle);
         viewTitle.setPosition(stage.getWidth() / 2f, stage.getHeight() * 0.9f, Align.center);
@@ -36,34 +44,20 @@ public class CharacterPickerView extends ScreenAdapter {
         parameter.size = 24;
         labelStyle.font = generator.generateFont(parameter);
 
-        Label playerTurn = new Label("Player 1's turn to pick", labelStyle);
-        playerTurn.setPosition(stage.getWidth() / 2f, stage.getHeight() - stage.getHeight() / 3f, Align.center);
+        playerTurn = new Label("", labelStyle);
+        playerTurn.setPosition(stage.getWidth() / 2f, stage.getHeight() - stage.getHeight() * 0.3f, Align.center);
 
-        Table characters = new Table();
-        characters.setDebug(true);
-        characters.setPosition(stage.getWidth() / 2f, stage.getHeight() / 3f, Align.center);
+        characters = new Table();
+        characters.setDebug(false);
+        characters.setPosition(stage.getWidth() / 2f, stage.getHeight() * 0.35f, Align.center);
 
         parameter.borderWidth = 4;
         parameter.size = 32;
         labelStyle.font = generator.generateFont(parameter);
-        int i = 0;
-        for (Character c : GameModel.getInstance().getCharacters()) {
-            Label characterBox = new Label(c.getName(), labelStyle);
-            characterBox.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    //MarioKart.getInstance().setScreen(new TrackPickerView());
-                }
-            });
-            characters.add(characterBox).pad(75);
-            if ((i + 1) % 3 == 0 && i + 1 < GameModel.getInstance().getCharacters().size()) {
-                characters.row();
-            }
-            i++;
-        }
-
 
         generator.dispose();
+
+        reloadTable();
 
         stage.addActor(viewTitle);
         stage.addActor(characters);
@@ -71,8 +65,69 @@ public class CharacterPickerView extends ScreenAdapter {
 
     }
 
+    private void reloadTable() {
+        characters.clearChildren();
+        int i = 0;
+        for (Character c : GameModel.getInstance().getCharacters()) {
+            //charactersImages.add(characterBox).pad(75).padBottom(10);
+            characters.add(charactersImages.get(c.getName())).width(250).height(250).padBottom(0).padLeft(50).padRight(50);
+
+            if ((i + 1) % 3 == 0 && i + 1 < GameModel.getInstance().getCharacters().size() || i == 5) {
+                characters.row();
+                for (int t = i -3; t < i; t++) {
+                    Label characterLabel = new Label("", labelStyle);
+                    for (Player player : GameModel.getInstance().getPlayers()) {
+                        if (player.getSelectedCharacter() != null) {
+                            if (player.getSelectedCharacter().getName().equals(GameModel.getInstance().getCharacters().get(t))) {
+                                characterLabel = new Label(player.getPlayerHandle(), labelStyle);
+                            }
+                        }
+
+                    }
+                    characters.add(characterLabel).padBottom(10).padLeft(50).padRight(50);
+                }
+                characters.row();
+            }
+
+
+
+            i++;
+        }
+    }
+
+    private void reloadLabel() {
+        int number = GameModel.getInstance().getCurrentPickerId();
+        if (number != -1) {
+            String name = GameModel.getInstance().getPlayer(number).getPlayerHandle();
+            playerTurn.setText(name + "'s turn to pick!");
+        }
+    }
+
+    private void loadCharacters() {
+        Texture texture = new Texture(Gdx.files.internal("mario_circle.png"));
+        Image image = new Image(texture);
+        charactersImages.put("Mario", image);
+        texture = new Texture(Gdx.files.internal("luigi_circle.png"));
+        image = new Image(texture);
+        charactersImages.put("Luigi", image);
+        texture = new Texture(Gdx.files.internal("peach_circle.png"));
+        image = new Image(texture);
+        charactersImages.put("Peach", image);
+        texture = new Texture(Gdx.files.internal("toad_circle.png"));
+        image = new Image(texture);
+        charactersImages.put("Toad", image);
+        texture = new Texture(Gdx.files.internal("yoshi_circle.png"));
+        image = new Image(texture);
+        charactersImages.put("Yoshi", image);
+        texture = new Texture(Gdx.files.internal("bowser_circle.png"));
+        image = new Image(texture);
+        charactersImages.put("Bowser", image);
+    }
+
     @Override
     public void render(float delta) {
+        reloadLabel();
+        reloadTable();
         drawBackground();
         stage.act();
         stage.draw();
@@ -80,7 +135,7 @@ public class CharacterPickerView extends ScreenAdapter {
     }
 
     private void drawBackground() {
-        Gdx.gl.glClearColor(1f, 1f, 0f, 1);
+        Gdx.gl.glClearColor(220/255f, 57/255f, 24/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
     }
 

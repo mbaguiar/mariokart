@@ -22,6 +22,8 @@ public class GameModel {
     private game_screen nextScreen;
     private Race currentRace;
     private TrackModel choosenTrack;
+    private int currentPickerId = -1;
+
     private GameModel() {
         TrackModel track1 = new TrackModel(-24, -16, 0);
         choosenTrack = track1;
@@ -161,4 +163,12 @@ public class GameModel {
     public enum char_pick_state { WAIT, PICK, PICKED }
 
     public enum game_screen { MENU, LOBBY, CHAR_PICK, TRACK_VOTE, RACE, RESULTS }
+
+    public int getCurrentPickerId() {
+        return currentPickerId;
+    }
+
+    public void setCurrentPickerId(int currentPickerId) {
+        this.currentPickerId = currentPickerId;
+    }
 }
