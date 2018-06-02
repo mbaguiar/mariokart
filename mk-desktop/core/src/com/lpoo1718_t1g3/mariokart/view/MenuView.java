@@ -5,6 +5,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,12 +18,17 @@ import com.lpoo1718_t1g3.mariokart.controller.GameController;
 
 public class MenuView extends ScreenAdapter {
     private Stage stage;
+    private Sprite background;
 
     public MenuView() {
 
         loadAssests();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
+
+        Texture texture = MarioKart.getInstance().getAssetManager().get("menubackground.jpg");
+        background = new Sprite(texture);
+        background.setSize(stage.getWidth(), stage.getHeight());
 
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("SuperMario256.ttf"));
@@ -77,11 +83,7 @@ public class MenuView extends ScreenAdapter {
     }
 
     private void drawBackground() {
-        Gdx.gl.glClearColor(0f, 1f, 0f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        Texture background = MarioKart.getInstance().getAssetManager().get("menubackground.jpg", Texture.class);
-        background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        MarioKart.getInstance().getBatch().draw(background, 0, 0, 0, 0, 1920, 1080);
+        background.draw(MarioKart.getInstance().getBatch());
     }
 
 }
