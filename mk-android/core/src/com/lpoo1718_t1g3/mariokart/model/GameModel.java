@@ -15,7 +15,7 @@ public class GameModel {
     private game_screen nextScreen;
     private Message.char_pick_state pickState;
     private Character selectedCharacter;
-    private String playerHandle = "duriola";
+    private String playerHandle;
     private int selectedCharacterIndex;
     private object_type powerUp = object_type.NULL;
 

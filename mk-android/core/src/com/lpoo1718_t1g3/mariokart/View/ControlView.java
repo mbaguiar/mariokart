@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
@@ -37,6 +36,8 @@ public class ControlView extends ScreenAdapter {
         loadAssets();
         style = new TextButton.TextButtonStyle();
         style.font = ViewDefaults.getDefaultButtonFont();
+        style.up = new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("button.png"))));
+        style.down = new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("button.png"))));
 
         throttle = new TextButton(">", style);
         throttle.setTransform(true);
@@ -73,6 +74,10 @@ public class ControlView extends ScreenAdapter {
             }
 
         });
+
+        style.up = null;
+        style.down = null;
+
         changeControls = new TextButton("Change", style);
         changeControls.setTransform(true);
         changeControls.setOrigin(Align.center);
@@ -92,7 +97,7 @@ public class ControlView extends ScreenAdapter {
         });
 
         powerUp = new Image(powerUpSprites[0]);
-        powerUp.setSize(stage.getWidth()/5f, stage.getWidth()/5f);
+        powerUp.setSize(stage.getWidth()/4f, stage.getWidth()/4f);
         powerUp.setOrigin(Align.center);
         powerUp.setRotation(-90);
 

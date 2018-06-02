@@ -18,7 +18,7 @@ public class AccelerometerControlView extends ControlView {
         brake.setPosition(0, stage.getHeight(), Align.topLeft);
 
         powerUp.setRotation(-90);
-        powerUp.setPosition(stage.getWidth()/2f,stage.getHeight()/2f, Align.center);
+        powerUp.setPosition(stage.getWidth()*3f/4f,stage.getHeight()/2f, Align.center);
 
         this.stage.addActor(throttle);
         this.stage.addActor(brake);
