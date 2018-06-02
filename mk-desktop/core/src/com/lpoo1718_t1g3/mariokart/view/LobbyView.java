@@ -167,7 +167,7 @@ public class LobbyView extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         Texture background = MarioKart.getInstance().getAssetManager().get("mario_background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        MarioKart.getInstance().getBatch().draw(background, 0, 0, 0, 0, 1920, 1080);
+        MarioKart.getInstance().getBatch().draw(background, 0, 0, 0, 0, (int) stage.getWidth(), (int) stage.getHeight());
     }
 
 }

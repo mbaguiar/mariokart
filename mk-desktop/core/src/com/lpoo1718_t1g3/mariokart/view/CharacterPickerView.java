@@ -47,6 +47,7 @@ public class CharacterPickerView extends ScreenAdapter {
 
         playerTurn = new Label("", labelStyle);
         playerTurn.setPosition(stage.getWidth() / 2f, stage.getHeight() - stage.getHeight() * 0.3f, Align.center);
+        playerTurn.setAlignment(Align.center);
 
         characters = new Table();
         characters.setDebug(false);
