@@ -56,16 +56,22 @@ public class GameController {
 
     public void tryConnect(String ipAddress) {
         String[] fullIp = ipAddress.split(":");
-        String ip = fullIp[0];
-        int port = Integer.parseInt(fullIp[1]);
-        System.out.println("Ip: " + ip + "; port: " + port);
-        if (Connector.getInstance().connect(ip, port) == null){
-            //Error
-            return;
-        }
+        if (fullIp.length == 2) {
+            String ip = fullIp[0];
+            try {
+                int port = Integer.parseInt(fullIp[1]);
+                System.out.println("Ip: " + ip + "; port: " + port);
+                if (Connector.getInstance().connect(ip, port) == null) {
+                    //Error
+                    return;
+                }
+                System.out.println("Connection successful");
+                this.connectionMessage();
+            } catch (NumberFormatException e) {
+                return;
+            }
 
-        System.out.println("Connection successful");
-        this.connectionMessage();
+        }
 
         //set loading
         //get response

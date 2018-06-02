@@ -28,7 +28,7 @@ public class QRCodeUtilities {
 
         try {
             BitMatrix b = w.encode(address, BarcodeFormat.QR_CODE, size, size);
-            
+
             MatrixToImageConfig config = new MatrixToImageConfig(0xFFDC3918, MatrixToImageConfig.WHITE);
 
             BufferedImage img = MatrixToImageWriter.toBufferedImage(b, config);

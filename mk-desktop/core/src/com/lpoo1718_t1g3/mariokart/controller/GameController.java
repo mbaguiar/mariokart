@@ -83,7 +83,6 @@ public class GameController {
     }
 
     public void newConnection(Message m) {
-        //test if connection is possible (max players, state of game, etc)
         Message returnMessage = new Message(Message.MESSAGE_TYPE.CONNECTION, Message.SENDER.SERVER);
         returnMessage.addOption("connectionSuccessful", true); // or false
         returnMessage.addOption("partyName", GameModel.getInstance().getPartyName());
@@ -98,14 +97,16 @@ public class GameController {
 
     public void newPlayer(Message m) {
         Message returnMessage = new Message(Message.MESSAGE_TYPE.PLAYER_REGISTRY, Message.SENDER.SERVER);
-        if (registerPlayer(m.getSenderId(), (String) m.getOptions().get("playerHandle"))) {
-            returnMessage.addOption("registrySuccessful", true);
-        } else {
-            returnMessage.addOption("registrySuccessful", false);
-            returnMessage.addOption("error", "Player name already in use");
+        if (GameModel.getInstance().getPlayers().size() < GameModel.getInstance().MAX_PLAYERS){
+            String name = (String) m.getOptions().get("playerHandle");
+            if (name.equals("")) name = "Player " + GameModel.getInstance().getPlayers().size() + 1;
+            if (registerPlayer(m.getSenderId(), name)) {
+                returnMessage.addOption("registrySuccessful", true);
+            } else {
+                returnMessage.addOption("registrySuccessful", false);
+            }
         }
         writeToClient(returnMessage, m.getSenderId());
-        System.out.println(m);
     }
 
     public void startCharPick() {

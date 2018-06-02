@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.lpoo1718_t1g3.mariokart.Controller.GameController;
+import com.lpoo1718_t1g3.mariokart.MarioKart;
 
 public class ConnectionView extends ScreenAdapter {
     private Stage stage;
@@ -47,7 +48,7 @@ public class ConnectionView extends ScreenAdapter {
         scanQrCode.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                MarioKart.getInstance().startScan();
                 super.clicked(event, x, y);
             }
         });

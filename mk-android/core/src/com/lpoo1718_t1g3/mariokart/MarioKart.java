@@ -3,18 +3,29 @@ package com.lpoo1718_t1g3.mariokart;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.lpoo1718_t1g3.QRCodeUtils.QRCodeIntegrator;
+import com.lpoo1718_t1g3.mariokart.Controller.GameController;
 import com.lpoo1718_t1g3.mariokart.View.MenuView;
 
 public class MarioKart extends Game {
     private static MarioKart ourInstance = new MarioKart();
     private SpriteBatch batch;
     private AssetManager assetManager;
+    private QRCodeIntegrator qrCodeIntegrator;
 
     public static MarioKart getInstance() {
         if (ourInstance == null) {
             ourInstance = new MarioKart();
         }
         return ourInstance;
+    }
+
+    public QRCodeIntegrator getCallback() {
+        return qrCodeIntegrator;
+    }
+
+    public void setCallback(QRCodeIntegrator callback) {
+        this.qrCodeIntegrator = callback;
     }
 
     @Override
@@ -40,5 +51,13 @@ public class MarioKart extends Game {
     public void dispose() {
         batch.dispose();
         assetManager.dispose();
+    }
+
+    public void startScan(){
+        this.qrCodeIntegrator.startScanner();
+    }
+
+    public void scanResult(String contents) {
+        GameController.getInstance().tryConnect(contents);
     }
 }

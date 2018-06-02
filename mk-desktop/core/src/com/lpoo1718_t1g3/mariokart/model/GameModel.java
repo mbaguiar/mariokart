@@ -16,7 +16,7 @@ public class GameModel {
     private String partyName = "MarioKart Party";
     private String ipAddress;
     private int port;
-    private int MAX_PLAYERS;
+    public final int MAX_PLAYERS = 6;
     private boolean qrCode = false;
     private ArrayList<Player> players = new ArrayList<Player>();
     private game_screen nextScreen;
