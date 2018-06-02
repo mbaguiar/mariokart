@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -22,6 +23,7 @@ public class LobbyView extends ScreenAdapter {
     private TextField partyName;
     private Table connectedPlayers;
     private Label.LabelStyle labelStyle;
+    private Sprite background;
 
     public LobbyView() {
 
@@ -37,6 +39,9 @@ public class LobbyView extends ScreenAdapter {
         parameter.borderColor = Color.BLACK;
         parameter.borderWidth = 5;
         parameter.size = 100;
+        Texture texture = MarioKart.getInstance().getAssetManager().get("mario_background.png");
+        background = new Sprite(texture);
+        background.setSize(stage.getWidth(), stage.getHeight());
 
         labelStyle = new Label.LabelStyle();
 
@@ -163,11 +168,7 @@ public class LobbyView extends ScreenAdapter {
     }
 
     private void drawBackground() {
-        Gdx.gl.glClearColor(0f, 0f, 1f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        Texture background = MarioKart.getInstance().getAssetManager().get("mario_background.png", Texture.class);
-        background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        MarioKart.getInstance().getBatch().draw(background, 0, 0, 0, 0, (int) stage.getWidth(), (int) stage.getHeight());
+        background.draw(MarioKart.getInstance().getBatch());
     }
 
 }
