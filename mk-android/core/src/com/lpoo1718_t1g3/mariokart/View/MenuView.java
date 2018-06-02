@@ -58,7 +58,7 @@ public class MenuView extends ScreenAdapter {
     }
 
     private void drawBackground() {
-        Gdx.gl.glClearColor(0f, 0f, 1f, 1);
+        Gdx.gl.glClearColor(220/255f, 57/255f, 24/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
     }
 
