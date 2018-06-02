@@ -22,7 +22,6 @@ public class ControlView extends ScreenAdapter {
     private boolean isAccelerating = false;
     private boolean isBraking = false;
     float direction = 0f;
-    private final TextButton.TextButtonStyle style;
     final TextButton throttle;
     final TextButton brake;
     final TextButton changeControls;
@@ -34,7 +33,7 @@ public class ControlView extends ScreenAdapter {
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         loadAssets();
-        style = new TextButton.TextButtonStyle();
+        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.font = ViewDefaults.getDefaultButtonFont();
         style.up = new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("button.png"))));
         style.down = new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("button.png"))));
@@ -75,10 +74,10 @@ public class ControlView extends ScreenAdapter {
 
         });
 
-        style.up = null;
-        style.down = null;
+        TextButton.TextButtonStyle nobackground_style = new TextButton.TextButtonStyle();
+        nobackground_style.font = ViewDefaults.getDefaultButtonFont();
 
-        changeControls = new TextButton("Change", style);
+        changeControls = new TextButton("Change", nobackground_style);
         changeControls.setTransform(true);
         changeControls.setOrigin(Align.center);
         changeControls.addListener(new ClickListener(){
