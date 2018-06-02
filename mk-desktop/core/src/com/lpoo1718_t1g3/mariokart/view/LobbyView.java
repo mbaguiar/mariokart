@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.model.Player;
@@ -23,10 +24,13 @@ public class LobbyView extends ScreenAdapter {
     private Label.LabelStyle labelStyle;
 
     public LobbyView() {
+
+        loadAssests();
+
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        stage.setDebugAll(true);
+        stage.setDebugAll(false);
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("SuperMario256.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -142,10 +146,17 @@ public class LobbyView extends ScreenAdapter {
         }
     }
 
+    private void loadAssests() {
+        MarioKart.getInstance().getAssetManager().load("mario_background.png", Texture.class);
+        MarioKart.getInstance().getAssetManager().finishLoading();
+    }
+
     @Override
     public void render (float delta) {
         reloadTable(this.labelStyle);
+        MarioKart.getInstance().getBatch().begin();
         drawBackground();
+        MarioKart.getInstance().getBatch().end();
         stage.act();
         stage.draw();
         GameController.getInstance().updateStatus();
@@ -154,6 +165,9 @@ public class LobbyView extends ScreenAdapter {
     private void drawBackground() {
         Gdx.gl.glClearColor(0f, 0f, 1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        Texture background = MarioKart.getInstance().getAssetManager().get("mario_background.png", Texture.class);
+        background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+        MarioKart.getInstance().getBatch().draw(background, 0, 0, 0, 0, 1920, 1080);
     }
 
 }

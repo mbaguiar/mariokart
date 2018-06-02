@@ -139,7 +139,6 @@ public class RaceController implements ContactListener {
         if (kartBody != null && kartBody.isUpdate()) kartBody.setAccelerate(value);
     }
 
-
     public void addKartBody(Player player) {
         kartBodies.put(player.getPlayerId(), new KartBody(world, player.getKartModel(), (float) Math.PI));
     }
