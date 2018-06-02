@@ -26,6 +26,9 @@ public class ButtonControlView extends ControlView {
         Sprite s = new Sprite(t);
         s.setSize(stage.getWidth()/6f, stage.getWidth()/6f);
         joystickStyle.knob = new SpriteDrawable(s);
+        t = new Texture(Gdx.files.internal("joystick.png"));
+        s = new Sprite(t);
+        joystickStyle.background = new SpriteDrawable(s);
 
         this.joystick = new Touchpad(50, joystickStyle);
         this.joystick.setSize(stage.getHeight()*2f/5f, stage.getHeight()*2f/5f);

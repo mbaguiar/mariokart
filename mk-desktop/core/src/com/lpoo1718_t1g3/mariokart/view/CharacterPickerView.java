@@ -16,11 +16,12 @@ import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
 import com.lpoo1718_t1g3.mariokart.model.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CharacterPickerView extends ScreenAdapter {
     private Stage stage;
-    private HashMap<String, Image> charactersImages = new HashMap<String, Image>();
+    private ArrayList<Image> charactersImages = new ArrayList<Image>();
     private Label playerTurn;
     private Table characters;
     private Label.LabelStyle labelStyle;
@@ -67,14 +68,12 @@ public class CharacterPickerView extends ScreenAdapter {
 
     private void reloadTable() {
         characters.clearChildren();
-        int i = 0;
-        for (Character c : GameModel.getInstance().getCharacters()) {
-            //charactersImages.add(characterBox).pad(75).padBottom(10);
-            characters.add(charactersImages.get(c.getName())).width(250).height(250).padBottom(0).padLeft(50).padRight(50);
+        for (int i = 0; i < GameModel.getInstance().getCharacters().size(); i++) {
+            characters.add(charactersImages.get(i)).width(250).height(250).padBottom(0).padLeft(50).padRight(50);
 
-            if ((i + 1) % 3 == 0 && i + 1 < GameModel.getInstance().getCharacters().size() || i == 5) {
+            if ((i + 1) % 3 == 0 && i + 1 < GameModel.getInstance().getCharacters().size()) {
                 characters.row();
-                for (int t = i -3; t < i; t++) {
+                for (int t = i - 2; t < i; t++) {
                     Label characterLabel = new Label("", labelStyle);
                     for (Player player : GameModel.getInstance().getPlayers()) {
                         if (player.getSelectedCharacter() != null) {
@@ -89,9 +88,6 @@ public class CharacterPickerView extends ScreenAdapter {
                 characters.row();
             }
 
-
-
-            i++;
         }
     }
 
@@ -106,22 +102,22 @@ public class CharacterPickerView extends ScreenAdapter {
     private void loadCharacters() {
         Texture texture = new Texture(Gdx.files.internal("mario_circle.png"));
         Image image = new Image(texture);
-        charactersImages.put("Mario", image);
+        charactersImages.add(image);
         texture = new Texture(Gdx.files.internal("luigi_circle.png"));
         image = new Image(texture);
-        charactersImages.put("Luigi", image);
+        charactersImages.add(image);
         texture = new Texture(Gdx.files.internal("peach_circle.png"));
         image = new Image(texture);
-        charactersImages.put("Peach", image);
+        charactersImages.add(image);
         texture = new Texture(Gdx.files.internal("toad_circle.png"));
         image = new Image(texture);
-        charactersImages.put("Toad", image);
+        charactersImages.add(image);
         texture = new Texture(Gdx.files.internal("yoshi_circle.png"));
         image = new Image(texture);
-        charactersImages.put("Yoshi", image);
+        charactersImages.add(image);
         texture = new Texture(Gdx.files.internal("bowser_circle.png"));
         image = new Image(texture);
-        charactersImages.put("Bowser", image);
+        charactersImages.add(image);
     }
 
     @Override
