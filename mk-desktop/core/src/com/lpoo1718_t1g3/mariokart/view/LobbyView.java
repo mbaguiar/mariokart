@@ -145,7 +145,7 @@ public class LobbyView extends ScreenAdapter {
         int t = 0;
         for (Player p: GameModel.getInstance().getPlayers()){
             Label playerLabel = new Label(p.getPlayerHandle(), labelStyle);
-            connectedPlayers.add(playerLabel).pad(20);
+            connectedPlayers.add(playerLabel).pad(20).bottom();
             t++;
             if (t < GameModel.getInstance().getPlayers().size()) connectedPlayers.row();
         }
