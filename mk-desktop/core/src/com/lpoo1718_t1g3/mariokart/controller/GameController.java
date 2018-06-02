@@ -134,7 +134,7 @@ public class GameController {
                     broadcastToNotPicked(newPickerMessage(Message.char_pick_state.WAIT), p.getPlayerId());
 
                     long t = System.currentTimeMillis();
-                    while (System.currentTimeMillis() - t <= 15000) {
+                    while (System.currentTimeMillis() - t <= 30000) {
                         try {
                             Thread.sleep(100);
                         } catch (InterruptedException e) {
@@ -192,5 +192,9 @@ public class GameController {
 
     public void pickMessage(Message m) {
         GameModel.getInstance().setPickMessage(m);
+    }
+
+    public void usePowerUp(Message m) {
+        GameController.getInstance().getRaceController().useObject(m.getSenderId());
     }
 }

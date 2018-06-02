@@ -13,7 +13,7 @@ public class Message implements Serializable {
 
     private Hashtable<String, Object> options;
 
-    public enum MESSAGE_TYPE {CONNECTION, PLAYER_REGISTRY, DISCONNECTION, CONTROLLER_ACTIVITY, CHAR_PICK, TRACK_VOTE, STATE_UPDATE}
+    public enum MESSAGE_TYPE {CONNECTION, PLAYER_REGISTRY, DISCONNECTION, CONTROLLER_ACTIVITY, CHAR_PICK, POWER_UP }
 
     public enum SENDER {SERVER, CLIENT}
 

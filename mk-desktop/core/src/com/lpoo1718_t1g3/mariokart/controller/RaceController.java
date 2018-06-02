@@ -31,13 +31,6 @@ public class RaceController implements ContactListener {
         trackBody = new TrackBody(world, GameModel.getInstance().getCurrentRace().getTrack());
         raceView = new RaceView();
 
-        /*GameModel.getInstance().addPlayer(1, "mbaguiar");
-        GameModel.getInstance().addPlayer(2, "tfragoso");
-        GameModel.getInstance().addPlayer(3, "coiso");
-        GameModel.getInstance().addPlayer(4, "coiso2");
-        GameModel.getInstance().addPlayer(5, "coiso3");
-        GameModel.getInstance().addPlayer(6, "coiso4");*/
-
         for (MysteryBoxModel box : GameModel.getInstance().getCurrentRace().getTrack().getBoxes()) {
             mysteryBoxes.add(new MysteryBoxBody(world, box));
         }
@@ -46,7 +39,7 @@ public class RaceController implements ContactListener {
         float y = GameModel.getInstance().getCurrentRace().getTrack().yStartPosition;
 
         for (Player player : GameModel.getInstance().getPlayers()) {
-            player.getKartModel().setPosition(x, y);
+                player.getKartModel().setPosition(x, y);
             x += GameModel.getInstance().getCurrentRace().getTrack().incStartPosition;
             kartBodies.put(player.getPlayerId(), new KartBody(world, player.getKartModel(), - (float) Math.PI / 2));
             player.resetPosition();

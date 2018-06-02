@@ -3,14 +3,20 @@ package com.lpoo1718_t1g3.mariokart.View;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.lpoo1718_t1g3.mariokart.Controller.GameController;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
+
 
 public class ControlView extends ScreenAdapter {
     Stage stage;
@@ -21,16 +27,18 @@ public class ControlView extends ScreenAdapter {
     final TextButton throttle;
     final TextButton brake;
     final TextButton changeControls;
-    final TextButton powerUp;
+    final Image powerUp;
     private long lastMessage = 0;
+    private SpriteDrawable[] powerUpSprites = new SpriteDrawable[2];
 
-    public ControlView(){
+    ControlView() {
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
+        loadAssets();
         style = new TextButton.TextButtonStyle();
         style.font = ViewDefaults.getDefaultButtonFont();
+
         throttle = new TextButton(">", style);
-        throttle.setDebug(true);
         throttle.setTransform(true);
         throttle.addListener(new ClickListener(){
             @Override
@@ -83,14 +91,19 @@ public class ControlView extends ScreenAdapter {
             }
         });
 
-        powerUp = new TextButton("P", style);
-        powerUp.setTransform(true);
+        powerUp = new Image(powerUpSprites[0]);
+        powerUp.setSize(stage.getWidth()/5f, stage.getWidth()/5f);
         powerUp.setOrigin(Align.center);
+        powerUp.setRotation(-90);
 
         powerUp.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //trigger power up
+                if (GameModel.getInstance().getPowerUp() != GameModel.object_type.NULL){
+                    GameController.getInstance().usePowerUp();
+                    GameModel.getInstance().clearPowerUp();
+                }
+                super.clicked(event, x, y);
             }
         });
 
@@ -110,12 +123,29 @@ public class ControlView extends ScreenAdapter {
         stage.act();
         stage.draw();
         GameController.getInstance().updateStatus();
+        updateActors();
     }
 
     private void drawBackground() {
-        Gdx.gl.glClearColor(0.5f, 0.5f, 1f, 1);
+        //Color c = GameModel.getInstance().getSelectedCharacter().getColor();
+        Gdx.gl.glClearColor(0.5f, 1f, 0.5f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
     }
 
+    private void loadAssets(){
+        Texture t = new Texture(Gdx.files.internal("banana.png"));
+        powerUpSprites[0] = new SpriteDrawable(new Sprite(t));
+        t = new Texture(Gdx.files.internal("misterybox.png"));
+        powerUpSprites[1] = new SpriteDrawable(new Sprite(t));
+    }
+
+    private void updateActors(){
+        if (GameModel.getInstance().getPowerUp() == GameModel.object_type.NULL){
+            powerUp.setVisible(false);
+        } else {
+            powerUp.setDrawable(powerUpSprites[GameModel.getInstance().getPowerUp().ordinal() - 1]);
+            powerUp.setVisible(true);
+        }
+    }
 
 }

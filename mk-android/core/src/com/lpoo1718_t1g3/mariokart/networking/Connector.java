@@ -111,6 +111,9 @@ public class Connector {
             case CONTROLLER_ACTIVITY:
                 GameController.getInstance().handleControlMessage(m);
                 break;
+            case POWER_UP:
+                GameController.getInstance().handlePowerUpMessage(m);
+                break;
         }
     }
 }

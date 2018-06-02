@@ -5,6 +5,7 @@ import com.lpoo1718_t1g3.mariokart.model.entities.TrackModel;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 import com.lpoo1718_t1g3.mariokart.networking.ServerManager;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class GameModel {
@@ -93,8 +94,14 @@ public class GameModel {
     }
 
     private void initCharacters() {
-        characters.add(new Character("Mario", "mariokart.png"));
-        characters.add(new Character("Luigi", "luigikart.png"));
+        /*characters.add(new Character("Mario", new Color(247/255f, 45/255f, 45/255f, 1)));
+        characters.add(new Character("Luigi", new Color(91/255f, 239/255f, 91/255f, 1)));
+        characters.add(new Character("Peach", new Color(249/255f, 188/255f, 188/255f, 1)));
+        characters.add(new Character("Toad", new Color(65/255f, 156/255f, 242/255f, 1)));
+        characters.add(new Character("Yoshi", new Color(155/255f, 246/255f, 155/255f, 1)));
+        characters.add(new Character("Bowser", new Color(238/255f, 185/255f, 37/255f, 1)));*/
+        characters.add(new Character("Mario"));
+        characters.add(new Character("Luigi"));
         characters.add(new Character("Peach"));
         characters.add(new Character("Toad"));
         characters.add(new Character("Yoshi"));
@@ -156,7 +163,7 @@ public class GameModel {
         this.currentRace = currentRace;
     }
 
-    public static enum object_type {NULL, BANANA, FAKE_MYSTERY_BOX}
+    public enum object_type { NULL, BANANA, FAKE_MYSTERY_BOX }
 
     public enum char_pick_state { WAIT, PICK, PICKED }
 

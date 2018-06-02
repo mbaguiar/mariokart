@@ -136,4 +136,13 @@ public class GameController {
     public void handleControlMessage(Message m){
         GameModel.getInstance().setNextScreen(GameModel.game_screen.CONTROL);
     }
+
+    public void handlePowerUpMessage(Message m) {
+        GameModel.getInstance().setPowerUp((GameModel.object_type) m.getOptions().get("powerUp"));
+    }
+
+    public void usePowerUp() {
+        Message m = new Message(Message.MESSAGE_TYPE.POWER_UP, Message.SENDER.CLIENT);
+        Connector.getInstance().write(m);
+    }
 }

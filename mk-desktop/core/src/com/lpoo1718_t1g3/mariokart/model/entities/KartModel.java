@@ -1,6 +1,9 @@
 package com.lpoo1718_t1g3.mariokart.model.entities;
 
+import com.badlogic.gdx.Game;
+import com.lpoo1718_t1g3.mariokart.controller.GameController;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
+import com.lpoo1718_t1g3.mariokart.networking.Message;
 
 import java.util.Random;
 
@@ -34,7 +37,7 @@ public class KartModel extends EntityModel {
 
     public KartModel(float x, float y, float rotation, int playerId) {
         super(x, y, rotation);
-        object = null;
+        object = GameModel.object_type.NULL;
         collision = true;
         this.playerId = playerId;
     }
@@ -49,22 +52,23 @@ public class KartModel extends EntityModel {
 
     public void generateObject() {
 
-        if (object == null) {
+        if (object == GameModel.object_type.NULL) {
             Random rand = new Random();
             int n = rand.nextInt(2) + 1;
             object = GameModel.object_type.values()[n];
-            System.out.println(object);
+            Message m = new Message(Message.MESSAGE_TYPE.POWER_UP, Message.SENDER.SERVER);
+            m.addOption("powerUp", object);
+            GameController.getInstance().writeToClient(m, playerId);
         }
     }
 
     public GameModel.object_type getObject() {
-        if (object == null) {
-            //System.out.println("Object is null");
+        if (object == GameModel.object_type.NULL) {
             return null;
         }
         System.out.println("Released object " + object);
         int obj = this.object.ordinal();
-        this.object = null;
+        this.object = GameModel.object_type.NULL;
         System.out.println(object);
         return GameModel.object_type.values()[obj];
     }

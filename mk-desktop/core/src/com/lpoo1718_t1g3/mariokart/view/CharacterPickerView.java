@@ -36,6 +36,7 @@ public class CharacterPickerView extends ScreenAdapter {
         parameter.size = 24;
         labelStyle.font = generator.generateFont(parameter);
 
+        //TODO Reload player's name
         Label playerTurn = new Label("Player 1's turn to pick", labelStyle);
         playerTurn.setPosition(stage.getWidth() / 2f, stage.getHeight() - stage.getHeight() / 3f, Align.center);
 
@@ -46,15 +47,11 @@ public class CharacterPickerView extends ScreenAdapter {
         parameter.borderWidth = 4;
         parameter.size = 32;
         labelStyle.font = generator.generateFont(parameter);
+        //TODO Fix generator
+
         int i = 0;
         for (Character c : GameModel.getInstance().getCharacters()) {
             Label characterBox = new Label(c.getName(), labelStyle);
-            characterBox.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    //MarioKart.getInstance().setScreen(new TrackPickerView());
-                }
-            });
             characters.add(characterBox).pad(75);
             if ((i + 1) % 3 == 0 && i + 1 < GameModel.getInstance().getCharacters().size()) {
                 characters.row();

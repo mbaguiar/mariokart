@@ -80,6 +80,9 @@ public class ClientManager extends Thread {
             case CHAR_PICK:
                 GameController.getInstance().pickMessage(m);
                 break;
+            case POWER_UP:
+                GameController.getInstance().usePowerUp(m);
+                break;
         }
     }
 

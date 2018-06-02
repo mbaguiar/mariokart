@@ -1,6 +1,7 @@
 package com.lpoo1718_t1g3.mariokart.model;
 
 
+import com.badlogic.gdx.Game;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class GameModel {
     private Character selectedCharacter;
     private String playerHandle = "duriola";
     private int selectedCharacterIndex;
+    private object_type powerUp = object_type.NULL;
 
     private GameModel() {
     }
@@ -92,6 +94,20 @@ public class GameModel {
         this.selectedCharacterIndex = selectedCharacterIndex;
     }
 
+    public void setPowerUp(object_type powerUp) {
+        this.powerUp = powerUp;
+    }
+
+    public void clearPowerUp() {
+        this.powerUp = object_type.NULL;
+    }
+
+    public object_type getPowerUp() {
+        return powerUp;
+    }
+
     public enum game_screen{ MENU, CONNECTION, REGISTRY, CONTROL, CHAR_PICK }
+
+    public enum object_type {NULL, BANANA, FAKE_MYSTERY_BOX}
 
 }

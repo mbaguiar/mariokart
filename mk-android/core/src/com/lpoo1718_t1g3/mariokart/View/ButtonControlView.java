@@ -2,8 +2,10 @@ package com.lpoo1718_t1g3.mariokart.View;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 
@@ -21,12 +23,13 @@ public class ButtonControlView extends ControlView {
 
         Touchpad.TouchpadStyle joystickStyle = new Touchpad.TouchpadStyle();
         Texture t = new Texture(Gdx.files.internal("knob.png"));
-        joystickStyle.knob = new TextureRegionDrawable(new TextureRegion(t));
+        Sprite s = new Sprite(t);
+        s.setSize(stage.getWidth()/6f, stage.getWidth()/6f);
+        joystickStyle.knob = new SpriteDrawable(s);
 
         this.joystick = new Touchpad(50, joystickStyle);
         this.joystick.setSize(stage.getHeight()*2f/5f, stage.getHeight()*2f/5f);
         this.joystick.setPosition(stage.getWidth()/3f, stage.getHeight()*4f/5f, Align.center);
-        this.joystick.setDebug(true);
 
         changeControls.setRotation(-90);
         changeControls.setPosition(stage.getWidth()/5f, stage.getHeight()*2f/5f, Align.center);
