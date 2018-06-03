@@ -7,16 +7,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.LinkedList;
+import java.net.SocketException;
 
 public class ClientManager extends Thread {
 
     private final int playerId;
-    private final LinkedList<Message> messageQueue = new LinkedList<Message>();
     private Socket socket;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
-    private Thread writerThread;
+    private boolean finished;
+
     ClientManager(Socket client, int playerId) {
         socket = client;
         this.playerId = playerId;
@@ -31,33 +31,17 @@ public class ClientManager extends Thread {
         try {
             inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream = new ObjectOutputStream(socket.getOutputStream());
-/*            writerThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    if (outputStream != null) {
-                        while(true){
-                            Message m;
-                            if ((m = messageQueue.pollFirst()) != null){
-                                try {
-                                    outputStream.writeObject(m);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-            writerThread.start();*/
         } catch (IOException e) {
             e.printStackTrace();
         }
         Message input;
         try {
-            while ((input = (Message) inputStream.readObject()) != null) {
+            while (!socket.isClosed() && (input = (Message) inputStream.readObject()) != null) {
                 handleMessage(input);
             }
-        } catch (EOFException e){
+        } catch (SocketException e) {
+            return;
+        } catch (EOFException e) {
             GameController.getInstance().playerDisconnected(this.playerId);
             try {
                 this.socket.close();
@@ -92,16 +76,29 @@ public class ClientManager extends Thread {
             case POWER_UP:
                 GameController.getInstance().usePowerUp(m);
                 break;
+            case DISCONNECTION:
+                GameController.getInstance().playerDisconnected(m.getSenderId());
+                this.close();
+                break;
         }
     }
 
     void write(Message m) {
-        if (outputStream != null) {
+        if (!socket.isClosed() && outputStream != null) {
             try {
                 outputStream.writeObject(m);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    void close() {
+        this.finished = true;
+        try {
+            this.socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

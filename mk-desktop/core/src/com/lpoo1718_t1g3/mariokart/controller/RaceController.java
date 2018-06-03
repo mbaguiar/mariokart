@@ -55,7 +55,7 @@ public class RaceController implements ContactListener {
 
 
 
-    public RaceView getRaceView() {
+    RaceView getRaceView() {
         return raceView;
     }
 
@@ -63,7 +63,7 @@ public class RaceController implements ContactListener {
         return world;
     }
 
-    public void update(float delta) {
+    void update(float delta) {
 
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
@@ -161,7 +161,7 @@ public class RaceController implements ContactListener {
 
     }
 
-    public void useBanana(int playerId) {
+    private void useBanana(int playerId) {
         KartModel kartModel = ((KartModel) kartBodies.get(playerId).getUserdata());
         kartModel.setCollision(false);
         BananaModel banana = new BananaModel(kartModel.getX(), kartModel.getY(), 0);
@@ -169,7 +169,7 @@ public class RaceController implements ContactListener {
         GameModel.getInstance().getCurrentRace().getTrack().addObject(banana);
     }
 
-    public void useFakeMysteryBox(int playerId) {
+    private void useFakeMysteryBox(int playerId) {
         KartModel kartModel = ((KartModel) kartBodies.get(playerId).getUserdata());
         kartModel.setCollision(false);
         FakeMysteryBoxModel fakeBox = new FakeMysteryBoxModel(kartModel.getX() , kartModel.getY(), 0);
@@ -411,7 +411,7 @@ public class RaceController implements ContactListener {
         }
     }
 
-    public boolean checkRaceOver() {
+    private boolean checkRaceOver() {
         for (com.lpoo1718_t1g3.mariokart.model.Position position : GameModel.getInstance().getCurrentRace().getPlayerPositions()) {
             if (!position.isFinished()) return false;
         }

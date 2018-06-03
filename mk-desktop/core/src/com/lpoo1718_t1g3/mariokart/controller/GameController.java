@@ -1,5 +1,6 @@
 package com.lpoo1718_t1g3.mariokart.controller;
 
+import com.badlogic.gdx.Game;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.model.Character;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
@@ -34,15 +35,14 @@ public class GameController {
                 GameModel.getInstance().setNextScreen(null);
                 break;
             case LOBBY:
+                if (GameModel.getInstance().getServer() != null)
+                    GameModel.getInstance().stopServer();
+                GameModel.getInstance().clearData();
                 MarioKart.getInstance().setScreen(new LobbyView());
                 GameModel.getInstance().setNextScreen(null);
                 break;
             case CHAR_PICK:
                 MarioKart.getInstance().setScreen(new CharacterPickerView());
-                GameModel.getInstance().setNextScreen(null);
-                break;
-            case TRACK_VOTE:
-                //MarioKart.getInstance().setScreen(new CharacterPickerView());
                 GameModel.getInstance().setNextScreen(null);
                 break;
             case RACE:
@@ -67,19 +67,18 @@ public class GameController {
         if (this.raceController != null) this.raceController.handleMovement(m);
     }
 
-    public boolean registerPlayer(int playerId, String playerHandle) {
+    private boolean registerPlayer(int playerId, String playerHandle) {
 
-        if (GameModel.getInstance().addPlayer(playerId, playerHandle)) {
-            //raceController.addKartBody(GameModel.getInstance().getPlayers().get(playerId));
-            return true;
-        }
+        return GameModel.getInstance().addPlayer(playerId, playerHandle);
 
-        return false;
     }
 
-    public void startLobby() {
-        GameModel.getInstance().startServer();
+    public void startLobbyScreen() {
         GameModel.getInstance().setNextScreen(LOBBY);
+    }
+
+    public void createServer(){
+        GameModel.getInstance().startServer();
     }
 
     public void newConnection(Message m) {
@@ -110,8 +109,11 @@ public class GameController {
     }
 
     public void startCharPick() {
-        GameModel.getInstance().setNextScreen(CHAR_PICK);
-        pickerAsync();
+        if (GameModel.getInstance().getPlayers().size() >= 1){
+            GameModel.getInstance().stopNewConnections();
+            GameModel.getInstance().setNextScreen(CHAR_PICK);
+            pickerAsync();
+        }
     }
 
     public void startRace() {
@@ -202,5 +204,9 @@ public class GameController {
 
     public void playerDisconnected(int playerId) {
         GameModel.getInstance().kickPlayer(playerId);
+    }
+
+    public void restart(){
+        GameModel.getInstance().setNextScreen(LOBBY);
     }
 }

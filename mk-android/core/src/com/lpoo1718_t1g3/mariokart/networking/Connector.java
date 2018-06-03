@@ -15,7 +15,7 @@ public class Connector {
     private Socket socket;
     private ObjectOutputStream ostream;
     private ObjectInputStream istream;
-
+    private boolean connected;
 
     private Connector() {}
 
@@ -33,6 +33,7 @@ public class Connector {
                     socket = new Socket(cAddress, cPort);
                     socket.setTcpNoDelay(true);
                     ostream = new ObjectOutputStream(socket.getOutputStream());
+                    connected = true;
                     startReceiver();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -60,7 +61,7 @@ public class Connector {
                 }
                 Message input;
                 try {
-                    while ((input = (Message) istream.readObject()) != null){
+                    while ((input = (Message) istream.readObject()) != null && socket.isConnected()){
                         handleMessage(input);
                     }
                 } catch (IOException | ClassNotFoundException e){
@@ -77,7 +78,7 @@ public class Connector {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                if (ostream != null) {
+                if (!socket.isClosed() && ostream != null) {
                     try {
                         ostream.writeObject(obj);
                         ostream.reset();
@@ -113,6 +114,17 @@ public class Connector {
                 break;
             case POWER_UP:
                 GameController.getInstance().handlePowerUpMessage(m);
+                break;
+            case DISCONNECTION:
+                GameController.getInstance().handleDisconnectMessage(m);
+                this.connected = false;
+                try {
+                    this.socket.close();
+                    istream.close();
+                    ostream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }

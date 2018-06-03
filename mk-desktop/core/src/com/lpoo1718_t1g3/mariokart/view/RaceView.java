@@ -1,5 +1,6 @@
 package com.lpoo1718_t1g3.mariokart.view;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
@@ -9,7 +10,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -20,6 +20,7 @@ import com.lpoo1718_t1g3.mariokart.controller.GameController;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.model.Player;
 import com.lpoo1718_t1g3.mariokart.model.Position;
+import com.lpoo1718_t1g3.mariokart.model.Race;
 import com.lpoo1718_t1g3.mariokart.model.entities.BananaModel;
 import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
 import com.lpoo1718_t1g3.mariokart.model.entities.FakeMysteryBoxModel;
@@ -185,8 +186,6 @@ public class RaceView extends ScreenAdapter {
 
     private void reloadTable(Label.LabelStyle labelStyle, Label.LabelStyle labelStyleSmall) {
 
-
-
         connectedPlayers.clearChildren();
         int t = 1;
         for (Position p : GameModel.getInstance().getCurrentRace().getPlayerPositions()) {
@@ -212,7 +211,7 @@ public class RaceView extends ScreenAdapter {
 
         handleInputs(delta);
 
-        reloadTable(this.labelStyle, this.labelStyleSmall);
+        if (GameModel.getInstance().getCurrentRace().getState() != Race.race_state.OVER) reloadTable(this.labelStyle, this.labelStyleSmall);
 
         GameController.getInstance().updateRaceController(delta);
         camera.update();
@@ -230,6 +229,7 @@ public class RaceView extends ScreenAdapter {
         stage.act();
         stage.draw();
 
+        GameController.getInstance().updateStatus();
         //debugRenderer.render(GameController.getInstance().getRaceController().getWorld(), camera.combined);
     }
 
@@ -303,7 +303,7 @@ public class RaceView extends ScreenAdapter {
 
     }
 
-    public void initKartViews() {
+    private void initKartViews() {
         kartViews.put("Mario", new KartView("mariokart.png"));
         kartViews.put("Luigi", new KartView("luigikart.png"));
         kartViews.put("Peach", new KartView("peachkart.png"));
@@ -369,6 +369,7 @@ public class RaceView extends ScreenAdapter {
                 break;
             case OVER:
                 raceLabel.setText("Race Over!");
+                GameController.getInstance().restart();
                 break;
         }
     }
