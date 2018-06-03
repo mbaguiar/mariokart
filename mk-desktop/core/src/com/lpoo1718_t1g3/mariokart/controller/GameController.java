@@ -182,7 +182,7 @@ public class GameController {
                     GameModel.getInstance().setCurrentPickerId(p.getPlayerId());
                     GameController.getInstance().writeToClient(newPickerMessage(Message.char_pick_state.PICK), p.getPlayerId());
                     broadcastToNotPicked(newPickerMessage(Message.char_pick_state.WAIT), p.getPlayerId());
-
+                    boolean timedOut = true;
                     long t = System.currentTimeMillis();
                     while (System.currentTimeMillis() - t <= 30000) {
                         try {
@@ -191,9 +191,17 @@ public class GameController {
                             e.printStackTrace();
                         }
                         if (GameModel.getInstance().getPickMessage() != null) {
-                            if (testPick(GameModel.getInstance().getPickMessage(), p)) break;
+                            if (testPick(GameModel.getInstance().getPickMessage(), p)) {
+                                timedOut = false;
+                                break;
+                            }
                         }
                     }
+                    if (timedOut) {
+                        GameController.getInstance().restart();
+                        return;
+                    }
+
                 }
                 GameController.getInstance().startRace();
             }
