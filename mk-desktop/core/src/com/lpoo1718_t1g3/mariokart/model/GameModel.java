@@ -7,6 +7,9 @@ import com.lpoo1718_t1g3.mariokart.networking.ServerManager;
 
 import java.util.ArrayList;
 
+/**
+ * Class that represents the model of the game, stores all its data
+ */
 public class GameModel {
 
     private static GameModel ourInstance = new GameModel();
@@ -24,6 +27,9 @@ public class GameModel {
     private TrackModel choosenTrack;
     private int currentPickerId = -1;
 
+    /**
+     * Constructs a new GameModel
+     */
     private GameModel() {
         TrackModel track1 = new TrackModel(-24, -16, 0);
         choosenTrack = track1;
@@ -31,38 +37,66 @@ public class GameModel {
         initCharacters();
     }
 
+    /**
+     * Gets current instance of GameModel
+     * @return Returns game model instance
+     */
     public static GameModel getInstance() {
         return ourInstance;
     }
 
+    /**
+     * Gets game next screen
+     * @return Returns next screen
+     */
     public game_screen getNextScreen() {
         return nextScreen;
     }
 
+    /**
+     * Sets game next screen
+     * @param nextScreen game next screen
+     */
     public void setNextScreen(game_screen nextScreen) {
         this.nextScreen = nextScreen;
     }
 
+    /**
+     * Gets pick message
+     * @return Returns pick message
+     */
     public Message getPickMessage() {
         return pickMessage;
     }
 
+    /**
+     * Sets pick message to the given message
+     * @param pickMessage pick Message
+     */
     public void setPickMessage(Message pickMessage) {
         this.pickMessage = pickMessage;
     }
 
+    /**
+     * Gets game characters
+     * @return Returns all game characters
+     */
     public ArrayList<Character> getCharacters() {
         return characters;
     }
 
-    public void setCharacters(ArrayList<Character> characters) {
-        this.characters = characters;
-    }
-
+    /**
+     * Gets ip address
+     * @return Returns ip address
+     */
     public String getIpAddress() {
         return ipAddress;
     }
 
+    /**
+     * Gets port
+     * @return Returns port
+     */
     public int getPort() {
         return port;
     }
@@ -83,6 +117,12 @@ public class GameModel {
         track1.addBox(new MysteryBoxModel(473, 852, 0));
     }
 
+    /**
+     * Adds player to the game, with the given playerId and playerHandle
+     * @param playerId player's id
+     * @param playerHandle player's handle
+     * @return Returns true if success and false otherwise
+     */
     public boolean addPlayer(int playerId, String playerHandle) {
 
         for (Player p : players) {
@@ -95,12 +135,6 @@ public class GameModel {
     }
 
     private void initCharacters() {
-        /*characters.add(new Character("Mario", new Color(247/255f, 45/255f, 45/255f, 1)));
-        characters.add(new Character("Luigi", new Color(91/255f, 239/255f, 91/255f, 1)));
-        characters.add(new Character("Peach", new Color(249/255f, 188/255f, 188/255f, 1)));
-        characters.add(new Character("Toad", new Color(65/255f, 156/255f, 242/255f, 1)));
-        characters.add(new Character("Yoshi", new Color(155/255f, 246/255f, 155/255f, 1)));
-        characters.add(new Character("Bowser", new Color(238/255f, 185/255f, 37/255f, 1)));*/
         characters.add(new Character("Mario"));
         characters.add(new Character("Luigi"));
         characters.add(new Character("Peach"));
@@ -109,15 +143,26 @@ public class GameModel {
         characters.add(new Character("Bowser"));
     }
 
+    /**
+     * Gets all the game players
+     * @return Returns players
+     */
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
+    /**
+     * Starts server
+     */
     public void startServer() {
         this.server = new ServerManager();
         updateServerData();
     }
 
+    /**
+     * Gets server
+     * @return Returns serverManager
+     */
     public ServerManager getServer() {
         return server;
     }
@@ -127,10 +172,20 @@ public class GameModel {
         port = GameModel.getInstance().getServer().getPort();
     }
 
+    //TODO fragoso
+    /**
+     * Sets qrCode
+     * @param qrCode
+     */
     public void setQrCode(boolean qrCode) {
         this.qrCode = qrCode;
     }
 
+    /**
+     * Gets player with the given id
+     * @param id player's id
+     * @return Returns the player if it exists and null otherwise
+     */
     public Player getPlayer(int id) {
         for (Player player : players) {
             if (player.getPlayerId() == id)
@@ -140,44 +195,85 @@ public class GameModel {
         return null;
     }
 
+    /**
+     * Sets the character with the given index to unavailable
+     * @param index character's index
+     */
     public void setCharacterUnavailable(int index){
         this.characters.get(index).setAvailable(false);
     }
 
+    /**
+     * Gets party name
+     * @return Returns party name
+     */
     public String getPartyName() {
         return partyName;
     }
 
+    /**
+     * Sets party name to the given name
+     * @param partyName Party name
+     */
     public void setPartyName(String partyName) {
         this.partyName = partyName;
     }
 
+    /**
+     * Gets current chosen track
+     * @return Returns current TrackModel
+     */
     public TrackModel getChoosenTrack() {
         return choosenTrack;
     }
 
+    /**
+     * Gets current race
+     * @return Returns current Race
+     */
     public Race getCurrentRace() {
         return currentRace;
     }
 
+    /**
+     * Sets current race
+     * @param currentRace game race
+     */
     public void setCurrentRace(Race currentRace) {
         this.currentRace = currentRace;
     }
 
+    /**
+     * Kicks player with the given id
+     * @param playerId player's id to be kicked
+     */
     public void kickPlayer(int playerId) {
         if (getPlayer(playerId) != null) players.remove(getPlayer(playerId));
     }
 
+    /**
+     * Object type
+     */
     public enum object_type { NULL, BANANA, FAKE_MYSTERY_BOX }
 
-    public enum char_pick_state { WAIT, PICK, PICKED }
 
-    public enum game_screen { MENU, LOBBY, CHAR_PICK, TRACK_VOTE, RACE, RESULTS }
+    /**
+     * Game state
+     */
+    public enum game_screen {MENU, LOBBY, CHAR_PICK, TRACK_VOTE, RACE}
 
+    /**
+     * Gets id of player currently choosing its track
+     * @return Returns id player
+     */
     public int getCurrentPickerId() {
         return currentPickerId;
     }
 
+    /**
+     * Sets current player picker id
+     * @param currentPickerId player id
+     */
     public void setCurrentPickerId(int currentPickerId) {
         this.currentPickerId = currentPickerId;
     }
