@@ -5,34 +5,22 @@ import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 public class ServerManager implements Runnable {
 
-    private ServerSocket socket;
-
-    private int playerId = 1;
-
     private static final int serverId = -1;
-
     private static final String GOOGLE_URL = "google.pt";
-
     private static final int TEST_PORT = 80;
-
+    private ServerSocket socket;
+    private int playerId = 1;
     private String localIp = "default_ip";
 
     private int port = 4444;
-
-    public String getLocalIp() {
-        return localIp;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
     private ArrayList<ClientManager> clients = new ArrayList<ClientManager>();
+    private boolean finished = false;
 
     public ServerManager() {
         try {
@@ -49,8 +37,9 @@ public class ServerManager implements Runnable {
 
         try {
             socket = new ServerSocket(port);
-            GameModel.getInstance().setQrCode(QRCodeUtilities.generateQRCode(localIp, port));
+            QRCodeUtilities.generateQRCode(localIp, port);
             System.out.println("Server opened: " + localIp + ":" + port);
+            finished = false;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -59,15 +48,28 @@ public class ServerManager implements Runnable {
 
     }
 
+    public String getLocalIp() {
+        return localIp;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
 
     @Override
     public void run() {
-        while (true) {
+        while (!socket.isClosed() && !finished) {
             Socket clientSocket = null;
             try {
                 clientSocket = socket.accept();
                 clientSocket.setTcpNoDelay(true);
                 System.out.println("Player " + playerId + " connected");
+            } catch (SocketException e) {
+                return;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -90,5 +92,24 @@ public class ServerManager implements Runnable {
             if (c.getPlayerId() == id) return c;
         }
         return null;
+    }
+
+    private void disconnectAll() {
+        Message m = new Message(Message.MESSAGE_TYPE.DISCONNECTION, Message.SENDER.SERVER);
+        for (ClientManager c: clients){
+            c.write(m);
+            c.close();
+        }
+        clients.clear();
+    }
+
+    public void stop() {
+        this.finished = true;
+        this.disconnectAll();
+        try {
+            this.socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

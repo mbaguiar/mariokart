@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class Connector {
 
@@ -15,7 +16,6 @@ public class Connector {
     private Socket socket;
     private ObjectOutputStream ostream;
     private ObjectInputStream istream;
-
 
     private Connector() {}
 
@@ -60,7 +60,7 @@ public class Connector {
                 }
                 Message input;
                 try {
-                    while ((input = (Message) istream.readObject()) != null){
+                    while ((input = (Message) istream.readObject()) != null && socket.isConnected()){
                         handleMessage(input);
                     }
                 } catch (IOException | ClassNotFoundException e){
@@ -77,10 +77,17 @@ public class Connector {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
+                if (socket.isClosed()) {
+                    GameController.getInstance().handleDisconnectMessage(null);
+                    return;
+                }
                 if (ostream != null) {
                     try {
                         ostream.writeObject(obj);
                         ostream.reset();
+                    } catch (SocketException e){
+                        disconnect();
+                        return;
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -93,11 +100,20 @@ public class Connector {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
 
+    public void disconnect(){
+        GameController.getInstance().handleDisconnectMessage(null);
+        try {
+            this.socket.close();
+            istream.close();
+            ostream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void handleMessage(Message m){
-        System.out.println(m.toString());
         switch (m.getType()){
             case CONNECTION:
                 GameController.getInstance().handleConnectionMessage(m);
@@ -113,6 +129,9 @@ public class Connector {
                 break;
             case POWER_UP:
                 GameController.getInstance().handlePowerUpMessage(m);
+                break;
+            case DISCONNECTION:
+                this.disconnect();
                 break;
         }
     }

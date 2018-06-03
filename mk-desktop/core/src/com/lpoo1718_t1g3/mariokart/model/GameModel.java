@@ -1,5 +1,6 @@
 package com.lpoo1718_t1g3.mariokart.model;
 
+import com.lpoo1718_t1g3.mariokart.controller.GameController;
 import com.lpoo1718_t1g3.mariokart.model.entities.MysteryBoxModel;
 import com.lpoo1718_t1g3.mariokart.model.entities.TrackModel;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
@@ -20,7 +21,6 @@ public class GameModel {
     private String ipAddress;
     private int port;
     public final int MAX_PLAYERS = 6;
-    private boolean qrCode = false;
     private ArrayList<Player> players = new ArrayList<Player>();
     private game_screen nextScreen;
     private Race currentRace;
@@ -125,9 +125,7 @@ public class GameModel {
      */
     public boolean addPlayer(int playerId, String playerHandle) {
 
-        for (Player p : players) {
-            if (p.getPlayerHandle().equals(playerHandle)) return false;
-        }
+        for (Player p : players) if (p.getPlayerHandle().equals(playerHandle)) return false;
 
         Player player = new Player(playerId, playerHandle);
         players.add(player);
@@ -172,14 +170,6 @@ public class GameModel {
         port = GameModel.getInstance().getServer().getPort();
     }
 
-    //TODO fragoso
-    /**
-     * Sets qrCode
-     * @param qrCode
-     */
-    public void setQrCode(boolean qrCode) {
-        this.qrCode = qrCode;
-    }
 
     /**
      * Gets player with the given id
@@ -254,8 +244,23 @@ public class GameModel {
     /**
      * Object type
      */
+    public void stopNewConnections() {
+        this.server.setFinished(true);
+    }
+
+    public void stopServer() {
+        this.server.stop();
+    }
+
+    public void clearData() {
+        this.server = null;
+        this.currentPickerId = -1;
+        this.players.clear();
+    }
+
     public enum object_type { NULL, BANANA, FAKE_MYSTERY_BOX }
 
+    public enum char_pick_state { WAIT, PICK, PICKED }
 
     /**
      * Game state

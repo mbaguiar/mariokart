@@ -10,7 +10,7 @@ public class GameModel {
 
     private static final GameModel ourInstance = new GameModel();
     private ArrayList<Character> characters = new ArrayList<>();
-    private Boolean accelerometer = false;
+    private Boolean accelerometer = true;
     private String partyName;
     private game_screen nextScreen;
     private Message.char_pick_state pickState;

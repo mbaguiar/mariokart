@@ -369,7 +369,7 @@ public class RaceController implements ContactListener {
     }
 
     private boolean checkRaceOver() {
-        for (com.lpoo1718_t1g3.mariokart.model.Position position : GameModel.getInstance().getCurrentRace().getPlayerPositions()) {
+        for (Position position : GameModel.getInstance().getCurrentRace().getPlayerPositions()) {
             if (!position.isFinished()) return false;
         }
 

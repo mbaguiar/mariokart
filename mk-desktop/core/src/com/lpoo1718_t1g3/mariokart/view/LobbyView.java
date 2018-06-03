@@ -3,7 +3,6 @@ package com.lpoo1718_t1g3.mariokart.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -12,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
@@ -24,6 +24,9 @@ public class LobbyView extends ScreenAdapter {
     private Table connectedPlayers;
     private Label.LabelStyle labelStyle;
     private Sprite background;
+    private Image qrCode;
+    private Label ipLabel;
+    private TextArea connectedPlayersLabel;
 
     public LobbyView() {
 
@@ -31,8 +34,6 @@ public class LobbyView extends ScreenAdapter {
 
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
-
-        stage.setDebugAll(false);
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("SuperMario256.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -63,6 +64,8 @@ public class LobbyView extends ScreenAdapter {
 
         TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
 
+        parameter.borderWidth = 2;
+
         parameter.size = 24;
 
         labelStyle.font = generator.generateFont(parameter);
@@ -75,38 +78,56 @@ public class LobbyView extends ScreenAdapter {
 
         Table partyGroup = new Table();
 
-        partyGroup.setDebug(true);
-
         partyGroup.setPosition(stage.getWidth() / 2f, stage.getHeight() * 0.7f, Align.center);
 
         Label partyNameLabel = new Label("Party name:", labelStyle);
 
         partyGroup.add(partyNameLabel);
 
-        this.partyName = new TextField("MarioKart Party", textFieldStyle);
+        this.partyName = new TextField("Mario Kart Party", textFieldStyle);
 
         this.partyName.setAlignment(Align.center);
 
         partyGroup.add(partyName).width(300);
 
-        Texture qrCodeTexture = new Texture(Gdx.files.internal("qrcode/qrcode.png"));
+        TextButton.TextButtonStyle starLobbyStyle = new TextButton.TextButtonStyle();
 
-        Image qrCode = new Image(qrCodeTexture);
+        starLobbyStyle.font = generator.generateFont(parameter);
 
-        qrCode.setSize(qrCodeTexture.getWidth(), qrCodeTexture.getHeight());
+        TextButton startLobby = new TextButton("Start lobby", starLobbyStyle);
 
-        Label ipLabel = new Label(GameModel.getInstance().getIpAddress() + ":" + GameModel.getInstance().getPort(), labelStyle);
+        startLobby.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (partyName.getText().equals("")) partyName.setText("Mario Kart Party");
+                GameModel.getInstance().setPartyName(partyName.getText());
+                GameController.getInstance().createServer();
+                initServerActors();
+                super.clicked(event, x, y);
+            }
+        });
 
-        ipLabel.setPosition(stage.getWidth()/2f, stage.getHeight()/2f - qrCode.getHeight(), Align.center);
+        partyGroup.add(startLobby);
+
+
+        //QR Code image
+        qrCode = new Image();
+        qrCode.setAlign(Align.center);
+        qrCode.setVisible(false);
+
+        //Server ip label
+        ipLabel = new Label("", labelStyle);
+        ipLabel.setAlignment(Align.center);
+        ipLabel.setVisible(false);
+
 
         playBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
                 GameController.getInstance().startCharPick();
             }
         });
-        qrCode.setPosition(stage.getWidth()/2f, stage.getHeight()/2f, Align.center);
+
 
         parameter.size = 50;
 
@@ -116,7 +137,9 @@ public class LobbyView extends ScreenAdapter {
 
         subtitleStyle.fontColor = new Color(1f, 1f, 1f, 1);
 
-        TextArea connectedPlayersLabel = new TextArea("Connected\nPlayers", subtitleStyle);
+        connectedPlayersLabel = new TextArea("Connected\nPlayers", subtitleStyle);
+        connectedPlayersLabel.setAlignment(Align.center);
+        connectedPlayersLabel.setVisible(false);
 
         connectedPlayersLabel.setPosition(stage.getWidth() / 8f, stage.getHeight() * 0.7f, Align.center);
         connectedPlayersLabel.setAlignment(Align.center);
@@ -124,7 +147,6 @@ public class LobbyView extends ScreenAdapter {
         connectedPlayersLabel.setHeight(100);
 
         connectedPlayers = new Table();
-        connectedPlayers.setDebug(true);
 
         connectedPlayers.setPosition(stage.getWidth()/8f, stage.getHeight() * 0.6f, Align.top);
 
@@ -169,6 +191,19 @@ public class LobbyView extends ScreenAdapter {
 
     private void drawBackground() {
         background.draw(MarioKart.getInstance().getBatch());
+    }
+
+    private void initServerActors(){
+        Texture qrCodeTexture = new Texture(Gdx.files.internal("qrcode/qrcode.png"));
+        qrCode.setSize(qrCodeTexture.getWidth(), qrCodeTexture.getHeight());
+        qrCode.setDrawable(new SpriteDrawable(new Sprite(qrCodeTexture)));
+        qrCode.setPosition(stage.getWidth()/2f, stage.getHeight()/2f, Align.center);
+        qrCode.setVisible(true);
+        ipLabel.setText(GameModel.getInstance().getIpAddress() + ":" + GameModel.getInstance().getPort());
+        ipLabel.setPosition(stage.getWidth()/2f, stage.getHeight()/2f - qrCode.getHeight(), Align.center);
+        ipLabel.setVisible(true);
+        connectedPlayersLabel.setVisible(true);
+
     }
 
 }

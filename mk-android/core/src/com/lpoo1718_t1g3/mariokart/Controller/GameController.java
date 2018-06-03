@@ -106,6 +106,7 @@ public class GameController {
     public void handleRegistryMessage(Message m){
         if ((Boolean) m.getOptions().get("registrySuccessful")){
             //Wait
+            GameModel.getInstance().setPickState(null);
         } else {
             GameModel.getInstance().setNextScreen(GameModel.game_screen.CONNECTION);
         }
@@ -150,5 +151,13 @@ public class GameController {
     public void usePowerUp() {
         Message m = new Message(Message.MESSAGE_TYPE.POWER_UP, Message.SENDER.CLIENT);
         Connector.getInstance().write(m);
+    }
+
+    public void handleDisconnectMessage(Message m) {
+        GameModel.getInstance().setNextScreen(GameModel.game_screen.CONNECTION);
+    }
+
+    public void disconnectPlayer() {
+        Connector.getInstance().disconnect();
     }
 }
