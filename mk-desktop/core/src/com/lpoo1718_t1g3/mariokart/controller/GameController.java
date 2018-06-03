@@ -46,6 +46,7 @@ public class GameController {
                 GameModel.getInstance().setNextScreen(null);
                 break;
             case LOBBY:
+                MarioKart.getInstance().getScreen().dispose();
                 if (GameModel.getInstance().getServer() != null)
                     GameModel.getInstance().stopServer();
                 GameModel.getInstance().clearData();
@@ -93,8 +94,7 @@ public class GameController {
 
     private boolean registerPlayer(int playerId, String playerHandle) {
 
-        return GameModel.getInstance().addPlayer(playerId, playerHandle);
-
+        return (GameModel.getInstance().addPlayer(playerId, playerHandle));
     }
 
     public void startLobbyScreen() {
@@ -105,6 +105,11 @@ public class GameController {
         GameModel.getInstance().startServer();
     }
 
+    //TODO fragoso
+    /**
+     *
+     * @param m
+     */
     public void newConnection(Message m) {
         Message returnMessage = new Message(Message.MESSAGE_TYPE.CONNECTION, Message.SENDER.SERVER);
         returnMessage.addOption("connectionSuccessful", true); // or false

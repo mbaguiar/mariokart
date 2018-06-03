@@ -68,10 +68,10 @@ public class RaceController implements ContactListener {
         return raceView;
     }
 
-    public World getWorld() {
-        return world;
-    }
-
+    /**
+     * Updates the physics world and all its bodies based on the passed time
+     * @param delta time passed
+     */
     public void update(float delta) {
 
         float frameTime = Math.min(delta, 0.25f);
@@ -369,7 +369,7 @@ public class RaceController implements ContactListener {
     }
 
     private boolean checkRaceOver() {
-        for (com.lpoo1718_t1g3.mariokart.model.Position position : GameModel.getInstance().getCurrentRace().getPlayerPositions()) {
+        for (Position position : GameModel.getInstance().getCurrentRace().getPlayerPositions()) {
             if (!position.isFinished()) return false;
         }
 

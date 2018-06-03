@@ -190,17 +190,19 @@ public class RaceView extends ScreenAdapter {
         int t = 1;
         for (Position p : GameModel.getInstance().getCurrentRace().getPlayerPositions()) {
             Player player = GameModel.getInstance().getPlayer(p.playerId);
-            Label playerLabel = new Label(player.getPlayerHandle(), labelStyle);
-            connectedPlayers.add(place_numbers.get(t)).width(70).height(70).pad(20).padBottom(0);
-            connectedPlayers.add(playerLabel).pad(20).padBottom(0);
-            connectedPlayers.add(characters_symbols.get(player.getSelectedCharacter().getName())).width(70).height(70).padBottom(0);
-            t++;
-            connectedPlayers.row();
-            playerLabel = new Label("", labelStyle);
-            connectedPlayers.add(playerLabel).padBottom(0);
-            playerLabel = new Label(p.description, labelStyleSmall);
-            connectedPlayers.add(playerLabel).padBottom(0);
-            connectedPlayers.row();
+            if (player != null){
+                Label playerLabel = new Label(player.getPlayerHandle(), labelStyle);
+                connectedPlayers.add(place_numbers.get(t)).width(70).height(70).pad(20).padBottom(0);
+                connectedPlayers.add(playerLabel).pad(20).padBottom(0);
+                connectedPlayers.add(characters_symbols.get(player.getSelectedCharacter().getName())).width(70).height(70).padBottom(0);
+                t++;
+                connectedPlayers.row();
+                playerLabel = new Label("", labelStyle);
+                connectedPlayers.add(playerLabel).padBottom(0);
+                playerLabel = new Label(p.description, labelStyleSmall);
+                connectedPlayers.add(playerLabel).padBottom(0);
+                connectedPlayers.row();
+            }
         }
     }
 
