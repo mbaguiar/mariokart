@@ -48,16 +48,21 @@ The class KartBody has an update method that simulates one frame of this body be
 
 ### Dificulties
 ----
-
-
+* #### Networking:
+Since networking was not addressed in class, we had to do some research on our own to implement a Server-Client protocol and synchronize multiple clients.
+* #### LibGDX:
+LibGDX was fulcral for the development of this project, however it's not unit test friendly and its documentation needs refining. It is also hard to integrate native Android code and/or activities in the LibGDX core module.
+* #### Race tracks:
+Parsing a race track image to a box2d body also proved to be a rather arduous process which, unfortunately, limited the race track number to 1.
+<br>
 ### Time spent developing
 ----
-Both students put in an equal amount of effort into the development of this project.
+Both students put in an equal amount of effort into the development of this project. It was a continuous process started in the lab classes and improved throughout this last few weeks.
 
 ### User manual
 ----
 <p align="center">
-  <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenchots/mainmenu.png"/> <br> 
+  <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/mainmenu.png"/> <br> 
   Main screen for the desktop app.
   <br><br>
   <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/instructions.png" /> <br> 
