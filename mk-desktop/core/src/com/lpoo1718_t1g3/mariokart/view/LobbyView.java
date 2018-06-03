@@ -149,7 +149,7 @@ public class LobbyView extends ScreenAdapter {
 
         connectedPlayers = new Table();
 
-        connectedPlayers.setPosition(stage.getWidth()/8f, stage.getHeight() * 0.6f, Align.top);
+        connectedPlayers.setPosition(stage.getWidth()/8f, stage.getHeight() * 0.5f, Align.top);
 
         reloadTable(labelStyle);
 
