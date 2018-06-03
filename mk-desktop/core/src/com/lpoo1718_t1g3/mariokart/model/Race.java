@@ -94,4 +94,12 @@ public class Race {
     public race_state getState() {
         return state;
     }
+
+    public boolean raceOver() {
+        for (Position position : playerPositions) {
+            if (position.laps != 3) return false;
+        }
+
+        return true;
+    }
 }

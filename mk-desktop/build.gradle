@@ -61,6 +61,9 @@ project(":core") {
         compile "com.google.zxing:core:3.3.0"
         compile 'com.google.zxing:javase:3.3.0'
         compile 'com.codeandweb.physicseditor:gdx-pe-loader:1.1.0'
+        compile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        compile 'junit:junit:4.12'
+        compile "org.mockito:mockito-core:2.2.7"
         
     }
 }
