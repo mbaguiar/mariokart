@@ -18,6 +18,7 @@ import com.lpoo1718_t1g3.mariokart.model.GameModel;
 
 /**
  * Class that represents the control view
+ *
  * @see ScreenAdapter
  */
 public class ControlView extends ScreenAdapter {
@@ -46,7 +47,7 @@ public class ControlView extends ScreenAdapter {
 
         throttle = new TextButton(">", style);
         throttle.setTransform(true);
-        throttle.addListener(new ClickListener(){
+        throttle.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 isAccelerating = true;
@@ -62,10 +63,9 @@ public class ControlView extends ScreenAdapter {
         });
 
         brake = new TextButton("<", style);
-        brake.setDebug(true);
         brake.setTransform(true);
 
-        brake.addListener(new ClickListener(){
+        brake.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 isBraking = true;
@@ -86,14 +86,13 @@ public class ControlView extends ScreenAdapter {
         changeControls = new TextButton("Change", nobackground_style);
         changeControls.setTransform(true);
         changeControls.setOrigin(Align.center);
-        changeControls.addListener(new ClickListener(){
+        changeControls.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (GameModel.getInstance().getAccelerometer()) {
                     MarioKart.getInstance().setScreen(new ButtonControlView());
                     GameModel.getInstance().setAccelerometer(false);
-                }
-                else {
+                } else {
                     MarioKart.getInstance().setScreen(new AccelerometerControlView());
                     GameModel.getInstance().setAccelerometer(true);
                 }
@@ -102,14 +101,14 @@ public class ControlView extends ScreenAdapter {
         });
 
         powerUp = new Image(powerUpSprites[0]);
-        powerUp.setSize(stage.getWidth()/4f, stage.getWidth()/4f);
+        powerUp.setSize(stage.getWidth() / 4f, stage.getWidth() / 4f);
         powerUp.setOrigin(Align.center);
         powerUp.setRotation(-90);
 
-        powerUp.addListener(new ClickListener(){
+        powerUp.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (GameModel.getInstance().getPowerUp() != GameModel.object_type.NULL){
+                if (GameModel.getInstance().getPowerUp() != GameModel.object_type.NULL) {
                     GameController.getInstance().usePowerUp();
                     GameModel.getInstance().clearPowerUp();
                 }
@@ -125,7 +124,7 @@ public class ControlView extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        if (System.currentTimeMillis() - this.lastMessage >= 50){
+        if (System.currentTimeMillis() - this.lastMessage >= 50) {
             GameController.getInstance().controllerMessage(this.isAccelerating, this.isBraking, this.direction);
             this.lastMessage = System.currentTimeMillis();
         }
@@ -137,20 +136,19 @@ public class ControlView extends ScreenAdapter {
     }
 
     private void drawBackground() {
-        //Color c = GameModel.getInstance().getSelectedCharacter().getColor();
-        Gdx.gl.glClearColor(197/255f, 38/255f, 6/255f, 1);
+        Gdx.gl.glClearColor(197 / 255f, 38 / 255f, 6 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
     }
 
-    private void loadAssets(){
+    private void loadAssets() {
         Texture t = new Texture(Gdx.files.internal("banana.png"));
         powerUpSprites[0] = new SpriteDrawable(new Sprite(t));
         t = new Texture(Gdx.files.internal("misterybox.png"));
         powerUpSprites[1] = new SpriteDrawable(new Sprite(t));
     }
 
-    private void updateActors(){
-        if (GameModel.getInstance().getPowerUp() == GameModel.object_type.NULL){
+    private void updateActors() {
+        if (GameModel.getInstance().getPowerUp() == GameModel.object_type.NULL) {
             powerUp.setVisible(false);
         } else {
             powerUp.setDrawable(powerUpSprites[GameModel.getInstance().getPowerUp().ordinal() - 1]);

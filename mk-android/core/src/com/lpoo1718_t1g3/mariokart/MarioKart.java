@@ -9,6 +9,7 @@ import com.lpoo1718_t1g3.mariokart.View.MenuView;
 
 /**
  * Class that represents the mario kart game
+ *
  * @see Game
  */
 public class MarioKart extends Game {
@@ -19,6 +20,7 @@ public class MarioKart extends Game {
 
     /**
      * Gets mario kart game
+     *
      * @return Returns current instance of MarioKart
      */
     public static MarioKart getInstance() {
@@ -50,6 +52,7 @@ public class MarioKart extends Game {
 
     /**
      * Gets game batch
+     *
      * @return game batch
      */
     public SpriteBatch getBatch() {
@@ -58,6 +61,7 @@ public class MarioKart extends Game {
 
     /**
      * Gets game asset manager
+     *
      * @return Returns game asset manager
      */
     public AssetManager getAssetManager() {
@@ -73,12 +77,13 @@ public class MarioKart extends Game {
     /**
      * Start qr code scanning activity
      */
-    public void startScan(){
+    public void startScan() {
         this.qrCodeIntegrator.startScanner();
     }
 
     /**
      * Gets qr code scan results
+     *
      * @param contents qr code string content
      */
     public void scanResult(String contents) {

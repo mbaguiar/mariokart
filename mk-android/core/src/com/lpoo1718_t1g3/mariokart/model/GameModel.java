@@ -1,7 +1,6 @@
 package com.lpoo1718_t1g3.mariokart.model;
 
 
-import com.badlogic.gdx.Game;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 
 import java.util.ArrayList;
@@ -21,14 +20,13 @@ public class GameModel {
     private String playerHandle;
     private int selectedCharacterIndex;
     private object_type powerUp = object_type.NULL;
-    private Message serverResponse;
-    public static final long timeoutSecs = 10;
 
     private GameModel() {
     }
 
     /**
      * Gets game model
+     *
      * @return Returns current instance of GameModel
      */
     public static GameModel getInstance() {
@@ -37,6 +35,7 @@ public class GameModel {
 
     /**
      * Gets game next screen
+     *
      * @return Returns game next screen
      */
     public game_screen getNextScreen() {
@@ -45,6 +44,7 @@ public class GameModel {
 
     /**
      * Sets game next screen
+     *
      * @param nextScreen game next screen
      */
     public void setNextScreen(game_screen nextScreen) {
@@ -53,6 +53,7 @@ public class GameModel {
 
     /**
      * Gets accelerometer values
+     *
      * @return Returns accelerometer values
      */
     public Boolean getAccelerometer() {
@@ -61,6 +62,7 @@ public class GameModel {
 
     /**
      * Sets accelerometer value
+     *
      * @param accelerometer Current accelerometer value
      */
     public void setAccelerometer(Boolean accelerometer) {
@@ -69,6 +71,7 @@ public class GameModel {
 
     /**
      * Gets game characters
+     *
      * @return Returns game characters
      */
     public ArrayList<Character> getCharacters() {
@@ -77,6 +80,7 @@ public class GameModel {
 
     /**
      * Sets game characters
+     *
      * @param characters new game characters
      */
     public void setCharacters(ArrayList<Character> characters) {
@@ -85,6 +89,7 @@ public class GameModel {
 
     /**
      * Gets party name
+     *
      * @return Returns party name
      */
     public String getPartyName() {
@@ -93,6 +98,7 @@ public class GameModel {
 
     /**
      * Sets party name
+     *
      * @param partyName new party name
      */
     public void setPartyName(String partyName) {
@@ -101,6 +107,7 @@ public class GameModel {
 
     /**
      * Sets player handle
+     *
      * @param playerHandle new player handle
      */
     public void setPlayerHandle(String playerHandle) {
@@ -109,6 +116,7 @@ public class GameModel {
 
     /**
      * Gets pick state
+     *
      * @return Returns pick state
      */
     public Message.char_pick_state getPickState() {
@@ -117,6 +125,7 @@ public class GameModel {
 
     /**
      * Sets pick state
+     *
      * @param pickState new pick state
      */
     public void setPickState(Message.char_pick_state pickState) {
@@ -125,6 +134,7 @@ public class GameModel {
 
     /**
      * Sets selected Character
+     *
      * @param selectedCharacter selected character
      */
     public void setSelectedCharacter(Character selectedCharacter) {
@@ -133,14 +143,16 @@ public class GameModel {
 
     /**
      * Sets character with the given index to unavailable
+     *
      * @param index character index
      */
-    public void setUnavailable(int index){
+    public void setUnavailable(int index) {
         this.characters.get(index).setAvailable(false);
     }
 
     /**
      * Gets selected character index
+     *
      * @return Returns players selected character index
      */
     public int getSelectedCharacterIndex() {
@@ -149,6 +161,7 @@ public class GameModel {
 
     /**
      * Set selected character index
+     *
      * @param selectedCharacterIndex new character selected character
      */
     public void setSelectedCharacterIndex(int selectedCharacterIndex) {
@@ -157,6 +170,7 @@ public class GameModel {
 
     /**
      * Sets power up type
+     *
      * @param powerUp power up type
      */
     public void setPowerUp(object_type powerUp) {
@@ -172,6 +186,7 @@ public class GameModel {
 
     /**
      * Gets player power up
+     *
      * @return Returns player power up
      */
     public object_type getPowerUp() {
@@ -181,11 +196,15 @@ public class GameModel {
     /**
      * Game screen state
      */
-    public enum game_screen{ MENU, CONNECTION, REGISTRY, CONTROL, CHAR_PICK }
+    public enum game_screen {
+        MENU, CONNECTION, REGISTRY, CONTROL, CHAR_PICK
+    }
 
     /**
      * Object type
      */
-    public enum object_type {NULL, BANANA, FAKE_MYSTERY_BOX}
+    public enum object_type {
+        NULL, BANANA, FAKE_MYSTERY_BOX
+    }
 
 }

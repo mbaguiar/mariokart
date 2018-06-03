@@ -19,6 +19,7 @@ import com.lpoo1718_t1g3.mariokart.MarioKart;
 
 /**
  * Class that represents a connection view
+ *
  * @see ScreenAdapter
  */
 public class ConnectionView extends ScreenAdapter {
@@ -49,10 +50,10 @@ public class ConnectionView extends ScreenAdapter {
         Button.ButtonStyle qrCodeBtnStyle = new Button.ButtonStyle(qrCodeDrawable, qrCodeDrawable, qrCodeDrawable);
 
         Button scanQrCode = new Button(qrCodeBtnStyle);
-        scanQrCode.setSize(stage.getWidth()/3f, stage.getWidth()/3f);
-        scanQrCode.setPosition(stage.getWidth()/2f, stage.getHeight()/2f, Align.center);
+        scanQrCode.setSize(stage.getWidth() / 3f, stage.getWidth() / 3f);
+        scanQrCode.setPosition(stage.getWidth() / 2f, stage.getHeight() / 2f, Align.center);
 
-        scanQrCode.addListener(new ClickListener(){
+        scanQrCode.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 MarioKart.getInstance().startScan();
@@ -61,7 +62,7 @@ public class ConnectionView extends ScreenAdapter {
         });
 
         TextButton connectBtn = new TextButton("Connect", btnStyle);
-        connectBtn.setPosition(stage.getWidth()/2f, stage.getHeight()/4f, Align.center);
+        connectBtn.setPosition(stage.getWidth() / 2f, stage.getHeight() / 4f, Align.center);
 
         connectBtn.addListener(new ClickListener() {
             @Override
@@ -85,7 +86,7 @@ public class ConnectionView extends ScreenAdapter {
     }
 
     private void drawBackground() {
-        Gdx.gl.glClearColor(197/255f, 38/255f, 6/255f, 1);
+        Gdx.gl.glClearColor(197 / 255f, 38 / 255f, 6 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
     }
 }

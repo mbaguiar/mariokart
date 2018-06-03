@@ -1,6 +1,5 @@
 package com.lpoo1718_t1g3.mariokart.networking;
 
-import com.badlogic.gdx.Game;
 import com.lpoo1718_t1g3.mariokart.Controller.GameController;
 
 import java.io.IOException;
@@ -20,18 +19,21 @@ public class Connector {
     private ObjectOutputStream ostream;
     private ObjectInputStream istream;
 
-    private Connector() {}
+    private Connector() {
+    }
 
     /**
      * Gets connector
+     *
      * @return Returns current instance of Connector
      */
-    public static Connector getInstance(){
+    public static Connector getInstance() {
         return ourInstance;
     }
 
     /**
      * Connects to server socket and initializes i/o streams
+     *
      * @param addr server ip
      * @param port server port
      * @return Returns true on success and false otherwise
@@ -62,7 +64,7 @@ public class Connector {
         return socket;
     }
 
-    private void startReceiver(){
+    private void startReceiver() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -73,10 +75,10 @@ public class Connector {
                 }
                 Message input;
                 try {
-                    while ((input = (Message) istream.readObject()) != null && socket.isConnected()){
+                    while ((input = (Message) istream.readObject()) != null && socket.isConnected()) {
                         handleMessage(input);
                     }
-                } catch (IOException | ClassNotFoundException e){
+                } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -86,10 +88,10 @@ public class Connector {
 
     /**
      * Writes message to server
+     *
      * @param o Message to be written to server
      */
-    public void write(Message o){
-        System.out.println(o.toString());
+    public void write(Message o) {
         final Message obj = o;
         Thread t = new Thread(new Runnable() {
             @Override
@@ -102,7 +104,7 @@ public class Connector {
                     try {
                         ostream.writeObject(obj);
                         ostream.reset();
-                    } catch (SocketException e){
+                    } catch (SocketException e) {
                         disconnect();
                         return;
                     } catch (IOException e) {
@@ -122,7 +124,7 @@ public class Connector {
     /**
      * Disconnects client
      */
-    public void disconnect(){
+    public void disconnect() {
         GameController.getInstance().handleDisconnectMessage(null);
         try {
             this.socket.close();
@@ -133,8 +135,8 @@ public class Connector {
         }
     }
 
-    private void handleMessage(Message m){
-        switch (m.getType()){
+    private void handleMessage(Message m) {
+        switch (m.getType()) {
             case CONNECTION:
                 GameController.getInstance().handleConnectionMessage(m);
                 break;

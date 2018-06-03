@@ -13,10 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.lpoo1718_t1g3.mariokart.Controller.GameController;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
-import com.lpoo1718_t1g3.mariokart.networking.Connector;
 
 /**
  * Class that represents the registry view
+ *
  * @see ScreenAdapter
  */
 
@@ -42,7 +42,7 @@ public class RegistryView extends ScreenAdapter {
         TextButton disconnectBtn = new TextButton("Disconnect", btnStyle);
         disconnectBtn.setPosition(stage.getWidth() / 2f, stage.getHeight() * 3f / 5f, Align.center);
 
-        disconnectBtn.addListener(new ClickListener(){
+        disconnectBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 GameController.getInstance().disconnectPlayer();
@@ -63,7 +63,7 @@ public class RegistryView extends ScreenAdapter {
 
         TextButton readyBtn = new TextButton("Ready", btnStyle);
         readyBtn.setPosition(stage.getWidth() / 2f, stage.getHeight() / 5f, Align.center);
-        readyBtn.addListener(new ClickListener(){
+        readyBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 GameController.getInstance().tryRegister(playerHandle.getText());
@@ -86,7 +86,7 @@ public class RegistryView extends ScreenAdapter {
     }
 
     private void drawBackground() {
-        Gdx.gl.glClearColor(197/255f, 38/255f, 6/255f, 1);
+        Gdx.gl.glClearColor(197 / 255f, 38 / 255f, 6 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
     }
 }
