@@ -1,6 +1,5 @@
 # Final Project - Mario Kart
 <br>
-
 ### Team Members
 Mariana Barbosa Aguiar
 * Student Number: 201605904
@@ -30,14 +29,20 @@ Tiago José Viana Fragoso
 ### Design Patterns
 ----
 * #### Model View Controller (MVC) 
-Used in to separate the game's graphics, model and logic (controller) and to reduxe dependency between these 3 components (GameModel, GameController and RaceController and 
-To be used to separate the game's graphics, model and logic and to reduce dependency between these 3 components (GameModel, GameController, GameView) 
+Used in to separate the game's graphics, model and logic (controller) and to reduxe dependency between these 3 components (GameModel, GameController and RaceController and all the view classes, CharacterPickerView, InstructionsView, LobbyView, MenyView, RaceView)
+
 * #### Singleton 
-To be used in several different classes to ensure that they only have one instance and to provide a global and easy point of access to each one of them (GameModel, GameController, GameView)
+Used in several different classes to ensure that they only have one instance and to provide a global and esay point of access to each one of them (GameModel, GameController, MarioKart)
+
 * #### FlyWeight
+Used to share the same image for various diferent objects of the same class. Uses the same EntityView to draw diferent EntityModels of the same subclass (RaceView)
 
 * #### State
-The server side (desktop) and the client side (android) both have their own state that changes based on events. This allows the GameController to change its behaviour based on the state
+The server side (desktop) and the client side (android) both have their own state that changes based on events. This allows the GameController to change its behaviour based on the state.
+The class KartBody also has its own inner state from which it changes its movement, accelerate, break and stee, this state is changed based on the messages received from the clients.
+
+* #### Update Method
+The class KartBody has an update method that simulates one frame of this body behaviour. The RaceController updates in each frame every KartBody.
 <br>
 
 ### Dificulties
