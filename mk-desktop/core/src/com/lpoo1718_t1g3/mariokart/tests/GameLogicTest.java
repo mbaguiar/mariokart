@@ -13,7 +13,8 @@ import static org.junit.Assert.assertTrue;
 public class GameLogicTest {
 
     @Test
-    public void TestAddPlayers() {
+    public void testAddPlayers() {
+        GameModel.getInstance().clearData();
         GameModel.getInstance().addPlayer(1, "joao");
         GameModel.getInstance().addPlayer(2, "maria");
         assertEquals(2, GameModel.getInstance().getPlayers().size());
@@ -22,7 +23,28 @@ public class GameLogicTest {
     }
 
     @Test
-    public void TestPlayerCharacter() {
+    public void testAddExistingName(){
+        GameModel.getInstance().clearData();
+        GameModel.getInstance().addPlayer(1, "joao");
+        GameModel.getInstance().addPlayer(2, "maria");
+        assertEquals(false, GameModel.getInstance().addPlayer(2, "maria"));
+    }
+
+    @Test
+    public void testExceedMaxPlayers(){
+        GameModel.getInstance().clearData();
+        GameModel.getInstance().addPlayer(1, "joao");
+        GameModel.getInstance().addPlayer(2, "maria");
+        GameModel.getInstance().addPlayer(3, "joana");
+        GameModel.getInstance().addPlayer(4, "antonio");
+        GameModel.getInstance().addPlayer(5, "rui");
+        GameModel.getInstance().addPlayer(6, "bernardo");
+        assertEquals(false, GameModel.getInstance().addPlayer(7, "antonio"));
+    }
+
+    @Test
+    public void testPlayerCharacter() {
+        GameModel.getInstance().clearData();
         GameModel.getInstance().addPlayer(1, "joao");
         GameModel.getInstance().addPlayer(2, "maria");
         GameModel.getInstance().getPlayer(1).setSelectedCharacter(GameModel.getInstance().getCharacters().get(0));
@@ -34,6 +56,7 @@ public class GameLogicTest {
 
     @Test
     public void testCreateRace() {
+        GameModel.getInstance().clearData();
         GameModel.getInstance().addPlayer(1, "joao");
         GameModel.getInstance().addPlayer(2, "maria");
         Race race = new Race(new TrackModel(0, 0, 0));
@@ -48,7 +71,8 @@ public class GameLogicTest {
 
 
     @Test
-    public void TestPlayerEndRace() {
+    public void testPlayerEndRace() {
+        GameModel.getInstance().clearData();
         Player player = new Player(1, "joao");
         assertEquals(player.getPosition().laps, -1);
         player.getPosition().laps = 3;
@@ -56,7 +80,8 @@ public class GameLogicTest {
     }
 
     @Test
-    public void TestRaceOver() {
+    public void testRaceOver() {
+        GameModel.getInstance().clearData();
         GameModel.getInstance().addPlayer(1, "joao");
         GameModel.getInstance().addPlayer(2, "maria");
         Race race = new Race(new TrackModel(0, 0, 0));
@@ -73,13 +98,15 @@ public class GameLogicTest {
     }
 
     @Test
-    public void TestPlayerKartModel() {
+    public void testPlayerKartModel() {
+        GameModel.getInstance().clearData();
         Player player = new Player(1, "joao");
         assertEquals(player.getKartModel().getPlayerId(), player.getPlayerId());
     }
 
     @Test
-    public void TestKartGetObject() {
+    public void testKartGetObject() {
+        GameModel.getInstance().clearData();
         Player player = new Player(1, "joao");
         assertEquals(NULL, player.getKartModel().getObject());
     }

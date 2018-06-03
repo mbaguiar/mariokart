@@ -46,6 +46,7 @@ public class GameController {
                 GameModel.getInstance().setNextScreen(null);
                 break;
             case CONTROL:
+                GameModel.getInstance().setPowerUp(GameModel.object_type.NULL);
                 if (GameModel.getInstance().getAccelerometer()) MarioKart.getInstance().setScreen(new AccelerometerControlView());
                 else MarioKart.getInstance().setScreen(new ButtonControlView());
                 GameModel.getInstance().setNextScreen(null);
@@ -62,22 +63,15 @@ public class GameController {
                 int port = Integer.parseInt(fullIp[1]);
                 System.out.println("Ip: " + ip + "; port: " + port);
                 if (Connector.getInstance().connect(ip, port) == null) {
-                    //Error
                     return;
                 }
-                System.out.println("Connection successful");
                 this.connectionMessage();
+                /*if (!waitForResponse(GameModel.timeoutSecs)) GameModel.getInstance().setNextScreen(GameModel.game_screen.CONNECTION);
+                GameModel.getInstance().setServerResponse(null);*/
             } catch (NumberFormatException e) {
                 return;
             }
-
         }
-
-        //set loading
-        //get response
-        //if success -> set partyName and go to registry
-        //else -> show error dialog
-
     }
 
     public void controllerMessage(boolean t, boolean b, float d){
@@ -117,6 +111,8 @@ public class GameController {
         m.addOption("playerHandle", handle);
         GameModel.getInstance().setPlayerHandle(handle);
         Connector.getInstance().write(m);
+        /*if (!waitForResponse(GameModel.timeoutSecs)) GameModel.getInstance().setNextScreen(GameModel.game_screen.CONNECTION);
+        GameModel.getInstance().setServerResponse(null);*/
     }
 
     public void handleCharPickMessage(Message m){
@@ -159,5 +155,18 @@ public class GameController {
 
     public void disconnectPlayer() {
         Connector.getInstance().disconnect();
+    }
+
+    private boolean waitForResponse(long timeout){
+        long t = System.currentTimeMillis();
+        while (System.currentTimeMillis() - t <= timeout * 1000){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (GameModel.getInstance().getServerResponse() != null) return true;
+        }
+        return false;
     }
 }

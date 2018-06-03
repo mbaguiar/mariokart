@@ -1,8 +1,6 @@
 package com.lpoo1718_t1g3.mariokart.view;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,10 +8,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
@@ -41,6 +42,7 @@ public class RaceView extends ScreenAdapter {
     private Label.LabelStyle labelStyleBig;
     private Label raceLabel;
     private Table connectedPlayers;
+    TextButton endRace;
     private HashMap<Integer, Image> place_numbers = new HashMap<Integer, Image>();
     private HashMap<String, Image> characters_symbols = new HashMap<String, Image>();
 
@@ -59,11 +61,8 @@ public class RaceView extends ScreenAdapter {
         camera = createCamera();
         initKartViews();
         initObjectViews();
-
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
-
-        stage.setDebugAll(false);
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("SuperMario256.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -80,8 +79,6 @@ public class RaceView extends ScreenAdapter {
         setUpCharacterSymbols();
 
         connectedPlayers = new Table();
-        connectedPlayers.setDebug(false);
-
 
         connectedPlayers.setPosition((stage.getWidth() + stage.getHeight())/2f, stage.getHeight() * 0.45f, Align.top);
 
@@ -111,6 +108,23 @@ public class RaceView extends ScreenAdapter {
         raceLabel.setPosition(stage.getHeight() / 2, stage.getHeight() / 2, Align.center);
         raceLabel.setAlignment(Align.center);
 
+        TextButton.TextButtonStyle endRaceStyle = new TextButton.TextButtonStyle();
+        parameter.size = 35;
+        parameter.color = Color.WHITE;
+        parameter.borderColor = Color.BLACK;
+        endRaceStyle.font = generator.generateFont(parameter);
+
+        endRace = new TextButton("End race", endRaceStyle);
+        endRace.setPosition(connectedPlayers.getX(),stage.getHeight() * 0.035f , Align.center);
+        endRace.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                GameController.getInstance().restart();
+                super.clicked(event, x, y);
+            }
+        });
+
+        stage.addActor(endRace);
         stage.addActor(raceLabel);
 
         debugRenderer = new Box2DDebugRenderer(true, true, false, true, true, true);
@@ -232,7 +246,6 @@ public class RaceView extends ScreenAdapter {
         stage.draw();
 
         GameController.getInstance().updateStatus();
-        //debugRenderer.render(GameController.getInstance().getRaceController().getWorld(), camera.combined);
     }
 
     private void handleInputs(float delta) {
@@ -371,7 +384,6 @@ public class RaceView extends ScreenAdapter {
                 break;
             case OVER:
                 raceLabel.setText("Race Over!");
-                GameController.getInstance().restart();
                 break;
         }
     }

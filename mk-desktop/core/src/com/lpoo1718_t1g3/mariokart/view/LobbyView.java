@@ -23,15 +23,12 @@ public class LobbyView extends ScreenAdapter {
     private TextField partyName;
     private Table connectedPlayers;
     private Label.LabelStyle labelStyle;
-    private Sprite background;
+    private Image background;
     private Image qrCode;
     private Label ipLabel;
     private TextArea connectedPlayersLabel;
 
     public LobbyView() {
-
-        loadAssests();
-
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
@@ -40,10 +37,10 @@ public class LobbyView extends ScreenAdapter {
         parameter.borderColor = Color.BLACK;
         parameter.borderWidth = 5;
         parameter.size = 100;
-        Texture texture = MarioKart.getInstance().getAssetManager().get("mario_background.png");
-        background = new Sprite(texture);
-        background.setSize(stage.getWidth(), stage.getHeight());
-
+        Texture texture = new Texture(Gdx.files.internal("mario_background.png"));
+        Sprite s = new Sprite(texture);
+        s.setSize(stage.getWidth(), stage.getHeight());
+        background = new Image(new SpriteDrawable(s));
         labelStyle = new Label.LabelStyle();
 
         labelStyle.font = generator.generateFont(parameter);
@@ -101,7 +98,7 @@ public class LobbyView extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 if (partyName.getText().equals("")) partyName.setText("Mario Kart Party");
                 GameModel.getInstance().setPartyName(partyName.getText());
-                GameController.getInstance().createServer();
+                GameController.getInstance().createNewServer();
                 initServerActors();
                 super.clicked(event, x, y);
             }
@@ -152,6 +149,7 @@ public class LobbyView extends ScreenAdapter {
 
         reloadTable(labelStyle);
 
+        this.stage.addActor(background);
         this.stage.addActor(qrCode);
         this.stage.addActor(lobbyLabel);
         this.stage.addActor(partyGroup);
@@ -173,24 +171,12 @@ public class LobbyView extends ScreenAdapter {
         }
     }
 
-    private void loadAssests() {
-        MarioKart.getInstance().getAssetManager().load("mario_background.png", Texture.class);
-        MarioKart.getInstance().getAssetManager().finishLoading();
-    }
-
     @Override
     public void render (float delta) {
         reloadTable(this.labelStyle);
-        MarioKart.getInstance().getBatch().begin();
-        drawBackground();
-        MarioKart.getInstance().getBatch().end();
         stage.act();
         stage.draw();
         GameController.getInstance().updateStatus();
-    }
-
-    private void drawBackground() {
-        background.draw(MarioKart.getInstance().getBatch());
     }
 
     private void initServerActors(){

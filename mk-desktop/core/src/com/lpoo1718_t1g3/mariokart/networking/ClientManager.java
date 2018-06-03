@@ -57,7 +57,6 @@ public class ClientManager extends Thread {
 
     private void handleMessage(Message m) {
         m.setSenderId(playerId);
-        System.out.println(m.toString());
         switch (m.getType()) {
             case CONNECTION:
                 GameController.getInstance().newConnection(m);

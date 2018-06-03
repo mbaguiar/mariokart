@@ -27,7 +27,6 @@ public class RegistryView extends ScreenAdapter {
 
         Label partyNameLabel = new Label(GameModel.getInstance().getPartyName(), partyLabelStyle);
         partyNameLabel.setPosition(stage.getWidth() / 2f, stage.getHeight() * 4f / 5f, Align.center);
-        //partyNameLabel.setWidth(stage.getWidth()/1.5f);
 
         TextButton.TextButtonStyle btnStyle = new TextButton.TextButtonStyle();
         btnStyle.font = com.lpoo1718_t1g3.mariokart.View.ViewDefaults.getDefaultButtonFont();

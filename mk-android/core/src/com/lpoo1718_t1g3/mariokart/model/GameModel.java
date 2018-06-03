@@ -18,12 +18,22 @@ public class GameModel {
     private String playerHandle;
     private int selectedCharacterIndex;
     private object_type powerUp = object_type.NULL;
+    private Message serverResponse;
+    public static final long timeoutSecs = 10;
 
     private GameModel() {
     }
 
     public static GameModel getInstance() {
         return ourInstance;
+    }
+
+    public Message getServerResponse() {
+        return serverResponse;
+    }
+
+    public void setServerResponse(Message serverResponse) {
+        this.serverResponse = serverResponse;
     }
 
     public game_screen getNextScreen() {
@@ -94,16 +104,16 @@ public class GameModel {
         this.selectedCharacterIndex = selectedCharacterIndex;
     }
 
-    public void setPowerUp(object_type powerUp) {
-        this.powerUp = powerUp;
-    }
-
     public void clearPowerUp() {
         this.powerUp = object_type.NULL;
     }
 
     public object_type getPowerUp() {
         return powerUp;
+    }
+
+    public void setPowerUp(object_type powerUp) {
+        this.powerUp = powerUp;
     }
 
     public enum game_screen{ MENU, CONNECTION, REGISTRY, CONTROL, CHAR_PICK }

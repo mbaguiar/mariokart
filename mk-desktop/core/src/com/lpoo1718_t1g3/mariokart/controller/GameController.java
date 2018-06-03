@@ -46,7 +46,6 @@ public class GameController {
                 GameModel.getInstance().setNextScreen(null);
                 break;
             case LOBBY:
-                MarioKart.getInstance().getScreen().dispose();
                 if (GameModel.getInstance().getServer() != null)
                     GameModel.getInstance().stopServer();
                 GameModel.getInstance().clearData();
@@ -101,7 +100,10 @@ public class GameController {
         GameModel.getInstance().setNextScreen(LOBBY);
     }
 
-    public void createServer(){
+    public void createNewServer(){
+        if (GameModel.getInstance().getServer() != null)
+            GameModel.getInstance().stopServer();
+        GameModel.getInstance().clearData();
         GameModel.getInstance().startServer();
     }
 
@@ -125,7 +127,7 @@ public class GameController {
      * @param id
      */
     public void writeToClient(Message m, int id) {
-        GameModel.getInstance().getServer().writeToClient(m, id);
+        if (GameModel.getInstance().getServer() != null) GameModel.getInstance().getServer().writeToClient(m, id);
 
     }
 
