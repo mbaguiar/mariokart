@@ -16,12 +16,12 @@ import java.util.TimerTask;
  */
 public class KartBody extends EntityBody {
 
-    float maxSteerAngle, minSteerAngle, maxSpeed, power;
-    float wheelAngle;
+    private float maxSteerAngle, minSteerAngle, maxSpeed, power;
+    private float wheelAngle;
     private steer_type steer;
     private acc_type accelerate;
-    public List<TireBody> wheels;
-    boolean update;
+    private List<TireBody> wheels;
+    private boolean update;
 
     /**
      * Kart steer type

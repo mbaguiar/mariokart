@@ -84,8 +84,6 @@ public class GameController {
                     return;
                 }
                 this.connectionMessage();
-                /*if (!waitForResponse(GameModel.timeoutSecs)) GameModel.getInstance().setNextScreen(GameModel.game_screen.CONNECTION);
-                GameModel.getInstance().setServerResponse(null);*/
             } catch (NumberFormatException e) {
                 return;
             }
@@ -147,8 +145,6 @@ public class GameController {
         m.addOption("playerHandle", handle);
         GameModel.getInstance().setPlayerHandle(handle);
         Connector.getInstance().write(m);
-        /*if (!waitForResponse(GameModel.timeoutSecs)) GameModel.getInstance().setNextScreen(GameModel.game_screen.CONNECTION);
-        GameModel.getInstance().setServerResponse(null);*/
     }
 
     /**
@@ -219,16 +215,4 @@ public class GameController {
         Connector.getInstance().disconnect();
     }
 
-    private boolean waitForResponse(long timeout){
-        long t = System.currentTimeMillis();
-        while (System.currentTimeMillis() - t <= timeout * 1000){
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if (GameModel.getInstance().getServerResponse() != null) return true;
-        }
-        return false;
-    }
 }
