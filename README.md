@@ -56,5 +56,41 @@ Both students put in an equal amount of effort into the development of this proj
 
 ### User manual
 ----
-
+<p align="center">
+  <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenchots/mainmenu.png"/> <br> 
+  Main screen for the desktop app.
+  <br><br>
+  <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/instructions.png" /> <br> 
+  Desktop instructions.
+  <br><br>
+  <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/play.jpg"/> <br> 
+  Main screen for the Android app.
+  <br><br>
+  <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/lobby.png"/> <br> 
+  <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/lobby-waiting-players.png"/> <br> 
+  <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/lobby-connected-players.png"/> <br> 
+  Lobby screen while players connect.
+  <br><br>
+  <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/connect-qr.jpg"/> <br> 
+  <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/enter%20name.jpg"/> <br> 
+  Mobile connection screen.
+  <br><br>
+  <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/pick-character.png"/> <br> 
+  Character picking screen. Dynamic and updated as the players pick their character.
+  <br><br>
+  <img src="https://github.com/mbaguiar/mariokart/blob/master/Mockup/App%20-%20Character%20picker.png" /><br> 
+  Character picking screen in the app. This is a by-turn operation, thus there are different possible views for this activity.
+  <br><br>
+  <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/startrace.png"/> <br> 
+    <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/race.png"/> <br> 
+    <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/raceover.png"/> <br> 
+  Race view
+  <br><br>
+    <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/buttons-control.jpg"/> <br> 
+     <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/accelerometer-control.jpg"/> <br> 
+     <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/accelerometer-object-control.jpg"/> <br> 
+     <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/accelerometer-object.jpg"/> <br> 
+  Controller state while race is active. 2 possible control trypes (w/ or wo/Accelerometer)
+  <br><br>
+</p> <br> <br>
 <br>
