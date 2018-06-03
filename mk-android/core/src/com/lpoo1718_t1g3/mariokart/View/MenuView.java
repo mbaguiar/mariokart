@@ -40,12 +40,8 @@ public class MenuView extends ScreenAdapter {
                 GameController.getInstance().goToConnection();
             }
         });
-        
-        TextButton quitBtn = new TextButton("Quit", style);
 
         table.add(playBtn).pad(50);
-        table.row();
-        table.add(quitBtn).pad(50);
 
         this.stage.addActor(table);
 
