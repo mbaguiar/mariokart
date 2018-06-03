@@ -1,6 +1,5 @@
 package com.lpoo1718_t1g3.mariokart.controller;
 
-import com.badlogic.gdx.Game;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.model.Character;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
@@ -158,7 +157,7 @@ public class GameController {
         if (GameModel.getInstance().getPlayers().size() >= 1){
             GameModel.getInstance().stopNewConnections();
             GameModel.getInstance().setNextScreen(CHAR_PICK);
-            pickerAsync();
+            pickerAsync(30);
         }
     }
 
@@ -174,7 +173,7 @@ public class GameController {
         }
     }
 
-    private void pickerAsync() {
+    private void pickerAsync(final long timeout) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -184,7 +183,7 @@ public class GameController {
                     broadcastToNotPicked(newPickerMessage(Message.char_pick_state.WAIT), p.getPlayerId());
                     boolean timedOut = true;
                     long t = System.currentTimeMillis();
-                    while (System.currentTimeMillis() - t <= 30000) {
+                    while (System.currentTimeMillis() - t <= timeout * 1000) {
                         try {
                             Thread.sleep(100);
                         } catch (InterruptedException e) {
