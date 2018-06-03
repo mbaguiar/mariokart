@@ -66,6 +66,13 @@ public class MenuView extends ScreenAdapter {
             }
         });
 
+        quitBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.exit(0);
+            }
+        });
+
         buttonGroup.setPosition(stage.getWidth() / 2f, stage.getHeight() / 2f);
         stage.addActor(buttonGroup);
 

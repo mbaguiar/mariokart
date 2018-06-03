@@ -15,9 +15,17 @@ import com.lpoo1718_t1g3.mariokart.Controller.GameController;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.networking.Connector;
 
+/**
+ * Class that represents the registry view
+ * @see ScreenAdapter
+ */
+
 public class RegistryView extends ScreenAdapter {
     private Stage stage;
 
+    /**
+     * Initializes registry view
+     */
     public RegistryView() {
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);

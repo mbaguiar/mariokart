@@ -15,17 +15,31 @@ import com.lpoo1718_t1g3.mariokart.networking.Message;
 
 import java.util.ArrayList;
 
+/**
+ * Class that controls the logic of the game based on the user inputs and the data of the GameModel
+ */
 public class GameController {
 
     private static GameController ourInstance = new GameController();
+
+    /**
+     * Gets game controller
+     * @return Returns currents instance of game controller
+     */
     public static GameController getInstance() {
         return ourInstance;
     }
 
+    /**
+     * Sets next screen to connection screen
+     */
     public void goToConnection() {
         GameModel.getInstance().setNextScreen(GameModel.game_screen.CONNECTION);
     }
 
+    /**
+     * Updates game state
+     */
     public void updateStatus(){
         if (GameModel.getInstance().getNextScreen() == null) return;
         switch (GameModel.getInstance().getNextScreen()){
@@ -55,6 +69,10 @@ public class GameController {
 
     }
 
+    /**
+     * Tries to connect to server
+     * @param ipAddress server ip
+     */
     public void tryConnect(String ipAddress) {
         String[] fullIp = ipAddress.split(":");
         if (fullIp.length == 2) {
@@ -74,6 +92,12 @@ public class GameController {
         }
     }
 
+    /**
+     * Sends controller activity message to sever
+     * @param t throttle value
+     * @param b break value
+     * @param d direction value
+     */
     public void controllerMessage(boolean t, boolean b, float d){
         Message m = new Message(Message.MESSAGE_TYPE.CONTROLLER_ACTIVITY, Message.SENDER.CLIENT);
         m.addOption("throttle", t);
@@ -88,6 +112,10 @@ public class GameController {
         Connector.getInstance().write(m);
     }
 
+    /**
+     * Handles response connection message from server
+     * @param m Message to be handled
+     */
     public void handleConnectionMessage(Message m) {
         if ((Boolean) m.getOptions().get("connectionSuccessful")){
             GameModel.getInstance().setPartyName((String) m.getOptions().get("partyName"));
@@ -97,6 +125,10 @@ public class GameController {
         }
     }
 
+    /**
+     * Handles response registry message from server
+     * @param m Message to be handled
+     */
     public void handleRegistryMessage(Message m){
         if ((Boolean) m.getOptions().get("registrySuccessful")){
             //Wait
@@ -106,6 +138,10 @@ public class GameController {
         }
     }
 
+    /**
+     * Tries to register to party with the given name
+     * @param handle party name
+     */
     public void tryRegister(String handle) {
         Message m = new Message(Message.MESSAGE_TYPE.PLAYER_REGISTRY, Message.SENDER.CLIENT);
         m.addOption("playerHandle", handle);
@@ -115,6 +151,10 @@ public class GameController {
         GameModel.getInstance().setServerResponse(null);*/
     }
 
+    /**
+     * Handles response character picked message from server
+     * @param m Message to be handled
+     */
     public void handleCharPickMessage(Message m){
         if (GameModel.getInstance().getPickState() == null) {
             GameModel.getInstance().setNextScreen(GameModel.game_screen.CHAR_PICK);
@@ -130,29 +170,51 @@ public class GameController {
         }
     }
 
+    /**
+     * Creates character pick message for the character with the given index
+     * @param selectedIndex character index
+     */
     public void pickMessage(int selectedIndex) {
         Message m = new Message(Message.MESSAGE_TYPE.CHAR_PICK, Message.SENDER.CLIENT);
         m.addOption("selectedIndex", selectedIndex);
         Connector.getInstance().write(m);
     }
 
+    /**
+     * Handles response to control message from server
+     * @param m Message to be handled
+     */
     public void handleControlMessage(Message m){
         GameModel.getInstance().setNextScreen(GameModel.game_screen.CONTROL);
     }
 
+    /**
+     * Handles response to power up message from server
+     * @param m Message to be handled
+     */
     public void handlePowerUpMessage(Message m) {
         GameModel.getInstance().setPowerUp((GameModel.object_type) m.getOptions().get("powerUp"));
     }
 
+    /**
+     * Creates use power up message
+     */
     public void usePowerUp() {
         Message m = new Message(Message.MESSAGE_TYPE.POWER_UP, Message.SENDER.CLIENT);
         Connector.getInstance().write(m);
     }
 
+    /**
+     * Handles response to disconnect message form server
+     * @param m Message to be handled
+     */
     public void handleDisconnectMessage(Message m) {
         GameModel.getInstance().setNextScreen(GameModel.game_screen.CONNECTION);
     }
 
+    /**
+     * Disconnects player
+     */
     public void disconnectPlayer() {
         Connector.getInstance().disconnect();
     }

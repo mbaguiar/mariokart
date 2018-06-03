@@ -9,6 +9,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
+/**
+ * Class that writes and reads from server
+ */
 public class Connector {
 
     private static Connector ourInstance = new Connector();
@@ -19,10 +22,20 @@ public class Connector {
 
     private Connector() {}
 
+    /**
+     * Gets connector
+     * @return Returns current instance of Connector
+     */
     public static Connector getInstance(){
         return ourInstance;
     }
 
+    /**
+     * Connects to server socket and initializes i/o streams
+     * @param addr server ip
+     * @param port server port
+     * @return Returns true on success and false otherwise
+     */
     public Socket connect(String addr, int port) {
         final String cAddress = addr;
         final int cPort = port;
@@ -71,6 +84,10 @@ public class Connector {
 
     }
 
+    /**
+     * Writes message to server
+     * @param o Message to be written to server
+     */
     public void write(Message o){
         System.out.println(o.toString());
         final Message obj = o;
@@ -102,6 +119,9 @@ public class Connector {
         }
     }
 
+    /**
+     * Disconnects client
+     */
     public void disconnect(){
         GameController.getInstance().handleDisconnectMessage(null);
         try {

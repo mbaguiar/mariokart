@@ -17,9 +17,16 @@ import com.badlogic.gdx.utils.Align;
 import com.lpoo1718_t1g3.mariokart.Controller.GameController;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 
+/**
+ * Class that represents a connection view
+ * @see ScreenAdapter
+ */
 public class ConnectionView extends ScreenAdapter {
     private Stage stage;
 
+    /**
+     * Initializes connection view
+     */
     public ConnectionView() {
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);

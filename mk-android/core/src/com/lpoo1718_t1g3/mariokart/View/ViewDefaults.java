@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
+/**
+ * Class that generates font used in views
+ */
 public class ViewDefaults {
 
     private static final FreeTypeFontGenerator marioFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("SuperMario256.ttf"));

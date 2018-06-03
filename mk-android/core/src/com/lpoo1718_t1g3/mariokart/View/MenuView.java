@@ -11,9 +11,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.lpoo1718_t1g3.mariokart.Controller.GameController;
 
+/**
+ * Class that represents the menu view
+ * @see ScreenAdapter
+ */
 public class MenuView extends ScreenAdapter {
     private Stage stage;
 
+    /**
+     * Initializes menu view
+     */
     public MenuView() {
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
