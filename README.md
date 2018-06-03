@@ -57,7 +57,7 @@ Both students put in an equal amount of effort into the development of this proj
 ### User manual
 ----
 <p align="center">
-  <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenchots/mainmenu.png"/> <br> 
+  <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/mainmenu.png"/> <br> 
   Main screen for the desktop app.
   <br><br>
   <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/instructions.png" /> <br> 
