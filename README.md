@@ -13,7 +13,7 @@ Tiago José Viana Fragoso
 
 ### Project Setup
 ----
-. * Run mariokart-desktop.jar and install mariokart-android.apk in a android device
+* Run mariokart-desktop.jar and install mariokart-android.apk in a android device
 
 ### [Documentation](https://mbaguiar.github.io/mariokart)<br>
 
