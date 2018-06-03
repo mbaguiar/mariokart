@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
@@ -62,15 +63,19 @@ public class RaceView extends ScreenAdapter {
      * Initializes a race view
      */
     public RaceView() {
+        this.stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
         loadAssets();
         trackView = new TrackView();
+        trackView.getSprite().setSize(stage.getHeight(), stage.getHeight());
+
+        Image track = new Image(new SpriteDrawable(trackView.getSprite()));
+        stage.addActor(track);
+
         mysteryBoxView = new MysteryBoxView();
         camera = createCamera();
         initKartViews();
         initObjectViews();
-        this.stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
-
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("SuperMario256.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.borderColor = Color.BLACK;
@@ -130,6 +135,8 @@ public class RaceView extends ScreenAdapter {
                 super.clicked(event, x, y);
             }
         });
+
+
 
         stage.addActor(endRace);
         stage.addActor(raceLabel);
@@ -230,6 +237,11 @@ public class RaceView extends ScreenAdapter {
     @Override
     public void render(float delta) {
 
+        Gdx.gl.glClearColor(96 / 255f,96 / 255f, 96 / 255f, 0.5f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        stage.act();
+        stage.draw();
+
         GameController.getInstance().getRaceController().removeFlagged();
 
         if (GameModel.getInstance().getCurrentRace().getState() != Race.race_state.OVER) reloadTable(this.labelStyle, this.labelStyleSmall);
@@ -238,17 +250,13 @@ public class RaceView extends ScreenAdapter {
         camera.update();
         MarioKart.getInstance().getBatch().setProjectionMatrix(camera.combined);
 
-        Gdx.gl.glClearColor(96 / 255f,96 / 255f, 96 / 255f, 0.5f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-
         MarioKart.getInstance().getBatch().begin();
         drawEntities();
         MarioKart.getInstance().getBatch().end();
 
         reloadRaceLabel();
 
-        stage.act();
-        stage.draw();
+
 
         GameController.getInstance().updateStatus();
     }
@@ -269,7 +277,6 @@ public class RaceView extends ScreenAdapter {
     }
 
     private void drawEntities() {
-        trackView.draw(MarioKart.getInstance().getBatch());
         for (MysteryBoxModel box : GameModel.getInstance().getCurrentRace().getTrack().getBoxes()) {
             if (box.isEnable()) {
                 mysteryBoxView.update(box);

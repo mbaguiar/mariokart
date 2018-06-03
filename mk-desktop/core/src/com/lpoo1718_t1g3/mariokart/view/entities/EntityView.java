@@ -53,4 +53,7 @@ public abstract class EntityView {
         sprite.setRotation((float) Math.toDegrees(model.getRotation()));
     }
 
+    public Sprite getSprite() {
+        return sprite;
+    }
 }

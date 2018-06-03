@@ -44,7 +44,6 @@ public class ServerManager implements Runnable {
         try {
             socket = new ServerSocket(port);
             QRCodeUtilities.generateQRCode(localIp, port);
-            System.out.println("Server opened: " + localIp + ":" + port);
             finished = false;
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,7 +87,6 @@ public class ServerManager implements Runnable {
             try {
                 clientSocket = socket.accept();
                 clientSocket.setTcpNoDelay(true);
-                System.out.println("Player " + playerId + " connected");
             } catch (SocketException e) {
                 return;
             } catch (IOException e) {

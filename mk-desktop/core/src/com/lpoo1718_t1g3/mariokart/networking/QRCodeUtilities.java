@@ -42,7 +42,7 @@ public class QRCodeUtilities {
 
             BufferedImage img = MatrixToImageWriter.toBufferedImage(b, config);
 
-            ImageIO.write(img, "PNG", new File(Gdx.files.getLocalStoragePath() + "/qrcode/qrcode.png"));
+            ImageIO.write(img, "PNG", new File(Gdx.files.getLocalStoragePath() + "qrcode.png"));
 
 
             return true;

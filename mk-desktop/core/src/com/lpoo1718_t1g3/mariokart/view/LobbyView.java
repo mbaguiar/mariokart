@@ -184,7 +184,7 @@ public class LobbyView extends ScreenAdapter {
     }
 
     private void initServerActors(){
-        Texture qrCodeTexture = new Texture(Gdx.files.internal("qrcode/qrcode.png"));
+        Texture qrCodeTexture = new Texture(Gdx.files.internal("qrcode.png"));
         qrCode.setSize(qrCodeTexture.getWidth(), qrCodeTexture.getHeight());
         qrCode.setDrawable(new SpriteDrawable(new Sprite(qrCodeTexture)));
         qrCode.setPosition(stage.getWidth()/2f, stage.getHeight()/2f, Align.center);
