@@ -15,6 +15,9 @@ import java.util.ArrayList;
 
 import static com.lpoo1718_t1g3.mariokart.model.GameModel.game_screen.*;
 
+/**
+ * Class that controls the logic of the game based on the user inputs and the data on the GameModel
+ */
 public class GameController {
 
     private static GameController ourInstance = new GameController();
@@ -23,10 +26,18 @@ public class GameController {
     private GameController() {
     }
 
+    /**
+     * Returns the GameController
+     * @return instance of GameController
+     */
     public static GameController getInstance() {
         return ourInstance;
     }
 
+    //TODO fragoso
+    /**
+     *
+     */
     public void updateStatus() {
         if (GameModel.getInstance().getNextScreen() == null) return;
         switch (GameModel.getInstance().getNextScreen()) {
@@ -55,14 +66,27 @@ public class GameController {
 
     }
 
+    /**
+     * Returns raceController
+     * @return returns current instance of race controller
+     */
     public RaceController getRaceController() {
         return raceController;
     }
 
+    /**
+     * Updates raceController based on the passed time
+     * @param delta time passed
+     */
     public void updateRaceController(float delta) {
         raceController.update(delta);
     }
 
+    //TODO fragoso
+    /**
+     *
+     * @param m
+     */
     public void handleInput(Message m) {
         if (this.raceController != null) this.raceController.handleMovement(m);
     }
@@ -89,11 +113,22 @@ public class GameController {
 
     }
 
+    //TODO fragoso
+    /**
+     *
+     * @param m
+     * @param id
+     */
     public void writeToClient(Message m, int id) {
         GameModel.getInstance().getServer().writeToClient(m, id);
 
     }
 
+    //TODO fragoso
+    /**
+     *
+     * @param m
+     */
     public void newPlayer(Message m) {
         Message returnMessage = new Message(Message.MESSAGE_TYPE.PLAYER_REGISTRY, Message.SENDER.SERVER);
         if (GameModel.getInstance().getPlayers().size() < GameModel.getInstance().MAX_PLAYERS){
@@ -108,6 +143,10 @@ public class GameController {
         writeToClient(returnMessage, m.getSenderId());
     }
 
+    //TODO fragoso
+    /**
+     *
+     */
     public void startCharPick() {
         if (GameModel.getInstance().getPlayers().size() >= 1){
             GameModel.getInstance().stopNewConnections();
@@ -116,6 +155,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Starts new race
+     */
     public void startRace() {
         Message m = new Message(Message.MESSAGE_TYPE.CONTROLLER_ACTIVITY, Message.SENDER.SERVER);
         GameController.getInstance().broadcastToAll(m);
@@ -194,14 +236,28 @@ public class GameController {
         }
     }
 
+    //TODO fragoso
+    /**
+     *
+     * @param m
+     */
     public void pickMessage(Message m) {
         GameModel.getInstance().setPickMessage(m);
     }
 
+    //TODO fragoso
+    /**
+     *
+     * @param m
+     */
     public void usePowerUp(Message m) {
         GameController.getInstance().getRaceController().useObject(m.getSenderId());
     }
 
+    /**
+     * Disconnects player with the given playerId
+     * @param playerId id of the player to be disconnected
+     */
     public void playerDisconnected(int playerId) {
         GameModel.getInstance().kickPlayer(playerId);
     }

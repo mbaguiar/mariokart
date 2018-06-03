@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Class that represents a body of a Kart in the Game
+ * @see EntityBody
+ */
 public class KartBody extends EntityBody {
 
     float maxSteerAngle, minSteerAngle, maxSpeed, power;
@@ -19,15 +23,22 @@ public class KartBody extends EntityBody {
     public List<TireBody> wheels;
     boolean update;
 
-
+    /**
+     * Kart steer type
+     */
     public enum steer_type {STEER_NONE, STEER_LEFT, STEER_RIGHT, STEER_HARD_LEFT, STEER_HARD_RIGHT}
 
-    ;
-
+    /**
+     * Kart acceleration type
+     */
     public enum acc_type {ACC_NONE, ACC_ACCELERATE, ACC_BRAKE}
 
-    ;
-
+    /**
+     * Constructs a KartBody in the given world with the given model and with the given rotation angle
+     * @param world world in which to create the body
+     * @param model model from which to create the body
+     * @param angle rotation angle to set the body to
+     */
     public KartBody(World world, EntityModel model, float angle) {
         super(world, model, BodyDef.BodyType.DynamicBody);
 
@@ -64,7 +75,7 @@ public class KartBody extends EntityBody {
         this.body.setLinearDamping(0);
     }
 
-    public List<TireBody> getPoweredWheels() {
+    private List<TireBody> getPoweredWheels() {
         ArrayList<TireBody> poweredWheels = new ArrayList<TireBody>();
         for (TireBody tireBody : this.wheels) {
             if (tireBody.powered) {
@@ -75,12 +86,12 @@ public class KartBody extends EntityBody {
         return poweredWheels;
     }
 
-    public Vector2 getLocalVelocity() {
+    private Vector2 getLocalVelocity() {
 
         return this.body.getLocalVector(this.body.getLinearVelocityFromLocalPoint(new Vector2(0, 0)));
     }
 
-    public List<TireBody> getRevolvingWheels() {
+    private List<TireBody> getRevolvingWheels() {
         List<TireBody> revolvingWheels = new ArrayList<TireBody>();
         for (TireBody tireBody : this.wheels) {
             if (tireBody.revolving) {
@@ -91,30 +102,40 @@ public class KartBody extends EntityBody {
         return revolvingWheels;
     }
 
-    public float getSpeedKMH() {
+    private float getSpeedKMH() {
         Vector2 velocity = this.body.getLinearVelocity();
         float len = velocity.len();
         return (len / 1000) * 3600;
     }
 
-    public void setSpeed(float speed) {
+    private void setSpeed(float speed) {
         Vector2 velocity = this.body.getLinearVelocity();
         velocity = velocity.nor();
         velocity = new Vector2(velocity.x * ((speed * 1000.0f) / 3600.0f), velocity.y * ((speed * 1000.0f) / 3600.0f));
         this.body.setLinearVelocity(velocity);
     }
 
+    /**
+     * Sets the current steer type of the kart
+     * @param value steer type
+     */
     public void setSteer(steer_type value) {
         this.steer = value;
     }
 
+    /**
+     * Sets the current acceleration type of the kart
+     * @param value acceleration type
+     */
     public void setAccelerate(acc_type value) {
         this.accelerate = value;
     }
 
+    /**
+     * Updates the kart based on the time passed
+     * @param deltaTime time passed
+     */
     public void update(float deltaTime) {
-
-        //updateSpeed();
 
         for (TireBody tire : wheels) {
             tire.killSidewaysVelocity();
@@ -177,31 +198,31 @@ public class KartBody extends EntityBody {
 
     }
 
-    public void speedUp() {
-        System.out.println("impluso");
-        setHighSpeed();
-        new Timer().schedule(
-                new TimerTask() {
-                    @Override
-                    public void run() {
-                        setNormalSpeed();
-                    }
-                }, 2000
-        );
-    }
-
+    /**
+     * Checks if the kart can update
+     * @return returns true if kart can update and false otherwise
+     */
     public boolean isUpdate() {
         return update;
     }
 
+    /**
+     * Disables kart, prevents it from updating
+     */
     public void disable() {
         this.update = false;
     }
 
+    /**
+     * Enables kart, sets it to possible to update
+     */
     public void enable() {
         this.update = true;
     }
 
+    /**
+     * Steers kart hard to the right for half a second
+     */
     public void steerHard() {
         this.steer = steer_type.STEER_HARD_RIGHT;
         this.update = false;
@@ -215,44 +236,5 @@ public class KartBody extends EntityBody {
                     }
                 }, 500
         );
-    }
-
-    public void setHighSpeed() {
-        this.maxSpeed = KartModel.MAXSPEED_HIGH;
-        this.power = KartModel.POWER_HIGH;
-    }
-
-    public void setNormalSpeed() {
-        this.maxSpeed = KartModel.MAXSPEED;
-        this.power = KartModel.POWER;
-    }
-
-    public void setLowSpeed() {
-        this.maxSpeed = KartModel.MAXSPEED_LOW;
-        this.power = KartModel.POWER_LOW;
-    }
-
-    private void updateSpeed() {
-        switch (((KartModel) body.getUserData()).getSpeed()) {
-            case NORMAL:
-                setNormalSpeed();
-                break;
-            case LOW:
-                setLowSpeed();
-                break;
-            case HIGH:
-                setHighSpeed();
-                break;
-        }
-    }
-
-
-
-    public float getPower() {
-        return power;
-    }
-
-    public float getMaxSpeed() {
-        return maxSpeed;
     }
 }
