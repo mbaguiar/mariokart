@@ -22,6 +22,7 @@ public class RaceController implements ContactListener {
 
     private final World world;
     private final RaceView raceView;
+    private final TrackBody trackBody;
     private HashMap<Integer, KartBody> kartBodies = new HashMap<Integer, KartBody>();
     private ArrayList<MysteryBoxBody> mysteryBoxes = new ArrayList<MysteryBoxBody>();
     private ArrayList<EntityBody> objectBodies = new ArrayList<EntityBody>();
@@ -33,6 +34,7 @@ public class RaceController implements ContactListener {
     RaceController() {
         world = new World(new Vector2(0, 0), true);
         world.clearForces();
+        trackBody = new TrackBody(world, GameModel.getInstance().getCurrentRace().getTrack());
         raceView = new RaceView();
 
         for (MysteryBoxModel box : GameModel.getInstance().getCurrentRace().getTrack().getBoxes()) {
