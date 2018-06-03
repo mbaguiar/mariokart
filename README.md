@@ -83,7 +83,7 @@ Both students put in an equal amount of effort into the development of this proj
   <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/pick-character.png"/> <br> 
   Character picking screen. Dynamic and updated as the players pick their character.
   <br><br>
-  <img src="https://github.com/mbaguiar/mariokart/blob/master/Mockup/App%20-%20Character%20picker.png" /><br> 
+  <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/character-picker.png"/> <br> 
   Character picking screen in the app. This is a by-turn operation, thus there are different possible views for this activity.
   <br><br>
   <img src="https://github.com/mbaguiar/mariokart/blob/master/Screenshots/startrace.png"/> <br> 
