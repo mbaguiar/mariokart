@@ -27,13 +27,24 @@ public class AndroidLauncher extends AndroidApplication implements QRCodeIntegra
 				integrator.initiateScan();
 			}
 		};
-		runOnUiThread(r);
+		Thread scanThread = new Thread(r);
+		scanThread.start();
+		try {
+			scanThread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 		if (scanResult != null && scanResult.getContents() != null) {
 			MarioKart.getInstance().scanResult(scanResult.getContents());
+		}
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 }

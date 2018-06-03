@@ -156,4 +156,8 @@ public class GameController {
     public void handleDisconnectMessage(Message m) {
         GameModel.getInstance().setNextScreen(GameModel.game_screen.CONNECTION);
     }
+
+    public void disconnectPlayer() {
+        Connector.getInstance().disconnect();
+    }
 }

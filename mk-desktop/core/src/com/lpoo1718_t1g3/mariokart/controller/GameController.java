@@ -46,6 +46,7 @@ public class GameController {
                 GameModel.getInstance().setNextScreen(null);
                 break;
             case LOBBY:
+                MarioKart.getInstance().getScreen().dispose();
                 if (GameModel.getInstance().getServer() != null)
                     GameModel.getInstance().stopServer();
                 GameModel.getInstance().clearData();

@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.lpoo1718_t1g3.mariokart.Controller.GameController;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
+import com.lpoo1718_t1g3.mariokart.networking.Connector;
 
 public class RegistryView extends ScreenAdapter {
     private Stage stage;
@@ -33,6 +34,14 @@ public class RegistryView extends ScreenAdapter {
 
         TextButton disconnectBtn = new TextButton("Disconnect", btnStyle);
         disconnectBtn.setPosition(stage.getWidth() / 2f, stage.getHeight() * 3f / 5f, Align.center);
+
+        disconnectBtn.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                GameController.getInstance().disconnectPlayer();
+                super.clicked(event, x, y);
+            }
+        });
 
         TextField.TextFieldStyle txtFieldStyle = new TextField.TextFieldStyle();
         txtFieldStyle.font = com.lpoo1718_t1g3.mariokart.View.ViewDefaults.getDefaultTextFieldFont();

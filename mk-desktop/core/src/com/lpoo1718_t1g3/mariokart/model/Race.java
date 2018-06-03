@@ -11,7 +11,7 @@ public class Race {
     private TrackModel track;
 
     private List<Position> playerPositions = new ArrayList<Position>();
-    public static enum race_state {READY, SET, GO, RACE, OVER}
+    public enum race_state {READY, SET, GO, RACE, OVER}
     private race_state state;
 
     public Race(TrackModel track) {

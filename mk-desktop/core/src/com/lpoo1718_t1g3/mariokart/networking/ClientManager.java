@@ -15,8 +15,6 @@ public class ClientManager extends Thread {
     private Socket socket;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
-    private boolean finished;
-
     ClientManager(Socket client, int playerId) {
         socket = client;
         this.playerId = playerId;
@@ -94,7 +92,6 @@ public class ClientManager extends Thread {
     }
 
     void close() {
-        this.finished = true;
         try {
             this.socket.close();
         } catch (IOException e) {
