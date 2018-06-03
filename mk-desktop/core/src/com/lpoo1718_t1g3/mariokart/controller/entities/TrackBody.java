@@ -6,19 +6,20 @@ import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
 import com.lpoo1718_t1g3.mariokart.model.entities.FinishLineModel;
 import com.lpoo1718_t1g3.mariokart.model.entities.TrackModel;
 
+/**
+ * Class that represents the body of a track in the game
+ */
 public class TrackBody {
 
-    private Body body1;
     private Body body2;
-
     private FinishLineBody finishLineBody;
-
-    float y = 49*0.04f;
-    float x = 34*0.04f;
-
     private PhysicsShapeCache physicsBodies;
-    private PhysicsShapeCache physicsBodies1;
 
+    /**
+     * Constricts a TrackBody in the given world from the given model
+     * @param world world in which to create the body
+     * @param model model from which to create the body
+     */
     public TrackBody(World world, EntityModel model) {
 
         BodyDef bodyDef = new BodyDef();
@@ -28,24 +29,10 @@ public class TrackBody {
         bodyDef.awake = true;
         bodyDef.angle = 0;
 
-        //TrackPart trackPart1 = new TrackPart(true, false, false);
-
-        //physicsBodies = new PhysicsShapeCache("track1.xml");
-        //body1 = physicsBodies.createBody("track1", world, bodyDef, 1013/4033f, 977/3875f);
-        //body1.setUserData(trackPart1);
-
-
-        TrackPart trackPart2 = new TrackPart(false, true, false);
-        physicsBodies1 = new PhysicsShapeCache("track1-walls.xml");
-        body2 = physicsBodies1.createBody("track1-walls", world, bodyDef, 1, 1);
-        body2.setUserData(trackPart2);
-
+        TrackPart trackPart = new TrackPart(false, true, false);
+        physicsBodies = new PhysicsShapeCache("track1-walls.xml");
+        body2 = physicsBodies.createBody("track1-walls", world, bodyDef, 1, 1);
+        body2.setUserData(trackPart);
         finishLineBody = new FinishLineBody(world, ((TrackModel) model).getFinishLineModel());
-
     }
-
-    public Body getBody() {
-        return body1;
-    }
-
 }
