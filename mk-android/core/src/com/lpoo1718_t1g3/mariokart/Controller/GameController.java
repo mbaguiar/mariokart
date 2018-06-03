@@ -2,14 +2,14 @@ package com.lpoo1718_t1g3.mariokart.Controller;
 
 
 import com.lpoo1718_t1g3.mariokart.MarioKart;
-import com.lpoo1718_t1g3.mariokart.model.Character;
-import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.View.AccelerometerControlView;
 import com.lpoo1718_t1g3.mariokart.View.ButtonControlView;
 import com.lpoo1718_t1g3.mariokart.View.CharacterPickerView;
 import com.lpoo1718_t1g3.mariokart.View.ConnectionView;
 import com.lpoo1718_t1g3.mariokart.View.MenuView;
 import com.lpoo1718_t1g3.mariokart.View.RegistryView;
+import com.lpoo1718_t1g3.mariokart.model.Character;
+import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.networking.Connector;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 
@@ -24,6 +24,7 @@ public class GameController {
 
     /**
      * Gets game controller
+     *
      * @return Returns currents instance of game controller
      */
     public static GameController getInstance() {
@@ -40,9 +41,9 @@ public class GameController {
     /**
      * Updates game state
      */
-    public void updateStatus(){
+    public void updateStatus() {
         if (GameModel.getInstance().getNextScreen() == null) return;
-        switch (GameModel.getInstance().getNextScreen()){
+        switch (GameModel.getInstance().getNextScreen()) {
             case MENU:
                 MarioKart.getInstance().setScreen(new MenuView());
                 GameModel.getInstance().setNextScreen(null);
@@ -61,7 +62,8 @@ public class GameController {
                 break;
             case CONTROL:
                 GameModel.getInstance().setPowerUp(GameModel.object_type.NULL);
-                if (GameModel.getInstance().getAccelerometer()) MarioKart.getInstance().setScreen(new AccelerometerControlView());
+                if (GameModel.getInstance().getAccelerometer())
+                    MarioKart.getInstance().setScreen(new AccelerometerControlView());
                 else MarioKart.getInstance().setScreen(new ButtonControlView());
                 GameModel.getInstance().setNextScreen(null);
                 break;
@@ -71,6 +73,7 @@ public class GameController {
 
     /**
      * Tries to connect to server
+     *
      * @param ipAddress server ip
      */
     public void tryConnect(String ipAddress) {
@@ -79,7 +82,6 @@ public class GameController {
             String ip = fullIp[0];
             try {
                 int port = Integer.parseInt(fullIp[1]);
-                System.out.println("Ip: " + ip + "; port: " + port);
                 if (Connector.getInstance().connect(ip, port) == null) {
                     return;
                 }
@@ -92,30 +94,31 @@ public class GameController {
 
     /**
      * Sends controller activity message to sever
+     *
      * @param t throttle value
      * @param b break value
      * @param d direction value
      */
-    public void controllerMessage(boolean t, boolean b, float d){
+    public void controllerMessage(boolean t, boolean b, float d) {
         Message m = new Message(Message.MESSAGE_TYPE.CONTROLLER_ACTIVITY, Message.SENDER.CLIENT);
         m.addOption("throttle", t);
         m.addOption("brake", b);
         m.addOption("direction", d);
-        System.out.println(m.toString());
         Connector.getInstance().write(m);
     }
 
-    private void connectionMessage(){
+    private void connectionMessage() {
         Message m = new Message(Message.MESSAGE_TYPE.CONNECTION, Message.SENDER.CLIENT);
         Connector.getInstance().write(m);
     }
 
     /**
      * Handles response connection message from server
+     *
      * @param m Message to be handled
      */
     public void handleConnectionMessage(Message m) {
-        if ((Boolean) m.getOptions().get("connectionSuccessful")){
+        if ((Boolean) m.getOptions().get("connectionSuccessful")) {
             GameModel.getInstance().setPartyName((String) m.getOptions().get("partyName"));
             GameModel.getInstance().setNextScreen(GameModel.game_screen.REGISTRY);
         } else {
@@ -125,10 +128,11 @@ public class GameController {
 
     /**
      * Handles response registry message from server
+     *
      * @param m Message to be handled
      */
-    public void handleRegistryMessage(Message m){
-        if ((Boolean) m.getOptions().get("registrySuccessful")){
+    public void handleRegistryMessage(Message m) {
+        if ((Boolean) m.getOptions().get("registrySuccessful")) {
             //Wait
             GameModel.getInstance().setPickState(null);
         } else {
@@ -138,6 +142,7 @@ public class GameController {
 
     /**
      * Tries to register to party with the given name
+     *
      * @param handle party name
      */
     public void tryRegister(String handle) {
@@ -149,17 +154,18 @@ public class GameController {
 
     /**
      * Handles response character picked message from server
+     *
      * @param m Message to be handled
      */
-    public void handleCharPickMessage(Message m){
+    public void handleCharPickMessage(Message m) {
         if (GameModel.getInstance().getPickState() == null) {
             GameModel.getInstance().setNextScreen(GameModel.game_screen.CHAR_PICK);
             GameModel.getInstance().setCharacters((ArrayList<Character>) m.getOptions().get("characters"));
         }
         GameModel.getInstance().setPickState((Message.char_pick_state) m.getOptions().get("charPickState"));
-        if (m.getOptions().get("charPickState") == Message.char_pick_state.PICKED){
+        if (m.getOptions().get("charPickState") == Message.char_pick_state.PICKED) {
             GameModel.getInstance().setSelectedCharacter(GameModel.getInstance().getCharacters().get(GameModel.getInstance().getSelectedCharacterIndex()));
-        } else if (m.getOptions().get("charPickState") == Message.char_pick_state.PICK_ERROR){
+        } else if (m.getOptions().get("charPickState") == Message.char_pick_state.PICK_ERROR) {
             GameModel.getInstance().setPickState(Message.char_pick_state.PICK);
             GameModel.getInstance().setSelectedCharacter(null);
             GameModel.getInstance().setUnavailable(GameModel.getInstance().getSelectedCharacterIndex());
@@ -168,6 +174,7 @@ public class GameController {
 
     /**
      * Creates character pick message for the character with the given index
+     *
      * @param selectedIndex character index
      */
     public void pickMessage(int selectedIndex) {
@@ -178,14 +185,16 @@ public class GameController {
 
     /**
      * Handles response to control message from server
+     *
      * @param m Message to be handled
      */
-    public void handleControlMessage(Message m){
+    public void handleControlMessage(Message m) {
         GameModel.getInstance().setNextScreen(GameModel.game_screen.CONTROL);
     }
 
     /**
      * Handles response to power up message from server
+     *
      * @param m Message to be handled
      */
     public void handlePowerUpMessage(Message m) {
@@ -202,6 +211,7 @@ public class GameController {
 
     /**
      * Handles response to disconnect message form server
+     *
      * @param m Message to be handled
      */
     public void handleDisconnectMessage(Message m) {

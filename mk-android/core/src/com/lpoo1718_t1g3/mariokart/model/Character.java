@@ -12,6 +12,7 @@ public class Character implements Serializable {
 
     /**
      * Constructs a character with the given name
+     *
      * @param name character name
      */
     public Character(String name) {
@@ -20,6 +21,7 @@ public class Character implements Serializable {
 
     /**
      * Gets character name
+     *
      * @return Returns the character name
      */
     public String getName() {
@@ -28,6 +30,7 @@ public class Character implements Serializable {
 
     /**
      * Checks if the character is available or not
+     *
      * @return Returns true if the character is available and false otherwise
      */
     public boolean isAvailable() {
@@ -36,6 +39,7 @@ public class Character implements Serializable {
 
     /**
      * Sets character availability
+     *
      * @param available true to make the character available and false to make the character unavailable
      */
     public void setAvailable(boolean available) {

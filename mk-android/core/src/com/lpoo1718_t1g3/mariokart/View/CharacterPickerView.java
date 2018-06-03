@@ -20,6 +20,7 @@ import com.lpoo1718_t1g3.mariokart.model.GameModel;
 
 /**
  * Class that represents character picker view
+ *
  * @see ScreenAdapter
  */
 public class CharacterPickerView extends ScreenAdapter {
@@ -47,9 +48,8 @@ public class CharacterPickerView extends ScreenAdapter {
     /**
      * Initializes character picker view
      */
-    public CharacterPickerView(){
+    public CharacterPickerView() {
         this.stage = new Stage();
-        this.stage.setDebugAll(true);
         loadTextures();
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = ViewDefaults.getDefaultTextFieldFont();
@@ -58,27 +58,25 @@ public class CharacterPickerView extends ScreenAdapter {
         selectorStyle.font = ViewDefaults.getDefaultButtonFont();
 
         stateLabel = new Label("", labelStyle);
-        stateLabel.setPosition(stage.getWidth()/2f, stage.getHeight() * 6f/7f, Align.center);
+        stateLabel.setPosition(stage.getWidth() / 2f, stage.getHeight() * 6f / 7f, Align.center);
         stateLabel.setAlignment(Align.center);
-        stateLabel.setDebug(true);
 
         characterImage = new Image(characterTextures[selectedIndex]);
-        characterImage.setSize(stage.getWidth()/2.5f, stage.getWidth()/2.5f);
-        characterImage.setPosition(stage.getWidth()/2f, stage.getHeight() * 4f/7f, Align.center);
+        characterImage.setSize(stage.getWidth() / 2.5f, stage.getWidth() / 2.5f);
+        characterImage.setPosition(stage.getWidth() / 2f, stage.getHeight() * 4f / 7f, Align.center);
 
         selectedCharacter = new Label("", labelStyle);
-        selectedCharacter.setPosition(stage.getWidth()/2f, stage.getHeight() * 3f/7f, Align.center);
+        selectedCharacter.setPosition(stage.getWidth() / 2f, stage.getHeight() * 3f / 7f, Align.center);
         selectedCharacter.setAlignment(Align.center);
-        selectedCharacter.setDebug(true);
 
         characterUnavailable = new Label(CHAR_UNAVAILABLE, labelStyle);
-        characterUnavailable.setPosition(stage.getWidth()/2f, stage.getHeight()* 2f/7f, Align.center);
+        characterUnavailable.setPosition(stage.getWidth() / 2f, stage.getHeight() * 2f / 7f, Align.center);
         characterUnavailable.setAlignment(Align.center);
 
         pickButton = new TextButton("pick", selectorStyle);
-        pickButton.setPosition(stage.getWidth()/2f, stage.getHeight()/7f, Align.center);
+        pickButton.setPosition(stage.getWidth() / 2f, stage.getHeight() / 7f, Align.center);
 
-        pickButton.addListener(new ClickListener(){
+        pickButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (GameModel.getInstance().getCharacters().get(selectedIndex).isAvailable()) {
@@ -90,14 +88,14 @@ public class CharacterPickerView extends ScreenAdapter {
         });
 
         nextButton = new TextButton(">", selectorStyle);
-        nextButton.setPosition(stage.getWidth() * 5f/6f, stage.getHeight() * 3f/5f, Align.center);
+        nextButton.setPosition(stage.getWidth() * 5f / 6f, stage.getHeight() * 3f / 5f, Align.center);
 
         waitingLabel = new Label(WAIT_FOR_PLAYERS, labelStyle);
-        waitingLabel.setPosition(stage.getWidth()/2f, stage.getHeight()/6f, Align.center);
+        waitingLabel.setPosition(stage.getWidth() / 2f, stage.getHeight() / 6f, Align.center);
         waitingLabel.setAlignment(Align.center);
 
 
-        nextButton.addListener(new ClickListener(){
+        nextButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 updateSelectedIndex(1);
@@ -106,13 +104,12 @@ public class CharacterPickerView extends ScreenAdapter {
         });
 
         prevButton = new TextButton("<", selectorStyle);
-        prevButton.setPosition(stage.getWidth() * 1f/6f, stage.getHeight() * 3f/5f, Align.center);
+        prevButton.setPosition(stage.getWidth() * 1f / 6f, stage.getHeight() * 3f / 5f, Align.center);
 
-        prevButton.addListener(new ClickListener(){
+        prevButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 updateSelectedIndex(-1);
-                System.out.println(selectedIndex);
                 super.clicked(event, x, y);
             }
         });
@@ -126,7 +123,7 @@ public class CharacterPickerView extends ScreenAdapter {
         this.stage.addActor(pickButton);
         this.stage.addActor(waitingLabel);
 
-        swipeDetector = new GestureDetector(new GestureDetector.GestureAdapter(){
+        swipeDetector = new GestureDetector(new GestureDetector.GestureAdapter() {
             @Override
             public boolean fling(float velocityX, float velocityY, int button) {
                 if (velocityX >= 20) updateSelectedIndex(-1);
@@ -151,7 +148,7 @@ public class CharacterPickerView extends ScreenAdapter {
     }
 
     private void updateActors() {
-        switch (GameModel.getInstance().getPickState()){
+        switch (GameModel.getInstance().getPickState()) {
             case WAIT:
                 stateLabel.setText(WAIT_TO_PICK);
 
@@ -214,24 +211,24 @@ public class CharacterPickerView extends ScreenAdapter {
     }
 
     private void drawBackground() {
-        Gdx.gl.glClearColor(197/255f, 38/255f, 6/255f, 1);
+        Gdx.gl.glClearColor(197 / 255f, 38 / 255f, 6 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
     }
 
 
-    private void updateSelectedIndex(int d){
-        if (d == 1){
+    private void updateSelectedIndex(int d) {
+        if (d == 1) {
             if (selectedIndex + 1 < GameModel.getInstance().getCharacters().size()) {
                 selectedIndex++;
             }
-        } else if (d == -1){
+        } else if (d == -1) {
             if (selectedIndex - 1 >= 0) {
                 selectedIndex--;
             }
         }
     }
 
-    private void loadTextures(){
+    private void loadTextures() {
         Texture t = new Texture(Gdx.files.internal("picker_images/mario_picker.png"));
         characterTextures[0] = new SpriteDrawable(new Sprite(t));
         t = new Texture(Gdx.files.internal("picker_images/luigi_picker.png"));

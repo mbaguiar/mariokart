@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Main-Class: com.lpoo1718_t1g3.mariokart.desktop.DesktopLauncher
+

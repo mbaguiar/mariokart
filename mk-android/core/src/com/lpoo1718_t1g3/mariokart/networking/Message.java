@@ -19,15 +19,20 @@ public class Message implements Serializable {
     /**
      * Message type
      */
-    public enum MESSAGE_TYPE {CONNECTION, PLAYER_REGISTRY, DISCONNECTION, CONTROLLER_ACTIVITY, CHAR_PICK, POWER_UP }
+    public enum MESSAGE_TYPE {
+        CONNECTION, PLAYER_REGISTRY, DISCONNECTION, CONTROLLER_ACTIVITY, CHAR_PICK, POWER_UP
+    }
 
     /**
      * Sender type
      */
-    public enum SENDER {SERVER, CLIENT}
+    public enum SENDER {
+        SERVER, CLIENT
+    }
 
     /**
      * Constructs a message with the given type
+     *
      * @param t Message type
      * @param s Message sender
      */
@@ -39,14 +44,16 @@ public class Message implements Serializable {
 
     /**
      * Gets message type
+     *
      * @return Returns type of Message
      */
-    MESSAGE_TYPE getType() {
+    public MESSAGE_TYPE getType() {
         return type;
     }
 
     /**
      * Adds extra information to the message
+     *
      * @param s information identifier
      * @param o extra information
      */
@@ -56,6 +63,7 @@ public class Message implements Serializable {
 
     /**
      * Gets all message options
+     *
      * @return Returns options from message
      */
     public Hashtable<String, Object> getOptions() {
@@ -64,6 +72,7 @@ public class Message implements Serializable {
 
     /**
      * Gets sender id
+     *
      * @return Returns sender id
      */
     public int getSenderId() {
@@ -72,6 +81,7 @@ public class Message implements Serializable {
 
     /**
      * Sets message sender id
+     *
      * @param id sender id
      */
     void setSenderId(int id) {
@@ -91,5 +101,7 @@ public class Message implements Serializable {
     /**
      * Character pick state
      */
-    public enum char_pick_state { WAIT, PICK, PICKED, PICK_ERROR }
+    public enum char_pick_state {
+        WAIT, PICK, PICKED, PICK_ERROR
+    }
 }

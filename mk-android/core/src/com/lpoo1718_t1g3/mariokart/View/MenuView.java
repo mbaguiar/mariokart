@@ -13,6 +13,7 @@ import com.lpoo1718_t1g3.mariokart.Controller.GameController;
 
 /**
  * Class that represents the menu view
+ *
  * @see ScreenAdapter
  */
 public class MenuView extends ScreenAdapter {
@@ -26,7 +27,6 @@ public class MenuView extends ScreenAdapter {
         Gdx.input.setInputProcessor(stage);
 
         Table table = new Table();
-        table.setDebug(true);
         table.setPosition(stage.getWidth() / 2f, stage.getHeight() / 2f, Align.center);
 
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
@@ -57,7 +57,7 @@ public class MenuView extends ScreenAdapter {
     }
 
     private void drawBackground() {
-        Gdx.gl.glClearColor(197/255f, 38/255f, 6/255f, 1);
+        Gdx.gl.glClearColor(197 / 255f, 38 / 255f, 6 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
     }
 
