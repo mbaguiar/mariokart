@@ -8,6 +8,7 @@ import com.lpoo1718_t1g3.mariokart.model.Player;
 import com.lpoo1718_t1g3.mariokart.model.Race;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
 import com.lpoo1718_t1g3.mariokart.view.CharacterPickerView;
+import com.lpoo1718_t1g3.mariokart.view.InstructionsView;
 import com.lpoo1718_t1g3.mariokart.view.LobbyView;
 import com.lpoo1718_t1g3.mariokart.view.MenuView;
 
@@ -59,6 +60,10 @@ public class GameController {
                 GameModel.getInstance().setCurrentRace(new Race(GameModel.getInstance().getChoosenTrack()));
                 raceController = new RaceController();
                 MarioKart.getInstance().setScreen(raceController.getRaceView());
+                GameModel.getInstance().setNextScreen(null);
+                break;
+            case INSTRUCTIONS:
+                MarioKart.getInstance().setScreen(new InstructionsView());
                 GameModel.getInstance().setNextScreen(null);
                 break;
         }

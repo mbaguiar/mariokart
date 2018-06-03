@@ -272,7 +272,7 @@ public class GameModel {
     /**
      * Game state
      */
-    public enum game_screen {MENU, LOBBY, CHAR_PICK, TRACK_VOTE, RACE}
+    public enum game_screen {MENU, LOBBY, CHAR_PICK, RACE, INSTRUCTIONS}
 
     /**
      * Gets id of player currently choosing its track

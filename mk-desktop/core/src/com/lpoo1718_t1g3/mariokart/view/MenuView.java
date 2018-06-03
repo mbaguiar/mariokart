@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
+import com.lpoo1718_t1g3.mariokart.model.GameModel;
 
 /**
  * Class that represents the menu view
@@ -70,6 +71,13 @@ public class MenuView extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.exit(0);
+            }
+        });
+
+        instructionsBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                GameModel.getInstance().setNextScreen(GameModel.game_screen.INSTRUCTIONS);
             }
         });
 
