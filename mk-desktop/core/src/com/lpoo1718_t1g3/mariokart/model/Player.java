@@ -10,7 +10,7 @@ public class Player {
     private KartModel kartModel;
     private Position position;
 
-    Player(int playerId, String playerHandle) {
+    public Player(int playerId, String playerHandle) {
         this.playerId = playerId;
         this.playerHandle = playerHandle;
         this.kartModel = new KartModel(5, 5, 90, playerId);

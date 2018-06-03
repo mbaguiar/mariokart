@@ -7,6 +7,7 @@ import com.lpoo1718_t1g3.mariokart.networking.Message;
 
 import java.util.Random;
 
+import static com.lpoo1718_t1g3.mariokart.model.GameModel.object_type.NULL;
 import static com.lpoo1718_t1g3.mariokart.model.entities.KartModel.speed_type.NORMAL;
 
 public class KartModel extends EntityModel {
@@ -37,7 +38,7 @@ public class KartModel extends EntityModel {
 
     public KartModel(float x, float y, float rotation, int playerId) {
         super(x, y, rotation);
-        object = GameModel.object_type.NULL;
+        object = NULL;
         collision = true;
         this.playerId = playerId;
     }
@@ -52,7 +53,7 @@ public class KartModel extends EntityModel {
 
     public void generateObject() {
 
-        if (object == GameModel.object_type.NULL) {
+        if (object == NULL) {
             Random rand = new Random();
             int n = rand.nextInt(2) + 1;
             object = GameModel.object_type.values()[n];
@@ -63,12 +64,12 @@ public class KartModel extends EntityModel {
     }
 
     public GameModel.object_type getObject() {
-        if (object == GameModel.object_type.NULL) {
-            return null;
+        if (object == NULL) {
+            return NULL;
         }
         System.out.println("Released object " + object);
         int obj = this.object.ordinal();
-        this.object = GameModel.object_type.NULL;
+        this.object = NULL;
         System.out.println(object);
         return GameModel.object_type.values()[obj];
     }

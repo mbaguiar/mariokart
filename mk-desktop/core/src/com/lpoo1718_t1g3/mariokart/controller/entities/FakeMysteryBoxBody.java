@@ -7,6 +7,7 @@ import com.lpoo1718_t1g3.mariokart.model.entities.FinishLineModel;
 
 /**
  * Class that represents a body of a Fake Mystery Box object in the game
+ * @see EntityBody
  */
 public class FakeMysteryBoxBody extends EntityBody {
 

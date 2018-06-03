@@ -5,12 +5,12 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 
-
+/**
+ * Class that represents a tire of a kartBody in the game
+ */
 public class TireBody {
 
     Body body;
-
-    public static final float PIXELS_PER_METER = 60.0f;
 
     public KartBody kartBody;
     private float width;
@@ -18,10 +18,17 @@ public class TireBody {
     public boolean revolving;
     public boolean powered;
 
-    private float maxForwardSpeed = 10;
-    private float maxDriveForce = 15;
-    private float maxLateralImpulse = 1;
-
+    /**
+     * Constructs a tire body for a given kartBody in the given world
+     * @param world world in which to create the body
+     * @param kartBody kartBody that the tire belongs to
+     * @param posX tire's starting x position
+     * @param posY tire's starting y position
+     * @param width tire's width
+     * @param length tire's length
+     * @param revolving true if a tire is revolving and false otherwise
+     * @param powered true if a tire is powered and false otherwise
+     */
     public TireBody(World world, KartBody kartBody, float posX, float posY, float width, float length, boolean revolving, boolean powered) {
         super();
         this.kartBody = kartBody;
@@ -53,7 +60,7 @@ public class TireBody {
         }
     }
 
-    public void createFixture(Body body) {
+    private void createFixture(Body body) {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.density = 1.0f;
         fixtureDef.isSensor = true;
@@ -64,15 +71,19 @@ public class TireBody {
         wheelShape.dispose();
     }
 
+    /**
+     * Sets body angle
+     * @param angle value to set the body's angle to
+     */
     public void setAngle(float angle) {
         this.body.setTransform(body.getPosition(), this.kartBody.getAngle() + (float) Math.toRadians(angle));
     }
 
-    public Vector2 getLocalVelocity() {
+    private Vector2 getLocalVelocity() {
         return this.kartBody.body.getLocalVector(this.kartBody.body.getLinearVelocityFromLocalPoint(this.body.getPosition()));
     }
 
-    public Vector2 getDirectionVector() {
+    private Vector2 getDirectionVector() {
         Vector2 directionVector;
         if (this.getLocalVelocity().y > 0) {
             directionVector = new Vector2(0, 1);
@@ -83,13 +94,16 @@ public class TireBody {
         return directionVector.rotate((float) Math.toDegrees(this.body.getAngle()));
     }
 
-    public Vector2 getKillVelocityVector() {
+    private Vector2 getKillVelocityVector() {
         Vector2 velocity = this.body.getLinearVelocity();
         Vector2 sidewaysAxis = this.getDirectionVector();
         float dotprod = velocity.dot(sidewaysAxis);
         return new Vector2(sidewaysAxis.x * dotprod, sidewaysAxis.y * dotprod);
     }
 
+    /**
+     * Kills tire sideways velocity
+     */
     public void killSidewaysVelocity() {
         this.body.setLinearVelocity(this.getKillVelocityVector());
     }
