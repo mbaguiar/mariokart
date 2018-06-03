@@ -18,6 +18,10 @@ import com.badlogic.gdx.utils.Align;
 import com.lpoo1718_t1g3.mariokart.Controller.GameController;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 
+/**
+ * Class that represents character picker view
+ * @see ScreenAdapter
+ */
 public class CharacterPickerView extends ScreenAdapter {
 
     private Stage stage;
@@ -40,6 +44,9 @@ public class CharacterPickerView extends ScreenAdapter {
     private final InputMultiplexer inputDetector;
     private final SpriteDrawable[] characterTextures = new SpriteDrawable[GameModel.getInstance().getCharacters().size()];
 
+    /**
+     * Initializes character picker view
+     */
     public CharacterPickerView(){
         this.stage = new Stage();
         this.stage.setDebugAll(true);

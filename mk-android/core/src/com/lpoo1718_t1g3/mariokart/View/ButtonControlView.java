@@ -9,11 +9,17 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 
+/**
+ * Class that represents the button control view
+ * @see ControlView
+ */
 public class ButtonControlView extends ControlView {
 
     private Touchpad joystick;
 
-
+    /**
+     * Initializes button control view
+     */
     public ButtonControlView(){
         throttle.setSize(stage.getWidth()/2f, stage.getHeight()/5f);
         throttle.setPosition(stage.getWidth(), 0, Align.bottomRight);

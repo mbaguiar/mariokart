@@ -5,8 +5,15 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
+/**
+ * Class that represents the accelerometer control view
+ * @see ControlView
+ */
 public class AccelerometerControlView extends ControlView {
 
+    /**
+     * Initializes accelerometer control view
+     */
     public AccelerometerControlView(){
         throttle.setSize(stage.getWidth(), stage.getHeight()/5f);
         throttle.setPosition(stage.getWidth(), 0, Align.bottomRight);

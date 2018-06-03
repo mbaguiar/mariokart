@@ -16,7 +16,10 @@ import com.lpoo1718_t1g3.mariokart.Controller.GameController;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 
-
+/**
+ * Class that represents the control view
+ * @see ScreenAdapter
+ */
 public class ControlView extends ScreenAdapter {
     Stage stage;
     private boolean isAccelerating = false;
@@ -29,6 +32,9 @@ public class ControlView extends ScreenAdapter {
     private long lastMessage = 0;
     private SpriteDrawable[] powerUpSprites = new SpriteDrawable[2];
 
+    /**
+     * Initializes control view
+     */
     ControlView() {
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
