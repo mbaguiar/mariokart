@@ -19,6 +19,10 @@ import com.lpoo1718_t1g3.mariokart.model.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Class that represents the Character Picker view
+ * @see ScreenAdapter
+ */
 public class CharacterPickerView extends ScreenAdapter {
     private Stage stage;
     private ArrayList<Image> charactersImages = new ArrayList<Image>();
@@ -26,6 +30,9 @@ public class CharacterPickerView extends ScreenAdapter {
     private Table characters;
     private Label.LabelStyle labelStyle;
 
+    /**
+     * Initializes a characer picker view
+     */
     public CharacterPickerView() {
         loadCharacters();
         stage = new Stage();

@@ -1,9 +1,8 @@
 package com.lpoo1718_t1g3.mariokart.controller.entities;
 import com.badlogic.gdx.physics.box2d.*;
 import com.codeandweb.physicseditor.PhysicsShapeCache;
-import com.lpoo1718_t1g3.mariokart.model.TrackPart;
+import com.lpoo1718_t1g3.mariokart.model.entities.TrackPart;
 import com.lpoo1718_t1g3.mariokart.model.entities.EntityModel;
-import com.lpoo1718_t1g3.mariokart.model.entities.FinishLineModel;
 import com.lpoo1718_t1g3.mariokart.model.entities.TrackModel;
 
 /**
@@ -29,7 +28,7 @@ public class TrackBody {
         bodyDef.awake = true;
         bodyDef.angle = 0;
 
-        TrackPart trackPart = new TrackPart(false, true, false);
+        TrackPart trackPart = new TrackPart();
         physicsBodies = new PhysicsShapeCache("track1-walls.xml");
         body2 = physicsBodies.createBody("track1-walls", world, bodyDef, 1, 1);
         body2.setUserData(trackPart);

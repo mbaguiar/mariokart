@@ -1,15 +1,15 @@
 package com.lpoo1718_t1g3.mariokart.model.entities;
 
-import com.badlogic.gdx.Game;
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.networking.Message;
-
 import java.util.Random;
-
 import static com.lpoo1718_t1g3.mariokart.model.GameModel.object_type.NULL;
-import static com.lpoo1718_t1g3.mariokart.model.entities.KartModel.speed_type.NORMAL;
 
+/**
+ * Class that represents a Kart in the game
+ * @see EntityModel
+ */
 public class KartModel extends EntityModel {
 
     public final static float POWER = 100000;
@@ -20,22 +20,17 @@ public class KartModel extends EntityModel {
     public static final float WIDTH = 24;
     public static final float HEIGHT = 28;
 
-    public final static float POWER_HIGH = 100000;
-    public final static float MAXSPEED_HIGH = 500;
-
-    public final static float POWER_LOW = 1000;
-    public final static float MAXSPEED_LOW = 100;
-
-    public enum speed_type {NORMAL, LOW, HIGH}
-
-    public speed_type speed = NORMAL;
-
     private GameModel.object_type object;
     private boolean collision;
-    boolean isColliding = false;
-
     private int playerId;
 
+    /**
+     * Constructs a KartModel in the given coordinates with the given rotation and associated to a player
+     * @param x Starting x coordinate
+     * @param y Starting y coordinate
+     * @param rotation rotation angle
+     * @param playerId player's id
+     */
     public KartModel(float x, float y, float rotation, int playerId) {
         super(x, y, rotation);
         object = NULL;
@@ -43,14 +38,9 @@ public class KartModel extends EntityModel {
         this.playerId = playerId;
     }
 
-    public boolean isColliding() {
-        return isColliding;
-    }
-
-    public void setColliding(boolean colliding) {
-        isColliding = colliding;
-    }
-
+    /**
+     * Generates randomly a object if the kart does't already have one
+     */
     public void generateObject() {
 
         if (object == NULL) {
@@ -63,6 +53,10 @@ public class KartModel extends EntityModel {
         }
     }
 
+    /**
+     * Returns the kart object
+     * @return the generated kart object
+     */
     public GameModel.object_type getObject() {
         if (object == NULL) {
             return NULL;
@@ -74,22 +68,26 @@ public class KartModel extends EntityModel {
         return GameModel.object_type.values()[obj];
     }
 
+    /**
+     * Checks if the kart can collide with other objects in the world
+     * @return Return true if it can collide and false otherwise
+     */
     public boolean isCollision() {
         return collision;
     }
 
+    /**
+     * Sets if the kart in can colliding or not
+     * @param collision true if the kart can collide and false otherwise
+     */
     public void setCollision(boolean collision) {
         this.collision = collision;
     }
 
-    public speed_type getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(speed_type speed) {
-        this.speed = speed;
-    }
-
+    /**
+     * Gets the associated player's id
+     * @return player's id
+     */
     public int getPlayerId() {
         return playerId;
     }

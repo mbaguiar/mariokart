@@ -14,11 +14,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.controller.GameController;
 
-
+/**
+ * Class that represents the menu view
+ */
 public class MenuView extends ScreenAdapter {
     private Stage stage;
     private Sprite background;
 
+    /**
+     * Initializes a menu view
+     */
     public MenuView() {
 
         loadAssests();
