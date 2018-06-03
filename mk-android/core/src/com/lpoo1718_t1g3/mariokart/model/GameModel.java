@@ -194,6 +194,16 @@ public class GameModel {
     }
 
     /**
+     * Resets character availability
+     *
+     */
+    public void resetAvailableCharacters() {
+        for (Character c: characters){
+            c.setAvailable(true);
+        }
+    }
+
+    /**
      * Game screen state
      */
     public enum game_screen {

@@ -27,13 +27,7 @@ public class AndroidLauncher extends AndroidApplication implements QRCodeIntegra
 				integrator.initiateScan();
 			}
 		};
-		Thread scanThread = new Thread(r);
-		scanThread.start();
-		try {
-			scanThread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		runOnUiThread(r);
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {

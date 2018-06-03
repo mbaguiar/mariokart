@@ -1,6 +1,7 @@
 package com.lpoo1718_t1g3.mariokart.Controller;
 
 
+import com.badlogic.gdx.Game;
 import com.lpoo1718_t1g3.mariokart.MarioKart;
 import com.lpoo1718_t1g3.mariokart.View.AccelerometerControlView;
 import com.lpoo1718_t1g3.mariokart.View.ButtonControlView;
@@ -57,6 +58,7 @@ public class GameController {
                 GameModel.getInstance().setNextScreen(null);
                 break;
             case CHAR_PICK:
+                GameModel.getInstance().resetAvailableCharacters();
                 MarioKart.getInstance().setScreen(new CharacterPickerView());
                 GameModel.getInstance().setNextScreen(null);
                 break;
