@@ -68,7 +68,7 @@ public class InstructionsView extends ScreenAdapter {
                 "3. Use your phone to connect to the server using\n\n either the QRCode (requires BarcodeScanner)\n\n or the given ip address\n\n\n" +
                 "4. Register your name\n\n\n" +
                 "5. Click play to pick your characters\n\n\n" +
-                "6. When you're done picking, the race starts automatically.\n\n\n" +
+                "6. When you're done picking, the race starts \n\nautomatically.\n\n\n" +
                 "7. Have fun while racing your friends through 3\n\nlaps of a crazy Mario Kart racetrack.\n\n\n" +
                 "8. Repeat", textFieldStyle);
         textArea.setPosition(stage.getWidth() / 3f, stage.getHeight()* 0.2f, Align.center);
