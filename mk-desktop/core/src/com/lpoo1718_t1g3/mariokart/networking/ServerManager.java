@@ -21,7 +21,6 @@ public class ServerManager implements Runnable {
     private ServerSocket socket;
     private int playerId = 1;
     private String localIp = "default_ip";
-
     private int port = 4444;
     private ArrayList<ClientManager> clients = new ArrayList<ClientManager>();
     private boolean finished = false;

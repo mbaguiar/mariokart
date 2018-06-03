@@ -1,9 +1,11 @@
 package com.lpoo1718_t1g3.mariokart.tests;
+
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.model.Player;
 import com.lpoo1718_t1g3.mariokart.model.Position;
 import com.lpoo1718_t1g3.mariokart.model.Race;
 import com.lpoo1718_t1g3.mariokart.model.entities.TrackModel;
+import com.lpoo1718_t1g3.mariokart.networking.Message;
 import org.junit.Test;
 import static com.lpoo1718_t1g3.mariokart.model.GameModel.object_type.NULL;
 import static com.lpoo1718_t1g3.mariokart.model.Race.race_state.READY;
@@ -41,6 +43,16 @@ public class GameLogicTest {
         GameModel.getInstance().addPlayer(6, "bernardo");
         assertEquals(false, GameModel.getInstance().addPlayer(7, "antonio"));
     }
+
+    @Test
+    public void testCreateMessage(){
+        Message m = new Message(Message.MESSAGE_TYPE.CONNECTION, Message.SENDER.CLIENT);
+        assertEquals(Message.MESSAGE_TYPE.CONNECTION, m.getType());
+        Message n = new Message(Message.MESSAGE_TYPE.PLAYER_REGISTRY, Message.SENDER.SERVER);
+        n.addOption("registrySuccessful", true);
+        assertEquals(n.getOptions().get("registrySuccessful"), true);
+    }
+
 
     @Test
     public void testPlayerCharacter() {
@@ -109,6 +121,19 @@ public class GameLogicTest {
         GameModel.getInstance().clearData();
         Player player = new Player(1, "joao");
         assertEquals(NULL, player.getKartModel().getObject());
+    }
+
+    @Test(timeout = 100)
+    public void testRandomObjectGeneration() {
+        boolean banana = false;
+        boolean misterybox = false;
+        Player p = new Player(1, "joao");
+        while (!banana || !misterybox){
+            p.getKartModel().generateObject();
+            GameModel.object_type generateObject = p.getKartModel().getObject();
+            if (generateObject == GameModel.object_type.BANANA) banana = true;
+            else if (generateObject == GameModel.object_type.FAKE_MYSTERY_BOX) misterybox = true;
+        }
     }
 
 }

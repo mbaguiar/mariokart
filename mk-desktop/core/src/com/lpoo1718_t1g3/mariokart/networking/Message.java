@@ -41,7 +41,7 @@ public class Message implements Serializable {
      * Gets message type
      * @return Returns type of Message
      */
-    MESSAGE_TYPE getType() {
+    public MESSAGE_TYPE getType() {
         return type;
     }
 
