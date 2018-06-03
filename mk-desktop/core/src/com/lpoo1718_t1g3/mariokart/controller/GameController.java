@@ -34,9 +34,8 @@ public class GameController {
         return ourInstance;
     }
 
-    //TODO fragoso
     /**
-     *
+     * Updates game screen based on game state
      */
     public void updateStatus() {
         if (GameModel.getInstance().getNextScreen() == null) return;
@@ -83,10 +82,9 @@ public class GameController {
         raceController.update(delta);
     }
 
-    //TODO fragoso
     /**
-     *
-     * @param m
+     * Handles a message from the client
+     * @param m message to be handled
      */
     public void handleInput(Message m) {
         if (this.raceController != null) this.raceController.handleMovement(m);
@@ -97,18 +95,23 @@ public class GameController {
         return (GameModel.getInstance().addPlayer(playerId, playerHandle));
     }
 
+    /**
+     * Starts lobby screen
+     */
     public void startLobbyScreen() {
         GameModel.getInstance().setNextScreen(LOBBY);
     }
 
+    /**
+     * creates server
+     */
     public void createServer(){
         GameModel.getInstance().startServer();
     }
 
-    //TODO fragoso
     /**
-     *
-     * @param m
+     * Sends a successful collection message
+     * @param m Message to be sent
      */
     public void newConnection(Message m) {
         Message returnMessage = new Message(Message.MESSAGE_TYPE.CONNECTION, Message.SENDER.SERVER);
@@ -118,21 +121,19 @@ public class GameController {
 
     }
 
-    //TODO fragoso
     /**
-     *
-     * @param m
-     * @param id
+     * Write message to client with the given id
+     * @param m Message to be written
+     * @param id client id
      */
     public void writeToClient(Message m, int id) {
         GameModel.getInstance().getServer().writeToClient(m, id);
 
     }
 
-    //TODO fragoso
     /**
-     *
-     * @param m
+     * Writes response to client registry
+     * @param m client registry message
      */
     public void newPlayer(Message m) {
         Message returnMessage = new Message(Message.MESSAGE_TYPE.PLAYER_REGISTRY, Message.SENDER.SERVER);
@@ -148,9 +149,8 @@ public class GameController {
         writeToClient(returnMessage, m.getSenderId());
     }
 
-    //TODO fragoso
     /**
-     *
+     * Starts character picking process
      */
     public void startCharPick() {
         if (GameModel.getInstance().getPlayers().size() >= 1){
@@ -160,10 +160,7 @@ public class GameController {
         }
     }
 
-    /**
-     * Starts new race
-     */
-    public void startRace() {
+    private void startRace() {
         Message m = new Message(Message.MESSAGE_TYPE.CONTROLLER_ACTIVITY, Message.SENDER.SERVER);
         GameController.getInstance().broadcastToAll(m);
         GameModel.getInstance().setNextScreen(RACE);
@@ -241,18 +238,16 @@ public class GameController {
         }
     }
 
-    //TODO fragoso
     /**
-     *
-     * @param m
+     * Sets pick message
+     * @param m pick message
      */
     public void pickMessage(Message m) {
         GameModel.getInstance().setPickMessage(m);
     }
 
-    //TODO fragoso
     /**
-     *
+     * Notify raceController about object use
      * @param m
      */
     public void usePowerUp(Message m) {
@@ -267,6 +262,9 @@ public class GameController {
         GameModel.getInstance().kickPlayer(playerId);
     }
 
+    /**
+     * Restarts lobby after race
+     */
     public void restart(){
         GameModel.getInstance().setNextScreen(LOBBY);
     }

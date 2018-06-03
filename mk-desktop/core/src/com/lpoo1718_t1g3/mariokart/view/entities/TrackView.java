@@ -1,11 +1,13 @@
 package com.lpoo1718_t1g3.mariokart.view.entities;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.lpoo1718_t1g3.mariokart.MarioKart;
-
+/**
+ * Class that represents a view for the track in the game
+ */
 public class TrackView extends EntityView {
 
+    /**
+     * Constructs a Track view
+     */
     public TrackView() {
         super("track1.png");
     }

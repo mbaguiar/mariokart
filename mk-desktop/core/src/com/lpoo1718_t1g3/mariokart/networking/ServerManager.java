@@ -9,6 +9,10 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+/**
+ * Class that represents and controls the server
+ * @see Runnable
+ */
 public class ServerManager implements Runnable {
 
     private static final int serverId = -1;
@@ -22,6 +26,9 @@ public class ServerManager implements Runnable {
     private ArrayList<ClientManager> clients = new ArrayList<ClientManager>();
     private boolean finished = false;
 
+    /**
+     * Initializes server
+     */
     public ServerManager() {
         try {
             Socket testSocket = new Socket(GOOGLE_URL, TEST_PORT);
@@ -48,18 +55,33 @@ public class ServerManager implements Runnable {
 
     }
 
+    /**
+     * Gets local ip
+     * @return Returns local ip
+     */
     public String getLocalIp() {
         return localIp;
     }
 
+    /**
+     * Gets port
+     * @return Returns port
+     */
     public int getPort() {
         return port;
     }
 
+    /**
+     * Sets if server has finished accepted connections
+     * @param finished true if server is finished and false otherwise
+     */
     public void setFinished(boolean finished) {
         this.finished = finished;
     }
 
+    /**
+     * Accepts new connections
+     */
     @Override
     public void run() {
         while (!socket.isClosed() && !finished) {
@@ -79,6 +101,11 @@ public class ServerManager implements Runnable {
         }
     }
 
+    /**
+     * Writes to client with the given id
+     * @param m Message to be sent
+     * @param id client id
+     */
     public void writeToClient(Message m, int id) {
         m.setSenderId(serverId);
         ClientManager c;
@@ -103,6 +130,9 @@ public class ServerManager implements Runnable {
         clients.clear();
     }
 
+    /**
+     * Closes server and disconnects all clients
+     */
     public void stop() {
         this.finished = true;
         this.disconnectAll();

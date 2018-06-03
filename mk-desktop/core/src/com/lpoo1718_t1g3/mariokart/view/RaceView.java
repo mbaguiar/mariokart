@@ -29,6 +29,10 @@ import com.lpoo1718_t1g3.mariokart.view.entities.*;
 
 import java.util.HashMap;
 
+/**
+ * Class that represents the Race view
+ * @see ScreenAdapter
+ */
 public class RaceView extends ScreenAdapter {
 
     private HashMap<String, KartView> kartViews = new HashMap<String, KartView>();
@@ -52,6 +56,9 @@ public class RaceView extends ScreenAdapter {
 
     Box2DDebugRenderer debugRenderer;
 
+    /**
+     * Initializes a race view
+     */
     public RaceView() {
         loadAssets();
         trackView = new TrackView();
@@ -211,8 +218,6 @@ public class RaceView extends ScreenAdapter {
 
         GameController.getInstance().getRaceController().removeFlagged();
 
-        handleInputs(delta);
-
         if (GameModel.getInstance().getCurrentRace().getState() != Race.race_state.OVER) reloadTable(this.labelStyle, this.labelStyleSmall);
 
         GameController.getInstance().updateRaceController(delta);
@@ -235,76 +240,6 @@ public class RaceView extends ScreenAdapter {
         //debugRenderer.render(GameController.getInstance().getRaceController().getWorld(), camera.combined);
     }
 
-    private void handleInputs(float delta) {
-
-        /*
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            GameController.getInstance().getRaceController().setKartState(KartBody.acc_type.ACC_ACCELERATE, 1);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            GameController.getInstance().getRaceController().setKartState(KartBody.acc_type.ACC_BRAKE, 1);
-        } else {
-            GameController.getInstance().getRaceController().setKartState(KartBody.acc_type.ACC_NONE, 1);
-        }
-
-
-        if (Gdx.input.isKeyPressed((Input.Keys.A))) {
-            GameController.getInstance().getRaceController().setKartState(KartBody.steer_type.STEER_LEFT, 1);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            GameController.getInstance().getRaceController().setKartState(KartBody.steer_type.STEER_RIGHT, 1);
-        } else {
-            GameController.getInstance().getRaceController().setKartState(KartBody.steer_type.STEER_NONE, 1);
-        }
-
-
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            GameController.getInstance().getRaceController().setKartState(KartBody.acc_type.ACC_ACCELERATE, 2);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            GameController.getInstance().getRaceController().setKartState(KartBody.acc_type.ACC_BRAKE, 2);
-        } else {
-            GameController.getInstance().getRaceController().setKartState(KartBody.acc_type.ACC_NONE, 2);
-        }
-
-        if (Gdx.input.isKeyPressed((Input.Keys.LEFT))) {
-            GameController.getInstance().getRaceController().setKartState(KartBody.steer_type.STEER_LEFT, 2);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            GameController.getInstance().getRaceController().setKartState(KartBody.steer_type.STEER_HARD_RIGHT, 2);
-        } else {
-            GameController.getInstance().getRaceController().setKartState(KartBody.steer_type.STEER_NONE, 2);
-        }
-
-        //eventualmente desaparecer
-
-        /*
-
-        if (Gdx.input.isKeyPressed(((Input.Keys.M)))) {
-            if (!this.mario) {
-                GameModel.getInstance().addPlayer(1, "mbaguiar", "Mario");
-                GameController.getInstance().getRaceController().addKartBody(GameModel.getInstance().getPlayer(1));
-                this.mario = true;
-                System.out.println("Added 1 Mariio");
-            }
-        }
-
-        if (Gdx.input.isKeyPressed(((Input.Keys.L)))) {
-            if (!this.luigi) {
-                GameModel.getInstance().addPlayer(2, "tfragoso", "Luigi");
-                GameController.getInstance().getRaceController().addKartBody(GameModel.getInstance().getPlayer(2));
-                System.out.println("Added 1 Luigi");
-                this.luigi = true;
-            }
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            GameController.getInstance().getRaceController().useObject(1);
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-            GameController.getInstance().getRaceController().useObject(2);
-        }
-        */
-
-    }
-
     private void initKartViews() {
         kartViews.put("Mario", new KartView("mariokart.png"));
         kartViews.put("Luigi", new KartView("luigikart.png"));
@@ -315,7 +250,7 @@ public class RaceView extends ScreenAdapter {
 
     }
 
-    public void initObjectViews() {
+    private void initObjectViews() {
         objectViews.put("Banana", new BananaView());
         objectViews.put("FakeBox", new FakeMysteryBoxView());
     }

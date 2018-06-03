@@ -18,6 +18,10 @@ import com.lpoo1718_t1g3.mariokart.controller.GameController;
 import com.lpoo1718_t1g3.mariokart.model.GameModel;
 import com.lpoo1718_t1g3.mariokart.model.Player;
 
+/**
+ * Class that represents the Lobby view
+ * @see ScreenAdapter
+ */
 public class LobbyView extends ScreenAdapter {
     private Stage stage;
     private TextField partyName;
@@ -28,6 +32,9 @@ public class LobbyView extends ScreenAdapter {
     private Label ipLabel;
     private TextArea connectedPlayersLabel;
 
+    /**
+     * Initializes a lobby view
+     */
     public LobbyView() {
 
         loadAssests();
@@ -109,13 +116,10 @@ public class LobbyView extends ScreenAdapter {
 
         partyGroup.add(startLobby);
 
-
-        //QR Code image
         qrCode = new Image();
         qrCode.setAlign(Align.center);
         qrCode.setVisible(false);
 
-        //Server ip label
         ipLabel = new Label("", labelStyle);
         ipLabel.setAlignment(Align.center);
         ipLabel.setVisible(false);

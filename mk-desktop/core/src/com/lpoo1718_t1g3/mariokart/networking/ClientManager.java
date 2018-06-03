@@ -9,21 +9,38 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
+/**
+ * Class that represents and controls a client that is connected to the server
+ * @see Thread
+ */
 public class ClientManager extends Thread {
 
     private final int playerId;
     private Socket socket;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
+
+    /**
+     * Constructs and initializes a client manager for the player with the given id
+     * @param client client socket
+     * @param playerId player's id
+     */
     ClientManager(Socket client, int playerId) {
         socket = client;
         this.playerId = playerId;
     }
 
+    /**
+     * Gets player id
+     * @return Returns player's id
+     */
     public int getPlayerId() {
         return playerId;
     }
 
+    /**
+     * Receives client messages
+     */
     @Override
     public void run() {
         try {
@@ -81,6 +98,10 @@ public class ClientManager extends Thread {
         }
     }
 
+    /**
+     * Writes a message to the client
+     * @param m Message to be written
+     */
     void write(Message m) {
         if (!socket.isClosed() && outputStream != null) {
             try {
@@ -91,6 +112,9 @@ public class ClientManager extends Thread {
         }
     }
 
+    /**
+     * Closes client's socket
+     */
     void close() {
         try {
             this.socket.close();

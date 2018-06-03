@@ -242,25 +242,33 @@ public class GameModel {
     }
 
     /**
-     * Object type
+     * Stops accepting new connections
      */
     public void stopNewConnections() {
         this.server.setFinished(true);
     }
 
+    /**
+     * Disconnects all clients, closes sockets and streams
+     */
     public void stopServer() {
         this.server.stop();
     }
 
+    /**
+     * Clear model data
+     */
     public void clearData() {
         this.server = null;
         this.currentPickerId = -1;
         this.players.clear();
     }
 
+    /**
+     * Object type
+     */
     public enum object_type { NULL, BANANA, FAKE_MYSTERY_BOX }
 
-    public enum char_pick_state { WAIT, PICK, PICKED }
 
     /**
      * Game state

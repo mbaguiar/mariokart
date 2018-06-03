@@ -17,10 +17,19 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Utility functions to handle qr codes
+ */
 public class QRCodeUtilities {
 
     private static final int size = 200;
 
+    /**
+     * Generates qr code
+     * @param ip ip to create qr code from
+     * @param port port to create qr code from
+     * @return Returns true on success and false otherwise
+     */
     static boolean generateQRCode(String ip, int port){
         String address = ip + ":" + port;
 
